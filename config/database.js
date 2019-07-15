@@ -1,6 +1,4 @@
 const mongoose = require('mongoose');
-mongoose.set('useCreateIndex', true);
-mongoose.set('useNewUrlParser', true);
 
 const chalk = require('chalk');
 const dbURL = require('./properties').DB;
@@ -11,7 +9,10 @@ const disconnected = chalk.bold.red;
 const termination = chalk.bold.magenta;
 
 module.exports = () => {
-  mongoose.connect(dbURL);
+  mongoose.connect(dbURL, {
+    useCreateIndex: true,
+    useNewUrlParser: true
+  });
 
   mongoose.connection.on('connected', () => {
     console.log(connected('Mongoose default connection is open to ', dbURL));
