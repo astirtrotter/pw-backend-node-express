@@ -1,8 +1,9 @@
-const TagController = require('../controller/tag');
+const TagController = require('../controllers/tag');
 
 module.exports = router => {
-  router.post('/create', TagController.createTag);
-  router.get('/get', TagController.getTags);
-  router.put('/update/:id', TagController.updateTag);
-  router.delete('/remove/:id', TagController.removeTag);
+  router.route('/tags')
+    .get('/', TagController.getTags)
+    .post('/create', TagController.createTag)
+    .put('/update/:id', TagController.updateTag)
+    .delete('/remove/:id', TagController.removeTag);
 };

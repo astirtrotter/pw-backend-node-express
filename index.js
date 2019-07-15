@@ -19,6 +19,9 @@ app.use(bodyParserJSON);
 app.use(bodyParserURLEncoded);
 app.use('/static', express.static(path.join(__dirname, 'public')));
 
+// view engine
+app.set('view engine', 'pug');
+
 // error handling
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -29,11 +32,10 @@ app.use((req, res, next) => {
 });
 
 // initialize express router
-const tagRouter = express.Router();
+const router = require('./routes')(express.Router());
 
 // use express router
-app.use('/api/tags', tagRouter);
-require('./routes/tag')(tagRouter);
+app.use(router);
 
 // initialize server
 app.listen(port, (req, res) => console.log(`App listening on port ${port}`));
