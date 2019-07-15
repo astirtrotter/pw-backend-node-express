@@ -1,4 +1,7 @@
 const mongoose = require('mongoose');
+mongoose.set('useCreateIndex', true);
+mongoose.set('useNewUrlParser', true);
+
 const chalk = require('chalk');
 const dbURL = require('./properties').DB;
 
