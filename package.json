@@ -1,0 +1,25 @@
+{
+  "name": "pw-backend-node-express",
+  "version": "1.0.0",
+  "description": "BackEnd of my personal website using Node/Express",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/prodev9999/pw-backend-node-express.git"
+  },
+  "keywords": [
+    "personal-website",
+    "node",
+    "express",
+    "backend"
+  ],
+  "author": "Pro Dev",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/prodev9999/pw-backend-node-express/issues"
+  },
+  "homepage": "https://github.com/prodev9999/pw-backend-node-express#readme"
+}
