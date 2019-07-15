@@ -1,10 +1,9 @@
 const TagControllers = require('../controllers/tag');
-const TagViews = require('../views/tag');
 
 module.exports = router => {
   // views
   router.route('/tags')
-    .get('/', TagViews.showTags);
+    .get('/', TagControllers.showTags);
 
   // apis
   router.route('/api/tags')
