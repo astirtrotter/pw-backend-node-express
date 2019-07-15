@@ -21,7 +21,7 @@ app.use(bodyParserJSON);
 app.use(bodyParserURLEncoded);
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(favicon(__dirname + '/public/favicon.png'));
+app.use(favicon(__dirname + '/public/favicon.ico'));
 
 // view engine
 app.set('views', path.join(__dirname, 'views'));
