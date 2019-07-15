@@ -1,6 +1,8 @@
 const express = require('express');
 const log = require('morgan')('dev');
 const bodyParser = require('body-parser');
+const favicon = require('serve-favicon');
+const cookieParser = require('cookie-parser');
 const path = require('path');
 const app = express();
 const port = require('./config/properties').PORT;
@@ -17,7 +19,13 @@ db();
 app.use(log);
 app.use(bodyParserJSON);
 app.use(bodyParserURLEncoded);
-app.use('/static', express.static(path.join(__dirname, 'public')));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(favicon(__dirname + '/public/favicon.ico'));
+
+// view engine
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'pug');
 
 // error handling
 app.use((req, res, next) => {
@@ -29,11 +37,10 @@ app.use((req, res, next) => {
 });
 
 // initialize express router
-const tagRouter = express.Router();
+const router = require('./routes')(express.Router());
 
 // use express router
-app.use('/api/tags', tagRouter);
-require('./routes/tag')(tagRouter);
+app.use(router);
 
 // initialize server
 app.listen(port, (req, res) => console.log(`App listening on port ${port}`));
