@@ -1,6 +1,6 @@
 {
   "name": "pw-backend-node-express",
-  "version": "1.0.0",
+  "version": "v0.1.0",
   "description": "BackEnd of my personal website using Node/Express",
   "main": "index.js",
   "scripts": {
