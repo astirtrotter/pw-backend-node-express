@@ -1,6 +1,7 @@
 const express = require('express');
 const log = require('morgan')('dev');
 const bodyParser = require('body-parser');
+const path = require('path');
 const app = express();
 const port = require('./config/properties').PORT;
 const db = require('./config/database');
@@ -16,6 +17,7 @@ db();
 app.use(log);
 app.use(bodyParserJSON);
 app.use(bodyParserURLEncoded);
+app.use('/static', express.static(path.join(__dirname, 'public')));
 
 // error handling
 app.use((req, res, next) => {
