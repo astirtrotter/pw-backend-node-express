@@ -9,20 +9,20 @@ const tagSchema = new Schema({
 
 tagSchema.statics = {
   create: (data, cb) => {
-    var tag = new this(data);
+    var tag = new tagModel(data);
     tag.save(cb);
   },
 
   get: (query, cb) => {
-    this.find(query, cb);
+    tagModel.find(query, cb);
   },
 
   update: (query, updateData, cb) => {
-    this.findOneAndUpdate(query, {$set: updateData}, {new: true}, cb);
+    tagModel.findOneAndUpdate(query, {$set: updateData}, {new: true}, cb);
   },
 
   delete: (query, cb) => {
-    this.findOneAndDelete(query, cb);
+    tagModel.findOneAndDelete(query, cb);
   }
 };
 
