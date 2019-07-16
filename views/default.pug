@@ -7,21 +7,22 @@ html(lang='en')
     meta(name='viewport' content='width=device-width, initial-scale=1')
   body
     nav.navbar.navbar-expand-lg.navbar-dark.bg-dark
-      a.navbar-brand(href='/') Smart City
-      button.navbar-toggler(type='button', data-toggle='collapse', data-target='.navbar-collapse')
+      a.navbar-brand(href='/') Home
+      button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarSupportedContent', aria-controls='navbarSupportedContent', aria-expanded='false', aria-label='Toggle navigation')
         span.navbar-toggler-icon
 
-      .collapse.navbar-collapse
+      #navbarSupportedContent.collapse.navbar-collapse
         ul.navbar-nav.mr-auto
-          li.nav-item.active
+          li.nav-item
             a.nav-link(href='/tags') Tags
-        ul.navbar-nav.float-right
+          li.nav-item.dropdown
+            a#navbarDropdown.nav-link.dropdown-toggle(data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false') Settings
+            .dropdown-menu(aria-labelledby='navbarDropdown')
+              a.dropdown-item(href='#') Action1
+              .dropdown-divider
+              a.dropdown-item(href='#') Action2
+        ul.navbar-nav.ml-auto
           li.nav-item
             a.nav-link(href='/login') Login
-          li.nav-item.dropdown
-            a#navbarDropdownMenuLink.nav-link.dropdown-toggle(data-toggle='dropdown', aria-haspopup='true', aria-expanded='false') Accounts
-            .dropdown-menu(aria-labelledby='navbarDropdownMenuLink')
-              a.dropdown-item(href='#') Settings
 
-
-    block content
+  block content
