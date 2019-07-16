@@ -3,11 +3,25 @@ html(lang='en')
   head
     title #{title}
     include partials/styles
+    include partials/scripts
     meta(name='viewport' content='width=device-width, initial-scale=1')
   body
-    main
-      block header
-        header.header
-          h1 #{title}
-      block content
-  include partials/scripts
+    nav.navbar.navbar-expand-lg.navbar-dark.bg-dark
+      a.navbar-brand(href='/') Smart City
+      button.navbar-toggler(type='button', data-toggle='collapse', data-target='.navbar-collapse')
+        span.navbar-toggler-icon
+
+      .collapse.navbar-collapse
+        ul.navbar-nav.mr-auto
+          li.nav-item.active
+            a.nav-link(href='/tags') Tags
+        ul.navbar-nav.float-right
+          li.nav-item
+            a.nav-link(href='/login') Login
+          li.nav-item.dropdown
+            a#navbarDropdownMenuLink.nav-link.dropdown-toggle(data-toggle='dropdown', aria-haspopup='true', aria-expanded='false') Accounts
+            .dropdown-menu(aria-labelledby='navbarDropdownMenuLink')
+              a.dropdown-item(href='#') Settings
+
+
+    block content
