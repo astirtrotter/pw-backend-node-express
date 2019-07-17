@@ -38,7 +38,7 @@ const schema = new mongoose.Schema({
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Clients'
     }],
-    testimontials: [{
+    testimonials: [{
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Testimonials'
     }]
@@ -53,8 +53,8 @@ const schema = new mongoose.Schema({
 
 schema.statics = {
   create: (data, cb) => {
-    var tag = new model(data);
-    tag.save(cb);
+    var user = new model(data);
+    user.save(cb);
   },
 
   get: (query, cb) => {
