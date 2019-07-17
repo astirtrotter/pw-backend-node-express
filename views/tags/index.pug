@@ -1,1 +1,15 @@
 extends ../default
+
+block content
+  .container.py-4
+    h1 Tags
+    .my-4.d-flex.flex-row.justify-content-end
+      button.btn.btn-info(type='button') New Tag
+    table.table.table-striped.table-hover.table-responsive-md
+      thead
+        tr
+          th(scope='col') #
+          th(scope='col') Name
+          th(scope='col') Color
+          th(scope='col') Description
+      tbody
