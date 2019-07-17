@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const schema = new mongoose.Schema({
   name: {type: String, unique: true, required: true},
+  color: {type:Number, required: true, default: 0},
   description: String
 }, {
   timestamps: true

@@ -1,11 +1,27 @@
-html
+doctype html
+html(lang='en')
   head
     title #{title}
-    link(rel='stylesheet', href='/css/style.css')
-    meta(name="viewport" content="width=device-width, initial-scale=1")
+    include partials/styles
+    include partials/scripts
+    meta(name='viewport' content='width=device-width, initial-scale=1')
   body
-    main
-      block header
-        header.header
-          h1 #{title}
-      block content
+    nav.navbar.navbar-expand-lg.navbar-dark.bg-dark
+      a.navbar-brand(href='/') Home
+      button.navbar-toggler(type='button', data-toggle='collapse', data-target='.navbar-collapse')
+        span.navbar-toggler-icon
+
+      .collapse.navbar-collapse
+        ul.navbar-nav.mr-auto
+          li.nav-item.active
+            a.nav-link(href='/tags') Tags
+
+        ul.navbar-nav.ml-auto
+          li.nav-item
+            a.nav-link(href='/login') Login
+          li.nav-item
+            a.nav-link(href='/signup') Sign Up
+
+    block content
+
+    include layouts/footer
