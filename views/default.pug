@@ -16,10 +16,12 @@ html(lang='en')
           li.nav-item.active
             a.nav-link(href='/tags') Tags
 
-        ul.navbar-nav.float-right
+        ul.navbar-nav.ml-auto
           li.nav-item
             a.nav-link(href='/login') Login
           li.nav-item
             a.nav-link(href='/signup') Sign Up
 
     block content
+
+    include layouts/footer
