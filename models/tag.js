@@ -5,7 +5,7 @@ const schema = new mongoose.Schema({
     unique: true,
     required: 'Name is required',
     trim: true,
-    match: [/^[a-z_A-Z-.]+$/, 'Please fill a valid tag name']
+    match: [/^[\w\s._]+$/, 'Please fill a valid tag name']
   },
   color: {
     type:Number,
