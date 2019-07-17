@@ -1,4 +1,4 @@
 module.exports = {
   PORT: 4000,
-  DB: 'mongodb://localhost:27017/personal-website'
+  DB: 'mongodb://127.0.0.1:27017/personal-website'
 };
