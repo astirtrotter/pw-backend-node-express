@@ -1,3 +1,5 @@
+include mixin/flash-messages
+
 doctype html
 html(lang='en')
   head
@@ -28,6 +30,8 @@ html(lang='en')
           else
             li.nav-item
               a.nav-link(href='/logout') Log Out
+
+    +flash-messages(messages)
 
     block content
 
