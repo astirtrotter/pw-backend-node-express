@@ -11,7 +11,8 @@ exports.createSkill = (req, res, next) => {
   let skill = new Skill(data);
   skill.save((err, skill) => {
     if (err) return next(err);
-    res.json({message: 'Skill created successfully'});
+    req.flash('success', 'Skill created successfully');
+    res.redirect('/skills');
   });
 };
 
@@ -30,14 +31,16 @@ exports.updateSkill = (req, res, next) => {
 
   Skill.findOneAndUpdate({_id: req.params.id}, {$set: data}, {new: true}, (err, skill) => {
     if (err) return next(err);
-    res.json({message: 'Skill updated successfully'});
+    req.flash('success', 'Skill updated successfully');
+    res.redirect('/skills');
   });
 };
 
 exports.removeSkill = (req, res, next) => {
   Skill.findOneAndDelete({_id: req.params.id}, (err, skill) => {
     if (err) return next(err);
-    res.json({message: 'Skill deleted successfully'});
+    req.flash('success', 'Skill removed successfully');
+    res.redirect('/skills');
   });
 };
 

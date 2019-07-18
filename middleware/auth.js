@@ -7,7 +7,7 @@ exports.requireLogin = (req, res, next) => {
 
 exports.requireAdmin = (req, res, next) => {
   if (!req.user.meta.admin) {
-    return next(res.error(400, 'You are not allowed'))
+    return next(res.error(400, 'You are not allowed. Only admin user can edit'))
   }
   next();
 };

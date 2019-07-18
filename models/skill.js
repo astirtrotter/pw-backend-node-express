@@ -3,16 +3,20 @@ const schema = new mongoose.Schema({
   name: {
     type: String,
     unique: true,
-    required: 'Name is required',
+    required: true,
     trim: true,
-    match: [/^[\w\s._]+$/, 'Please fill a valid tag name']
+    match: /^[\w\s.-]+$/
   },
-  color: {
-    type:Number,
-    default: 0,
-    max: 0xFFFFFF
+  image: {
+    type: String,
+    required: true,
+    trim: true
   },
-  description: String
+  description: String,
+  combinedSkills: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Skills'
+  }]
 }, {
   timestamps: true
 });

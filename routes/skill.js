@@ -12,6 +12,6 @@ module.exports = router => {
   // apis
   router.get('/api/skills', SkillController.getSkills);
   router.post('/api/skills/create', authMiddlewareAdmin, SkillController.createSkill);
-  router.put('/api/skills/:id/update', authMiddlewareAdmin, SkillController.updateSkill);
-  router.delete('/api/skills/:id/remove', authMiddlewareAdmin, SkillController.removeSkill);
+  router.put('/api/skills/:id', authMiddlewareAdmin, SkillController.updateSkill);
+  router.get('/api/skills/:id/delete', authMiddlewareAdmin, SkillController.removeSkill);
 };
