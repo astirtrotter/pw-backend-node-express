@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const favicon = require('serve-favicon');
 const cookieParser = require('cookie-parser');
 const path = require('path');
+const methodOverride = require('method-override');
 const app = express();
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
@@ -35,6 +36,7 @@ app.use(session({
     ttl: 14 * 24 * 60 * 60      // default: 14 days
   })
 }));
+app.use(methodOverride('_method'));
 
 // view engine
 app.set('views', path.join(__dirname, 'views'));
