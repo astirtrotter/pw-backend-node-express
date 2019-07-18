@@ -28,6 +28,10 @@ const schema = new mongoose.Schema({
       trim: true,
       match: /^\w+, \w+$/
     },
+    services: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Services'
+    }],
     skills: [{
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Skills'
@@ -36,14 +40,6 @@ const schema = new mongoose.Schema({
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Portfolios'
     }],
-    clients: [{
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Clients'
-    }],
-    testimonials: [{
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Testimonials'
-    }]
   },
   meta: {
     admin: {type: Boolean, default: false},
