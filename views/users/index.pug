@@ -3,7 +3,7 @@ extends ../default
 block content
   .container.py-4
     h1 #{title}
-    table.table.table-striped.table-hover.table-responsive-md
+    table.table.table-striped.table-hover.table-responsive-md.my-4
       thead
         tr
           th(scope='col') #
@@ -25,5 +25,7 @@ block content
             td #{usr.profile.location}
             td #{usr.meta.admin}
             td
-              a.text-danger.mr-1(href=`/api/users/${usr._id}/delete`) Del
-              a.ml-1(href=`/users/${usr._id}`) Edit
+              a.text-danger.mr-1(href=`/api/users/${usr._id}/delete`)
+                span.fas.fa-trash-alt
+              a.ml-1(href=`/users/${usr._id}`)
+                span.fas.fa-edit

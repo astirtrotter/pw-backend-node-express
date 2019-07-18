@@ -21,5 +21,7 @@ block content
             td #{user.image}
             td #{user.combinedSkills}
             td
-              a.text-danger.mr-1(href=`/api/skills/${user._id}/delete`) Del
+              a.text-danger.mr-1(href=`/api/skills/${user._id}/delete`)
+                span.fas.fa-trash-alt
               a.ml-1(href=`/skills/${user._id}`) Edit
+                span.fas.fa-edit
