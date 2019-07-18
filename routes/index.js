@@ -11,11 +11,10 @@ module.exports = router => {
 
   tagRoute(router);
 
-  router.use((req, res) => {
-    res.render('404', {url: req.url});
-    // var error = new Error('message error');
-    // error.status = 500;
-    // res.render('500', {error});
+  router.use((req, res, next) => {
+    var error = new Error('Page Not Found');
+    error.status = 404;
+    next(error)
   });
 
   return router;

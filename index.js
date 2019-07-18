@@ -42,5 +42,21 @@ const router = require('./routes')(express.Router());
 // use express router
 app.use(router);
 
+// error handler
+app.use((err, req, res, next) => {
+  var isOfApi = req.url.startsWith('/api/');
+
+  err.status = err.status || 500;
+  if (isOfApi) {
+    return res.status(err.status).json({message: err.message});
+  }
+
+  if (err.status === 404) {
+    res.render('404', {url: req.url});
+  } else {
+    res.render('500', {error: err});
+  }
+});
+
 // initialize server
 app.listen(port, (req, res) => console.log(`App listening on port ${port}`));
