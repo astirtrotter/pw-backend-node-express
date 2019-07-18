@@ -55,7 +55,7 @@ app.use((err, req, res, next) => {
   if (err.status === 404) {
     res.render('404', {url: req.url});
   } else {
-    res.render('500', {error: err});
+    res.render('error', {error: err});
   }
 });
 
