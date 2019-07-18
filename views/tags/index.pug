@@ -2,9 +2,9 @@ extends ../default
 
 block content
   .container.py-4
-    h1 Tags
+    h1 #{title}
     .my-4.d-flex.flex-row.justify-content-end
-      button.btn.btn-info(type='button') New Tag
+      a.btn.btn-info(href='/tags/create', role='button') New Tag
     table.table.table-striped.table-hover.table-responsive-md
       thead
         tr
