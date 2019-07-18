@@ -1,0 +1,25 @@
+extends ../default
+
+block content
+  .container.py-4
+    h1 #{title}
+    .my-4.d-flex.flex-row.justify-content-end
+      a.btn.btn-info(href='/skills/create', role='button') Add Skill
+    table.table.table-striped.table-hover.table-responsive-md
+      thead
+        tr
+          th(scope='col') #
+          th(scope='col') Name
+          th(scope='col') Color
+          th(scope='col') Description
+          th(scope='col') Action
+      tbody
+        each skill, index in skills
+          tr
+            th(scope='row') #{index + 1}
+            td #{skill.name}
+            td #{skill.color}
+            td #{skill.description}
+            td
+              button.btn.btn-danger Del
+              button.btn.btn-info Edit

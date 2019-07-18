@@ -13,7 +13,6 @@ exports.signup = (req, res, next) => {
   };
   User.create(data, (err, user) => {
     if (err) {
-      console.log(err);
       req.flash('error', err.message);
       return res.redirect('/signup');
     }

@@ -17,5 +17,5 @@ const schema = new mongoose.Schema({
   timestamps: true
 });
 
-const model = mongoose.model('Tags', schema);
+const model = mongoose.model('Skills', schema);
 module.exports = model;
