@@ -8,4 +8,7 @@ block content
       hr.my-4
       p No matter you have single or multiple accounts, we treat them separately and accordingly you can feel different looking per each account's personal website.
       p.lead
-        a.btn.btn-primary.btn-lg(href='/', role='button') Visit FrontEnd
+        if user
+          a.btn.btn-primary.btn-lg(href='#', role='button') Visit FrontEnd
+        else
+          a.btn.btn-primary.btn-lg(href='/login', role='button') Log In
