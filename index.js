@@ -49,7 +49,7 @@ app.use((err, req, res, next) => {
 
   err.status = err.status || 500;
   if (isOfApi) {
-    return res.status(err.status).json({message: err.message});
+    return res.status(err.status).json({error: {message: err.message}});
   }
 
   if (err.status === 404) {
