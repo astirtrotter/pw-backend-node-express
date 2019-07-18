@@ -24,10 +24,12 @@
   },
   "homepage": "https://github.com/prodev9999/pw-backend-node-express#readme",
   "dependencies": {
+    "bcrypt": "^3.0.6",
     "body-parser": "^1.19.0",
     "chalk": "^2.4.2",
     "cookie-parser": "^1.4.4",
     "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.6.4",
     "morgan": "^1.9.1",
     "path": "^0.12.7",

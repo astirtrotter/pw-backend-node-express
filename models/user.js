@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 const schema = new mongoose.Schema({
   email: {
     type: String,
@@ -7,7 +8,7 @@ const schema = new mongoose.Schema({
     required: 'Email is required',
     match: [/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/, 'Please fill a valid email address']
   },
-  salt_password: String,
+  password: String,
   profile: {
     name: {
       type: String,
@@ -50,6 +51,24 @@ const schema = new mongoose.Schema({
 }, {
   timestamps: true
 });
+
+schema.pre('save', (next) => {
+  var user = this;
+  if (!user.isModified('password')) return next();
+  bcrypt.hash(user.password, 10)
+    .then((password) => {
+      user.password = password;
+      next();
+    })
+    .catch((err) => next(err));
+});
+
+schema.methods.comparePassword = (candidatePassword, next) => {
+  bcrypt.compare(candidatePassword, this.password, (err, isMatch) => {
+    if (err) return next(err);
+    next(null, isMatch);
+  });
+};
 
 schema.statics = {
   create: (data, cb) => {
