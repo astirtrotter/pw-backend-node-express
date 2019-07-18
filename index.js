@@ -27,10 +27,11 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 app.use(session({
   secret: process.env.SESSION_SECRET,
+  resave: false,              // don't save session if unmodified
+  saveUninitialized: false,   //
   store: new MongoStore({
     url: process.env.DB,
     collection: 'sessions',     // default
-    resave: false,              // don't save session if unmodified
     autoRemove: 'native',       // default
     ttl: 14 * 24 * 60 * 60      // default: 14 days
   })
