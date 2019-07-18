@@ -1,4 +1,4 @@
-module.exports = router => {
+module.exports = (router, passport) => {
   // init error handler
   router.use((req, res, next) => {
     res.error = (statusCode, error) => {
@@ -16,11 +16,14 @@ module.exports = router => {
 
   // home page
   router.get('/', (req, res) => {
-    res.render('index', {title: 'Admin Panel'})
+    res.render('index', {
+      title: 'Admin Panel',
+      user: req.user
+    })
   });
 
   require('./tag')(router);
-  require('./auth')(router);
+  require('./auth')(router, passport);
 
   // 404
   router.use((req, res, next) => {

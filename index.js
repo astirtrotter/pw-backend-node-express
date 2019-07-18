@@ -1,19 +1,20 @@
 require('dotenv').config();
 
 const express = require('express');
+const app = express();
 const log = require('morgan')('dev');
 const bodyParser = require('body-parser');
 const favicon = require('serve-favicon');
 const cookieParser = require('cookie-parser');
 const path = require('path');
+const flash = require('connect-flash');
 const methodOverride = require('method-override');
-const app = express();
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
-const db = require('./config/database');
+const passport = require('./middleware/passport');
 
 // call the database connectivity function
-db();
+require('./config/database')();
 
 // configure app.use()
 app.use(log);
@@ -35,9 +36,12 @@ app.use(session({
   })
 }));
 app.use(methodOverride('_method'));
+app.use(flash());
+app.use(passport.initialize());
+app.use(passport.session());
 
 // initialize express router
-const router = require('./routes')(express.Router());
+const router = require('./routes')(express.Router(), passport);
 
 // use express router
 app.use(router);
@@ -53,9 +57,17 @@ app.use((err, req, res, next) => {
   if (err.status === 401) {
     res.redirect('/login');
   } else if (err.status === 404) {
-    res.render('404', {url: req.url});
+    res.render('404', {
+      title: 'Error',
+      user: req.user,
+      url: req.url
+    });
   } else {
-    res.render('error', {error: err});
+    res.render('error', {
+      title: 'Error',
+      user: req.user,
+      error: err
+    });
   }
 });
 

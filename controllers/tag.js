@@ -48,6 +48,10 @@ exports.removeTag = (req, res, next) => {
 exports.showTags = (req, res, next) => {
   Tag.find({}, (err, tags) => {
     if (err) return next(err);
-    res.render('tags/index', {tags: tags});
+    res.render('tags/index', {
+      title: 'Tags',
+      user: req.user,
+      tags: tags
+    });
   });
 };
