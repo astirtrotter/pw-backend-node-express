@@ -1,5 +1,3 @@
-const tagRoute = require('./tag');
-
 module.exports = router => {
   // init error handler
   router.use((req, res, next) => {
@@ -24,7 +22,8 @@ module.exports = router => {
     res.render('index', {title: 'Admin Panel'})
   });
 
-  tagRoute(router);
+  require('./tag')(router);
+  require('./auth')(router);
 
   // 404
   router.use((req, res, next) => {

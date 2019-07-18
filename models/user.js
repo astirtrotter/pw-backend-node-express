@@ -61,11 +61,8 @@ schema.pre('save', (next) => {
     .catch((err) => next(err));
 });
 
-schema.methods.comparePassword = (candidatePassword, next) => {
-  bcrypt.compare(candidatePassword, this.password, (err, isMatch) => {
-    if (err) return next(err);
-    next(null, isMatch);
-  });
+schema.methods.comparePassword = (candidatePassword, cb) => {
+  bcrypt.compare(candidatePassword, this.password, cb);
 };
 
 schema.statics = {
