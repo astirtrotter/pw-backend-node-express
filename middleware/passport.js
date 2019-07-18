@@ -24,7 +24,7 @@ passport.serializeUser((user, done) => {
 });
 
 passport.deserializeUser((id, done) => {
-  User.findById(id, done(err, user));
+  User.findById(id, done);
 });
 
 module.exports = passport;

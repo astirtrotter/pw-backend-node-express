@@ -49,12 +49,13 @@ app.use(router);
 // error handler
 app.use((err, req, res, next) => {
   err.status = err.status || 500;
-  var isOfApi = req.url.startsWith('/api/');
-  if (isOfApi) {
-    return res.status(err.status).json({error: {message: err.message}});
-  }
+  // var isOfApi = req.url.startsWith('/api/');
+  // if (isOfApi) {
+  //   return res.status(err.status).json({error: {message: err.message}});
+  // }
 
   if (err.status === 401) {
+    req.logout();
     res.redirect('/login');
   } else if (err.status === 404) {
     res.render('404', {

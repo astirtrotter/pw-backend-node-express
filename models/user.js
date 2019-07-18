@@ -50,18 +50,20 @@ const schema = new mongoose.Schema({
   timestamps: true
 });
 
-schema.pre('save', (next) => {
+schema.pre('save', function(next) {
   let user = this;
   if (!user.isModified('password')) return next();
-  bcrypt.hash(user.password, process.env.PASSWORD_SALT)
-    .then((password) => {
-      user.password = password;
-      next();
-    })
-    .catch((err) => next(err));
+  bcrypt.genSalt(10, (err, salt) => {
+    bcrypt.hash(user.password, salt)
+      .then((password) => {
+        user.password = password;
+        next();
+      })
+      .catch(next);
+  });
 });
 
-schema.methods.comparePassword = (candidatePassword, cb) => {
+schema.methods.comparePassword = function (candidatePassword, cb) {
   bcrypt.compare(candidatePassword, this.password, cb);
 };
 
