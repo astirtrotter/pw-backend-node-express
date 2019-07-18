@@ -3,11 +3,11 @@ const AuthMiddleware = require('../middleware/auth');
 
 module.exports = router => {
   // views
-  // router.get('/users', AuthMiddleware.requireLogin, UserController.showUsers);
+  router.get('/users', AuthMiddleware.requireLogin, UserController.showUsers);
+  router.get('/users/:id', AuthMiddleware.requireLogin, UserController.showUser);
 
   // apis
-  // router.get('/api/users', AuthMiddleware.requireLogin, UserController.getUsers);
-  // router.post('/api/users/create', AuthMiddleware.requireAdmin, UserController.createUser);
-  // router.put('/api/users/:id', AuthMiddleware.requireAdmin, UserController.updateUser);
-  // router.delete('/api/users/:id', AuthMiddleware.requireAdmin, UserController.removeUser);
+  router.get('/api/users', AuthMiddleware.requireLogin, UserController.getUsers);
+  router.put('/api/users/:id', AuthMiddleware.requireAdmin, UserController.updateUser);
+  router.get('/api/users/:id/delete', AuthMiddleware.requireAdmin, UserController.removeUser);
 };

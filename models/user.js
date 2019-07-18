@@ -19,6 +19,7 @@ const schema = new mongoose.Schema({
       required: true,
       match: /^[\w\s]+$/
     },
+    image: String,
     overview: {
       type: String,
       trim: true

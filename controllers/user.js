@@ -3,46 +3,60 @@ const User = require('../models/user');
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // api
 
-exports.signup = (req, res, next) => {
-  let data = {
-    email: req.body.email,
-    password: req.body.password,
-    profile: {
-      name: req.body.name
-    }
-  };
-  User.create(data, (err, user) => {
-    if (err) {
-      req.flash('error', err.message);
-      return res.redirect('/signup');
-    }
-    req.logIn(user, (err) => {
-      if (err) {
-        req.flash('error', err.message);
-        return res.redirect('/login');
-      }
-      res.redirect('/');
-    });
+exports.getUsers = (req, res, next) => {
+  User.find({}, (err, users) => {
+    if (err) return next(err);
+    res.json({users});
   });
 };
 
-exports.logout = (req, res, next) => {
-  req.logout();
-  res.redirect('/login');
+exports.updateUser = (req, res, next) => {
+  let data = {
+    title: req.body.title,
+    description: req.body.description
+  };
+
+  User.findOneAndUpdate({_id: req.params.id}, {$set: data}, {new: true}, (err, user) => {
+    if (err) return next(err);
+    req.flash('success', 'User updated successfully');
+    res.redirect('/users');
+  });
+};
+
+exports.removeUser = (req, res, next) => {
+  User.findOneAndDelete({_id: req.params.id}, (err, user) => {
+    if (err) return next(err);
+    req.flash('success', 'User removed successfully');
+    res.redirect('/users');
+  });
 };
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// view
+// views
 
-exports.showLogin = (req, res, next) => {
-  res.render('auth/login', {
-    title: 'Log In'
+exports.showUsers = (req, res, next) => {
+  User.find({}, (err, users) => {
+    if (err) {
+      req.flash('error', err.message);
+      return res.redirect('/');
+    }
+    res.render('users/index', {
+      title: 'Users',
+      users
+    });
   });
 };
 
-exports.showSignup = (req, res, next) => {
-  res.render('auth/signup', {
-    title: 'Sign Up'
+exports.showUser = (req, res, next) => {
+  User.findById(req.params.id, (err, user) => {
+    if (err) {
+      req.flash('error', err.message);
+      return res.redirect('/users');
+    }
+    res.render('users/edit', {
+      title: 'Edit User',
+      user
+    });
   });
 };

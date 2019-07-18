@@ -1,0 +1,29 @@
+extends ../default
+
+block content
+  .container.py-4
+    h1 #{title}
+    table.table.table-striped.table-hover.table-responsive-md
+      thead
+        tr
+          th(scope='col') #
+          th(scope='col') Image
+          th(scope='col') Name
+          th(scope='col') Email
+          th(scope='col') Location
+          th(scope='col') Superuser
+          th(scope='col') Action
+      tbody
+        each usr, index in users
+          tr
+            th(scope='row') #{index + 1}
+            td #{usr.profile.image}
+            td
+              span #{usr.profile.name}
+              span.text-info  #{(usr._id.equals(user._id) ? '(you)' : '')}
+            td #{usr.email}
+            td #{usr.profile.location}
+            td #{usr.meta.admin}
+            td
+              a.text-danger.mr-1(href=`/api/users/${usr._id}/delete`) Del
+              a.ml-1(href=`/users/${usr._id}`) Edit

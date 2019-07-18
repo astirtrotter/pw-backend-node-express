@@ -17,9 +17,9 @@ block content
         each skill, index in skills
           tr
             th(scope='row') #{index + 1}
-            td #{skill.name}
-            td #{skill.image}
-            td #{skill.combinedSkills}
+            td #{user.name}
+            td #{user.image}
+            td #{user.combinedSkills}
             td
-              a.text-danger.mr-1(href=`/api/skills/${skill._id}/delete`) Del
-              a.ml-1(href=`/skills/${skill._id}`) Edit
+              a.text-danger.mr-1(href=`/api/skills/${user._id}/delete`) Del
+              a.ml-1(href=`/skills/${user._id}`) Edit
