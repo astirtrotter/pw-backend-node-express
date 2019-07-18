@@ -11,10 +11,16 @@ module.exports = (router, passport) => {
       err.status = statusCode;
       return err;
     };
-    res.locals = {
-      user: req.user,
-      url: req.url
+    let render = res.render;
+    res.render = (view, locals, cb) => {
+      if (typeof locals == 'object') {
+        locals.user = req.user;
+        locals.url = req.url;
+        locals.messages = req.flash();
+      }
+      render.call(res, view, locals, cb);
     };
+
     next();
   });
 
