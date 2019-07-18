@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 const getToken = (user) => jwt.sign({userId: user._id}, process.env.TOKEN_SECURITY);
 
 exports.signup = (req, res, next) => {
-  var data = {
+  let data = {
     email: req.body.email,
     password: req.body.password,
     profile: {
@@ -19,7 +19,7 @@ exports.signup = (req, res, next) => {
 };
 
 exports.login = (req, res, next) => {
-  User.get({email: req.body.email}, (err, users) => {
+  User.find({email: req.body.email}, (err, users) => {
     if (err) return next(err);
     if (users.length === 0) return next(res.error(400, 'No existing user'));
     const user = users[0];

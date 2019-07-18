@@ -51,7 +51,7 @@ const schema = new mongoose.Schema({
 });
 
 schema.pre('save', (next) => {
-  var user = this;
+  let user = this;
   if (!user.isModified('password')) return next();
   bcrypt.hash(user.password, process.env.PASSWORD_SALT)
     .then((password) => {
@@ -63,25 +63,6 @@ schema.pre('save', (next) => {
 
 schema.methods.comparePassword = (candidatePassword, cb) => {
   bcrypt.compare(candidatePassword, this.password, cb);
-};
-
-schema.statics = {
-  create: (data, cb) => {
-    var user = new model(data);
-    user.save(cb);
-  },
-
-  get: (query, cb) => {
-    model.find(query, cb);
-  },
-
-  update: (query, updateData, cb) => {
-    model.findOneAndUpdate(query, {$set: updateData}, {new: true}, cb);
-  },
-
-  delete: (query, cb) => {
-    model.findOneAndDelete(query, cb);
-  }
 };
 
 const model = mongoose.model('Users', schema);
