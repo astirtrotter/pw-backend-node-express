@@ -30,14 +30,12 @@ exports.logout = (req, res, next) => {
 // view
 
 exports.showLogin = (req, res, next) => {
-  if (req.user) return next(res.error(400, 'You should log out first'));
   res.render('auth/login', {
     title: 'Log In'
   });
 };
 
 exports.showSignup = (req, res, next) => {
-  if (req.user) return next(res.error(400, 'You should log out first'));
   res.render('auth/signup', {
     title: 'Sign Up'
   });

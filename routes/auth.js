@@ -6,6 +6,7 @@ module.exports = (router, passport) => {
   // router.get('/users', AuthMiddleware.requireLogin, UserController.showUsers);
   router.get('/login', AuthMiddleware.requireLogout, UserController.showLogin);
   router.get('/signup', AuthMiddleware.requireLogout, UserController.showSignup);
+  router.get('/logout', AuthMiddleware.requireLogin, UserController.logout);
 
   // apis
   router.post('/api/login', AuthMiddleware.requireLogout, passport.authenticate('local', {
@@ -13,7 +14,6 @@ module.exports = (router, passport) => {
     failureRedirect: '/login',
     failureFlash: true
   }));
-  router.post('/api/logout', AuthMiddleware.requireLogin, UserController.logout);
   router.post('/api/signup', AuthMiddleware.requireLogout, UserController.signup);
   // router.get('/api/users', AuthMiddleware.requireLogin, UserController.getUsers);
   // router.post('/api/users/create', AuthMiddleware.requireAdmin, UserController.createUser);
