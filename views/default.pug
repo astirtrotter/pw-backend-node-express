@@ -1,7 +1,7 @@
 doctype html
 html(lang='en')
   head
-    title #{title}
+    title #{title || 'Admin Panel'}
     include partials/styles
     include partials/scripts
     meta(name='viewport' content='width=device-width, initial-scale=1')
@@ -12,15 +12,22 @@ html(lang='en')
         span.navbar-toggler-icon
 
       .collapse.navbar-collapse
-        ul.navbar-nav.mr-auto
-          li.nav-item.active
-            a.nav-link(href='/tags') Tags
+        if user
+          ul.navbar-nav.mr-auto
+            li.nav-item
+              a.nav-link(href='/users') Users
+            li.nav-item.active
+              a.nav-link(href='/tags') Tags
 
         ul.navbar-nav.ml-auto
-          li.nav-item
-            a.nav-link(href='/login') Login
-          li.nav-item
-            a.nav-link(href='/signup') Sign Up
+          if !user
+            li.nav-item
+              a.nav-link(href='/login') Log In
+            li.nav-item
+              a.nav-link(href='/signup') Sign Up
+          else
+            li.nav-item
+              a.nav-link(href='/logout') Log Out
 
     block content
 
