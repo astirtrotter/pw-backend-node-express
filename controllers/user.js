@@ -24,10 +24,18 @@ exports.updateUser = (req, res, next) => {
 };
 
 exports.removeUser = (req, res, next) => {
-  User.findOneAndDelete({_id: req.params.id}, (err, user) => {
+  User.findById(req.params.id, (err, user) => {
     if (err) return next(err);
-    req.flash('success', 'User removed successfully');
-    res.redirect('/users');
+    if (user.meta.admin) {
+      req.flash('error', 'Superuser cannot be removed');
+      return res.redirect('/users');
+    }
+    user.remove()
+      .then(() => {
+        req.flash('success', 'User removed successfully');
+        res.redirect('/users');
+      })
+      .catch(next);
   });
 };
 
