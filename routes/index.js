@@ -22,8 +22,9 @@ module.exports = (router, passport) => {
     })
   });
 
-  require('./tag')(router);
   require('./auth')(router, passport);
+  require('./user')(router);
+  require('./tag')(router);
 
   // 404
   router.use((req, res, next) => {
