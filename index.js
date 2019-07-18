@@ -59,14 +59,11 @@ app.use((err, req, res, next) => {
     res.redirect('/login');
   } else if (err.status === 404) {
     res.render('404', {
-      title: 'Error',
-      user: req.user,
-      url: req.url
+      title: 'Error'
     });
   } else {
     res.render('error', {
       title: 'Error',
-      user: req.user,
       error: err
     });
   }

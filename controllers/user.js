@@ -12,9 +12,16 @@ exports.signup = (req, res, next) => {
     }
   };
   User.create(data, (err, user) => {
-    if (err) return next(err);
+    if (err) {
+      console.log(err);
+      req.flash('error', err.message);
+      return res.redirect('/signup');
+    }
     req.logIn(user, (err) => {
-      if (err) return next(err);
+      if (err) {
+        req.flash('error', err.message);
+        return res.redirect('/login');
+      }
       res.redirect('/');
     });
   });

@@ -11,19 +11,30 @@ module.exports = (router, passport) => {
       err.status = statusCode;
       return err;
     };
+
+    let render = res.render;
+    res.render = (view, locals, cb) => {
+      if (typeof locals == 'object') {
+        locals.user = req.user;
+        locals.url = req.url;
+        locals.messages = req.flash();
+      }
+      render.call(res, view, locals, cb);
+    };
+
     next();
   });
 
   // home page
   router.get('/', (req, res) => {
     res.render('index', {
-      title: 'Admin Panel',
-      user: req.user
+      title: 'Admin Panel'
     })
   });
 
-  require('./tag')(router);
   require('./auth')(router, passport);
+  require('./user')(router);
+  require('./tag')(router);
 
   // 404
   router.use((req, res, next) => {

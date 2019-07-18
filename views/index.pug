@@ -3,10 +3,17 @@ extends default
 block content
   .container
     .jumbotron.mt-4
-      h1.display-4 Welcome to Admin Panel!
-      p.lead You can compose the contents of your personal website per each account.
+      if user
+        h1.display-4 Hi, #{user.profile.name}!
+      else
+        h1.display-4 Welcome to Admin Panel!
+      p.lead
+        | You can compose the contents of your personal website here.
       hr.my-4
-      p No matter you have single or multiple accounts, we treat them separately and accordingly you can feel different looking per each account's personal website.
+      if user
+        p If you want to see your personal website, click the button below.
+      else
+        p No matter you have single or multiple accounts, we treat them separately and accordingly you can feel different looking per each account's personal website.
       p.lead
         if user
           a.btn.btn-primary.btn-lg(href='#', role='button') Visit FrontEnd
