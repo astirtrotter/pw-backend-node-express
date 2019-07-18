@@ -11,6 +11,7 @@ module.exports = (router, passport) => {
       err.status = statusCode;
       return err;
     };
+
     let render = res.render;
     res.render = (view, locals, cb) => {
       if (typeof locals == 'object') {

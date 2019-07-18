@@ -5,16 +5,19 @@ const schema = new mongoose.Schema({
     type: String,
     unique: true,
     trim: true,
-    required: 'Email is required',
-    match: [/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/, 'Please fill a valid email address']
+    required: true,
+    match: /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/
   },
-  password: String,
+  password: {
+    type: String,
+    required: true,
+  },
   profile: {
     name: {
       type: String,
       trim: true,
-      required: 'Name is required',
-      match: [/^[\w\s]+$/, 'Please fill a valid name']
+      required: true,
+      match: /^[\w\s]+$/
     },
     overview: {
       type: String,
@@ -23,7 +26,7 @@ const schema = new mongoose.Schema({
     location: {
       type: String,
       trim: true,
-      match: [/^\w+, \w+$/, 'Please fill a valid location']
+      match: /^\w+, \w+$/
     },
     skills: [{
       type: mongoose.Schema.Types.ObjectId,

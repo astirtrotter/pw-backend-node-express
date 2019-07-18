@@ -1,18 +1,30 @@
 extends ../default
 
 block content
-  .container
-    .row.mt-4
-      .col-md-6.col-md-offset-3
-        h1.display-4.m-b-2 Sign Up
-        form(method='POST' action='/api/signup')
-          .form-group
-            label(for='name') Name
-            input.form-control(type='text' id='name' placeholder='Name' name='name')
-          .form-group
-            label(for='email') Email
-            input.form-control(type='text' id='email' placeholder='Email' name='email')
-          .form-group
-            label(for='password') Password
-            input.form-control(type='password' id='password' placeholder='Password' name='password')
-          button.btn.btn-primary(type='submit') Sign up
+  .container.mt-5
+    .row.justify-content-center
+      .col.col-lg-6
+        .card
+          form(method='POST' action='/api/signup')
+            .card-body
+              h2.card-title Sign Up
+              p.text-muted Register your account
+              .input-group.mb-3
+                .input-group-prepend
+                  .input-group-text
+                    span.fas.fa-user
+                input.form-control(type='text' id='name' placeholder='Name' name='name')
+              .input-group.mb-3
+                .input-group-prepend
+                  .input-group-text
+                    span.fas.fa-envelope
+                input.form-control(type='text' id='email' placeholder='Email' name='email')
+              .input-group
+                .input-group-prepend
+                  .input-group-text
+                    span.fas.fa-lock
+                input.form-control(type='password' id='password' placeholder='Password' name='password')
+            .card-footer
+              .row.justify-content-end
+                button.btn.btn-primary.mr-3(type='submit') Sign up
+                a.btn.btn-secondary.mr-3(href='/', role='button') Cancel
