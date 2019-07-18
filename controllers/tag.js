@@ -10,14 +10,14 @@ exports.createTag = (req, res, next) => {
   };
 
   Tag.create(data, (err, tag) => {
-    if (err) return next(res.error(400, err));
+    if (err) return next(err);
     res.json({message: 'Tag created successfully'});
   });
 };
 
 exports.getTags = (req, res, next) => {
   Tag.get({}, (err, tags) => {
-    if (err) return next(res.error(400, err));
+    if (err) return next(err);
     res.json({tags: tags});
   });
 };
@@ -29,14 +29,14 @@ exports.updateTag = (req, res, next) => {
   };
 
   Tag.update({_id: req.params.id}, data, (err, tag) => {
-    if (err) return next(res.error(400, err));
+    if (err) return next(err);
     res.json({message: 'Tag updated successfully'});
   });
 };
 
 exports.removeTag = (req, res, next) => {
   Tag.delete({_id: req.params.id}, (err, tag) => {
-    if (err) return next(res.error(400, err));
+    if (err) return next(err);
     res.json({message: 'Tag deleted successfully'});
   });
 };
@@ -47,7 +47,7 @@ exports.removeTag = (req, res, next) => {
 
 exports.showTags = (req, res, next) => {
   Tag.get({}, (err, tags) => {
-    if (err) return next(res.error(400, err));
+    if (err) return next(err);
     res.render('tags/index', {tags: tags});
   });
 };

@@ -9,10 +9,11 @@ exports.parseToken = (req, res, next) => {
     return next();
   }
   jwt.verify(token, process.env.TOKEN_SECURITY, (err, payload) => {
-    if (err) return next(res.error(401, err));
+    if (err) return next(err);
     if (payload) {
       User.findById(payload.userId, (err, user) => {
-        if (err) return next(res.error(401, err));
+        if (err) return next(err);
+        if (!user) return next(rex.error(401, 'Unauthorized error'));
         req.user = user;
         next();
       });
