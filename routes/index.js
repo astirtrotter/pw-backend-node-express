@@ -14,9 +14,6 @@ module.exports = router => {
     next();
   });
 
-  // middleware
-  router.use(require('../middleware/token').parseToken);
-
   // home page
   router.get('/', (req, res) => {
     res.render('index', {title: 'Admin Panel'})

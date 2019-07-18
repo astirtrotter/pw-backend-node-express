@@ -7,6 +7,8 @@ const favicon = require('serve-favicon');
 const cookieParser = require('cookie-parser');
 const path = require('path');
 const app = express();
+const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
 const db = require('./config/database');
 
 // configure body parser
@@ -23,19 +25,20 @@ app.use(bodyParserURLEncoded);
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(favicon(__dirname + '/public/favicon.ico'));
+app.use(session({
+  secret: process.env.SESSION_SECRET,
+  store: new MongoStore({
+    url: process.env.DB,
+    collection: 'sessions',     // default
+    resave: false,              // don't save session if unmodified
+    autoRemove: 'native',       // default
+    ttl: 14 * 24 * 60 * 60      // default: 14 days
+  })
+}));
 
 // view engine
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
-
-// error handling
-// app.use((req, res, next) => {
-//   res.setHeader("Access-Control-Allow-Origin", "*");
-//   res.setHeader("Access-Control-Allow-Credentials", "true");
-//   res.setHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
-//   res.setHeader("Access-Control-Allow-Headers", "Access-Control-Allow-Origin,Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers,Authorization");
-//   next();
-// });
 
 // initialize express router
 const router = require('./routes')(express.Router());
