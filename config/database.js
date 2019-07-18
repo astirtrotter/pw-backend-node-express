@@ -6,8 +6,9 @@ const error = chalk.bold.yellow;
 const disconnected = chalk.bold.red;
 const termination = chalk.bold.magenta;
 
+const dbURL = process.env.DB;
 module.exports = () => {
-  mongoose.connect(process.env.DB, {
+  mongoose.connect(dbURL, {
     useCreateIndex: true,
     useNewUrlParser: true
   });
