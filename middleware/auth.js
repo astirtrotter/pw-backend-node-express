@@ -1,5 +1,6 @@
 exports.requireLogin = (req, res, next) => {
   if (!req.user) {
+    req.flash('info', 'You need to sign in first');
     return res.redirect('/login');
   }
   next();
@@ -7,7 +8,8 @@ exports.requireLogin = (req, res, next) => {
 
 exports.requireAdmin = (req, res, next) => {
   if (!req.user.meta.admin) {
-    return next(res.error(400, 'You are not allowed. Only admin user can edit'))
+    req.flash('warning', 'Only superuser can access to this feature');
+    return next(res.error(401, 'Superuser permission is required'))
   }
   next();
 };
