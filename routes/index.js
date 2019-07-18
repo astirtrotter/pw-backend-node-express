@@ -13,7 +13,9 @@ module.exports = router => {
 
   router.use((req, res) => {
     res.render('404', {url: req.url});
-    // res.render('500', {error: new Error('message error')});
+    // var error = new Error('message error');
+    // error.status = 500;
+    // res.render('500', {error});
   });
 
   return router;
