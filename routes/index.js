@@ -11,14 +11,17 @@ module.exports = (router, passport) => {
       err.status = statusCode;
       return err;
     };
+    res.locals = {
+      user: req.user,
+      url: req.url
+    };
     next();
   });
 
   // home page
   router.get('/', (req, res) => {
     res.render('index', {
-      title: 'Admin Panel',
-      user: req.user
+      title: 'Admin Panel'
     })
   });
 

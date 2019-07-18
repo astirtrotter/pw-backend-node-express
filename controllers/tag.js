@@ -50,7 +50,6 @@ exports.showTags = (req, res, next) => {
     if (err) return next(err);
     res.render('tags/index', {
       title: 'Tags',
-      user: req.user,
       tags: tags
     });
   });
