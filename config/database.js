@@ -1,13 +1,12 @@
 const mongoose = require('mongoose');
 
 const chalk = require('chalk');
-const dbURL = require('./properties').DB;
-
 const connected = chalk.bold.cyan;
 const error = chalk.bold.yellow;
 const disconnected = chalk.bold.red;
 const termination = chalk.bold.magenta;
 
+const dbURL = process.env.DB;
 module.exports = () => {
   mongoose.connect(dbURL, {
     useCreateIndex: true,
