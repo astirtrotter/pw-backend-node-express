@@ -62,6 +62,8 @@ schema.pre('save', function(next) {
   });
 });
 
+// TODO: schema.pre('update' ....) should update salted password
+
 schema.methods.comparePassword = function (candidatePassword, cb) {
   bcrypt.compare(candidatePassword, this.password, cb);
 };
