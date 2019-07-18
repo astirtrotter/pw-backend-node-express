@@ -18,13 +18,11 @@ const schema = new mongoose.Schema({
     },
     overview: {
       type: String,
-      trim: true,
-      required: 'About is required'
+      trim: true
     },
     location: {
       type: String,
       trim: true,
-      required: 'Location is required',
       match: [/^\w+, \w+$/, 'Please fill a valid location']
     },
     skills: [{
