@@ -55,7 +55,7 @@ const schema = new mongoose.Schema({
 schema.pre('save', (next) => {
   var user = this;
   if (!user.isModified('password')) return next();
-  bcrypt.hash(user.password, 10)
+  bcrypt.hash(user.password, process.env.PASSWORD_SALT)
     .then((password) => {
       user.password = password;
       next();
