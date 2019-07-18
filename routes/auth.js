@@ -4,8 +4,8 @@ const AuthMiddleware = require('../middleware/auth');
 module.exports = router => {
   // views
   // router.get('/users', AuthMiddleware.requireLogin, UserController.showUsers);
-  // router.get('/login', UserController.showLogin);
-  // router.get('/signup', UserController.showSignup);
+  router.get('/login', UserController.showLogin);
+  router.get('/signup', UserController.showSignup);
   //
   // // apis
   // router.post('/api/login', UserController.login);

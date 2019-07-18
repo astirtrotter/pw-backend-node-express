@@ -46,7 +46,7 @@ exports.removeTag = (req, res, next) => {
 // views
 
 exports.showTags = (req, res, next) => {
-  Tag.get({}, (err, tags) => {
+  Tag.find({}, (err, tags) => {
     if (err) return next(err);
     res.render('tags/index', {tags: tags});
   });

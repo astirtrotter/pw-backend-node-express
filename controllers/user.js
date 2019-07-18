@@ -3,6 +3,9 @@ const jwt = require('jsonwebtoken');
 
 const getToken = (user) => jwt.sign({userId: user._id}, process.env.TOKEN_SECURITY);
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// api
+
 exports.signup = (req, res, next) => {
   let data = {
     email: req.body.email,
@@ -29,4 +32,16 @@ exports.login = (req, res, next) => {
       res.redirect('/users');
     });
   });
+};
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// view
+
+exports.showLogin = (req, res, next) => {
+  res.render('auth/login');
+};
+
+exports.showSignup = (req, res, next) => {
+  res.render('auth/signup');
 };
