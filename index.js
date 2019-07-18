@@ -51,7 +51,7 @@ app.use((err, req, res, next) => {
     return res.status(err.status).json({error: {message: err.message}});
   }
 
-  if (error.status === 401) {
+  if (err.status === 401) {
     res.redirect('/login');
   } else if (err.status === 404) {
     res.render('404', {url: req.url});
