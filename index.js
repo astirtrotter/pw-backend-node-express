@@ -12,20 +12,18 @@ const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
 const db = require('./config/database');
 
-// configure body parser
-const bodyParserJSON = bodyParser.json();
-const bodyParserURLEncoded = bodyParser.urlencoded({extended: true});
-
 // call the database connectivity function
 db();
 
 // configure app.use()
 app.use(log);
-app.use(bodyParserJSON);
-app.use(bodyParserURLEncoded);
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(favicon(__dirname + '/public/favicon.ico'));
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'pug');
 app.use(session({
   secret: process.env.SESSION_SECRET,
   store: new MongoStore({
@@ -37,10 +35,6 @@ app.use(session({
   })
 }));
 app.use(methodOverride('_method'));
-
-// view engine
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'pug');
 
 // initialize express router
 const router = require('./routes')(express.Router());
