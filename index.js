@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const express = require('express');
 const log = require('morgan')('dev');
 const bodyParser = require('body-parser');
@@ -5,7 +7,6 @@ const favicon = require('serve-favicon');
 const cookieParser = require('cookie-parser');
 const path = require('path');
 const app = express();
-const port = require('./config/properties').PORT;
 const db = require('./config/database');
 
 // configure body parser
@@ -59,4 +60,5 @@ app.use((err, req, res, next) => {
 });
 
 // initialize server
+const port = process.env.PORT;
 app.listen(port, (req, res) => console.log(`App listening on port ${port}`));
