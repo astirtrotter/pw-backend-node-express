@@ -9,7 +9,7 @@ exports.requireLogin = (req, res, next) => {
 exports.requireAdmin = (req, res, next) => {
   if (!req.user.meta.admin) {
     req.flash('warning', 'Only superuser can access to this feature');
-    return next(res.error(401, 'Superuser permission is required'))
+    return next(res.error(400, 'Superuser permission is required'))
   }
   next();
 };

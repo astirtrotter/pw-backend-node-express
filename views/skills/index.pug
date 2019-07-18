@@ -17,11 +17,12 @@ block content
         each skill, index in skills
           tr
             th(scope='row') #{index + 1}
-            td #{user.name}
-            td #{user.image}
-            td #{user.combinedSkills}
+            td #{skill.name}
+            td #{skill.image}
+            td #{skill.combinedSkills}
             td
-              a.text-danger.mr-1(href=`/api/skills/${user._id}/delete`)
-                span.fas.fa-trash-alt
-              a.ml-1(href=`/skills/${user._id}`) Edit
-                span.fas.fa-edit
+              if user.meta.admin
+                a.text-danger.mr-1(href=`/api/skills/${skill._id}/delete`)
+                  span.fas.fa-trash-alt
+                a.ml-1(href=`/skills/${skill._id}`) Edit
+                  span.fas.fa-edit

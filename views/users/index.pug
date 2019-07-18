@@ -25,7 +25,8 @@ block content
             td #{usr.profile.location}
             td #{usr.meta.admin}
             td
-              a.text-danger.mr-1(href=`/api/users/${usr._id}/delete`)
-                span.fas.fa-trash-alt
-              a.ml-1(href=`/users/${usr._id}`)
-                span.fas.fa-edit
+              if user.meta.admin || user._id.equals(usr._id)
+                a.text-danger.mr-1(href=`/api/users/${usr._id}/delete`)
+                  span.fas.fa-trash-alt
+                a.ml-1(href=`/users/${usr._id}`)
+                  span.fas.fa-edit
