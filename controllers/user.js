@@ -58,7 +58,7 @@ exports.showUser = (req, res, next) => {
     if (err) return next(err);
     res.render('users/edit', {
       title: 'Edit User',
-      user
+      usr: user
     });
   });
 };

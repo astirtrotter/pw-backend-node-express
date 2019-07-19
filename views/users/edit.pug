@@ -2,3 +2,11 @@ extends ../default
 
 block content
   h1 #{title}
+  .nav.nav-tabs.mt-4
+    a.nav-item.nav-link.active(data-toggle='tab', href='#nav-general') General
+    a.nav-item.nav-link(data-toggle='tab', href='#nav-security') Security
+    a.nav-item.nav-link(data-toggle='tab', href='#nav-details') Details
+  .tab-content.py-4
+    #nav-general.tab-pane.fade.show.active General
+    #nav-security.tab-pane.fade Security
+    #nav-details.tab-pane.fade Details
