@@ -15,7 +15,7 @@ block content
           th(scope='col') Action
       tbody
         each usr, index in users
-          tr
+          tr(data-href='#')
             th(scope='row') #{index + 1}
             td #{usr.profile.image}
             td

@@ -7,4 +7,8 @@ $(function () {
       $this.addClass('active');
     }
   });
+
+  $('*[data-href]').on('click', function() {
+    window.location = $(this).data("href");
+  });
 });
