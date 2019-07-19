@@ -15,3 +15,9 @@ $(function () {
     });
   });
 });
+
+function confirmDeleting(href) {
+  if (confirm('Are you sure')) {
+    window.location = href;
+  }
+}
