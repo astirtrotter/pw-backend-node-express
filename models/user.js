@@ -34,12 +34,26 @@ const schema = new mongoose.Schema({
       match: /^\w+, \w+$/
     },
     services: [{
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Services'
+      service: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Services'
+      },
+      rate: {
+        type: Number,
+        min: 1,
+        max: 10
+      }
     }],
     skills: [{
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Skills'
+      skill: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Skills'
+      },
+      rate: {
+        type: Number,
+        min: 1,
+        max: 10
+      }
     }],
     portfolios: [{
       type: mongoose.Schema.Types.ObjectId,
