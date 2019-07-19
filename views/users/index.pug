@@ -12,6 +12,7 @@ block content
           th(scope='col') Email
           th(scope='col') Location
           th(scope='col') Superuser
+          th(scope='col') Allowed
           th(scope='col') Action
       tbody
         each usr, index in users
@@ -24,6 +25,7 @@ block content
             td #{usr.email}
             td #{usr.profile.location}
             td #{usr.meta.admin}
+            td #{usr.meta.allowed}
             td
               if user.meta.admin || user._id.equals(usr._id)
                 a.text-danger.mr-1(href=`/api/users/${usr._id}/delete`)

@@ -44,7 +44,7 @@ const schema = new mongoose.Schema({
   },
   meta: {
     admin: {type: Boolean, default: false},
-    lock: {type: Boolean, default: false}
+    allowed: {type: Boolean, default: false}
   }
 }, {
   timestamps: true
