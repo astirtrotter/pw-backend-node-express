@@ -45,10 +45,7 @@ exports.removeUser = (req, res, next) => {
 
 exports.showUsers = (req, res, next) => {
   User.find({}, (err, users) => {
-    if (err) {
-      req.flash('error', err.message);
-      return res.redirect('/');
-    }
+    if (err) return next(err);
     res.render('users/index', {
       title: 'Users',
       users
@@ -58,10 +55,7 @@ exports.showUsers = (req, res, next) => {
 
 exports.showUser = (req, res, next) => {
   User.findById(req.params.id, (err, user) => {
-    if (err) {
-      req.flash('error', err.message);
-      return res.redirect('/users');
-    }
+    if (err) return next(err);
     res.render('users/edit', {
       title: 'Edit User',
       user

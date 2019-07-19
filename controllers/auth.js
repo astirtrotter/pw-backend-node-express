@@ -14,15 +14,10 @@ exports.signup = (req, res, next) => {
   User.create(data, (err, user) => {
     if (err) {
       req.flash('error', err.message);
-      return res.redirect('/signup');
+      return res.redirect('back');
     }
-    req.logIn(user, (err) => {
-      if (err) {
-        req.flash('error', err.message);
-        return res.redirect('/login');
-      }
-      res.redirect('/');
-    });
+    req.flash('success', 'Please contact superuser to get your account allowed');
+    return res.redirect('/login');
   });
 };
 

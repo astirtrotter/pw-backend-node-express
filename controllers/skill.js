@@ -8,9 +8,11 @@ exports.createSkill = (req, res, next) => {
     title: req.body.title,
     description: req.body.description
   };
-  let skill = new Skill(data);
-  skill.save((err, skill) => {
-    if (err) return next(err);
+  Skill.create(data, (err, skill) => {
+    if (err) {
+      req.flash('error', err.message);
+      return res.redirect('back');
+    }
     req.flash('success', 'Skill created successfully');
     res.redirect('/skills');
   });
@@ -32,7 +34,7 @@ exports.updateSkill = (req, res, next) => {
   Skill.findOneAndUpdate({_id: req.params.id}, {$set: data}, {new: true}, (err, skill) => {
     if (err) return next(err);
     req.flash('success', 'Skill updated successfully');
-    res.redirect('/skills');
+    res.redirect('back');
   });
 };
 
@@ -50,10 +52,7 @@ exports.removeSkill = (req, res, next) => {
 
 exports.showSkills = (req, res, next) => {
   Skill.find({}, (err, skills) => {
-    if (err) {
-      req.flash('error', err.message);
-      return res.redirect('/');
-    }
+    if (err) return next(err);
     res.render('skills/index', {
       title: 'Skills',
       skills
@@ -63,10 +62,7 @@ exports.showSkills = (req, res, next) => {
 
 exports.showSkill = (req, res, next) => {
   Skill.findById(req.params.id, (err, skill) => {
-    if (err) {
-      req.flash('error', err.message);
-      return res.redirect('/skills');
-    }
+    if (err) return next(err);
     res.render('skills/edit', {
       title: 'Edit Skill',
       skill
