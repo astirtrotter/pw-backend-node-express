@@ -3,6 +3,6 @@
   vertical-align: middle;
 }
 
-[data-href] {
+[data-href], [onclick] {
   cursor: pointer;
 }
