@@ -9,6 +9,7 @@ $(function () {
   });
 
   $('*[data-href]').on('click', function() {
-    window.location = $(this).data("href");
+    var win = window.open($(this).data("href"), '_blank');
+    win.focus();
   });
 });
