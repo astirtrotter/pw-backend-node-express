@@ -1,6 +1,6 @@
 $(function () {
   let current = location.pathname;
-  $('ul li a').each(function () {
+  $('nav ul li a').each(function () {
     let $this = $(this);
     // if the current path is like this link, make it active
     if (current.startsWith($this.attr('href')) && current.length > 1) {
@@ -8,8 +8,10 @@ $(function () {
     }
   });
 
-  $('*[data-href]').on('click', function() {
-    var win = window.open($(this).data("href"), '_blank');
-    win.focus();
+  $('[data-href]').each(function (i, e) {
+    let href = $(this).data("href");
+    $(e).children('td:not(:last)').click(function () {
+      window.open(href, '_blank');
+    });
   });
 });
