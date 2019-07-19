@@ -11,6 +11,8 @@ const flash = require('connect-flash');
 const methodOverride = require('method-override');
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
+const open = require('open');
+
 const passport = require('./middleware/passport');
 
 // call the database connectivity function
@@ -72,4 +74,8 @@ app.use((err, req, res, next) => {
 
 // initialize server
 const port = process.env.PORT;
-app.listen(port, (req, res) => console.log(`App listening on port ${port}`));
+app.listen(port, (req, res) => {
+  console.log(`App listening on port ${port}`);
+
+  // open(`http://localhost:${[port]}`);
+});
