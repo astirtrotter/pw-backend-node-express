@@ -8,31 +8,34 @@ block content
     a.nav-item.nav-link(data-toggle='tab', href='#nav-details') Details
   .tab-content.py-4.border.bg-light
     #nav-general.tab-pane.fade.show.active
-      form(method='POST', action=`/api/users/${usr._id}`)
-        .d-flex.flex-row.flex-wrap-reverse
-          .col-md-9.d-flex.flex-column
-            .card
-              .card-body.d-flex.flex-column
-                // image, name, location
-                .d-flex.flex-row.flex-wrap.mb-4
-                  // image
-                  .col-md-3
-                    figure.figure
-                      img.img-fluid.rounded-circle(src=`/assets/users/${usr._id}.png`, style='width:100px;', alt='No Image', onclick='alert()')
-                      figcaption.figure-caption.text-center Click to edit
-                  // name, location
-                  .col.d-flex.flex-column
-                    h2(onclick='') #{usr.profile.name}
-                    h5(onclick='')
-                      .fas.fa-map-pin.mr-1
-                      span #{usr.profile.location || '__No Location__'}
-                // title
-                h4.mb-4(onclick='') #{usr.profile.title || '__No Title__'}
-                // overview
-                .border.p-2(style='height:400px;', onclick='') #{usr.profile.overview || '__No Overview__'}
+      .d-flex.flex-row.flex-wrap-reverse
+        .col-md-9.d-flex.flex-column
+          .card
+            .card-body.d-flex.flex-column
+              // image, name, location
+              .d-flex.flex-row.flex-wrap.mb-4
+                // image
+                .col-sm-3
+                  figure.figure
+                    img.img-fluid.rounded-circle(src=`/assets/users/${usr._id}.png`, style='width:100px;', alt='No Image', onclick='alert()')
+                    figcaption.figure-caption.text-center Click to edit
+                // name, location
+                .col.d-flex.flex-column
+                  h2(onclick='') #{usr.profile.name}
+                  h5(onclick='')
+                    .fas.fa-map-pin.mr-1
+                    span #{usr.profile.location || '__No Location__'}
+              // title
+              h4.mb-4(onclick='') #{usr.profile.title || '__No Title__'}
+              // overview
+              .border.p-2(style='height:400px;', onclick='') #{usr.profile.overview || '__No Overview__'}
 
-          .col-md-3.d-flex.flex-column
-            .card(style='background-color: blue;')
+        .col-md-3.d-flex.flex-column
+          .card(style='background-color: blue;')
 
     #nav-security.tab-pane.fade Security
     #nav-details.tab-pane.fade Details
+
+  .mt-5.d-flex.flex-row.justify-content-center
+    a.btn.btn-primary.px-4.mr-5(href='#', role='button') FrontEnd
+    a.btn.btn-danger.px-4(href='#', role='button') Delete
