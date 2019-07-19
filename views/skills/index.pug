@@ -1,28 +1,27 @@
 extends ../default
 
 block content
-  .container.py-4
-    h1 #{title}
-    .my-4.d-flex.flex-row.justify-content-end
-      a.btn.btn-info(href='/skills/create', role='button') Add Skill
-    table.table.table-striped.table-hover.table-responsive-md
-      thead
+  h1 #{title}
+  .my-4.d-flex.flex-row.justify-content-end
+    a.btn.btn-info(href='/skills/create', role='button') Add Skill
+  table.table.table-striped.table-hover.table-responsive-md
+    thead
+      tr
+        th(scope='col') #
+        th(scope='col') Name
+        th(scope='col') Image
+        th(scope='col') Combined Skills
+        th(scope='col') Action
+    tbody
+      each skill, index in skills
         tr
-          th(scope='col') #
-          th(scope='col') Name
-          th(scope='col') Image
-          th(scope='col') Combined Skills
-          th(scope='col') Action
-      tbody
-        each skill, index in skills
-          tr
-            th(scope='row') #{index + 1}
-            td #{skill.name}
-            td #{skill.image}
-            td #{skill.combinedSkills}
-            td
-              if user.meta.admin
-                a.text-danger.mr-1(href=`/api/skills/${skill._id}/delete`)
-                  span.fas.fa-trash-alt
-                a.ml-1(href=`/skills/${skill._id}`) Edit
-                  span.fas.fa-edit
+          th(scope='row') #{index + 1}
+          td #{skill.name}
+          td #{skill.image}
+          td #{skill.combinedSkills}
+          td
+            if user.meta.admin
+              a.text-danger.mr-1(href=`/api/skills/${skill._id}/delete`)
+                span.fas.fa-trash-alt
+              a.ml-1(href=`/skills/${skill._id}`) Edit
+                span.fas.fa-edit
