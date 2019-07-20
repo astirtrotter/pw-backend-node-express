@@ -37,5 +37,6 @@ block content
     #nav-details.tab-pane.fade Details
 
   .mt-5.d-flex.flex-row.justify-content-center
-    a.btn.btn-primary.px-4.mr-5(href='#', role='button') FrontEnd
-    a.btn.btn-danger.px-4(href='#', role='button') Delete
+    .btn.btn-primary.px-4(onclick=`window.open('#', '_blank')`) FrontEnd
+    if user.meta.admin || usr._id.equals(user._id)
+      .btn.btn-danger.px-4.ml-5(onclick=`confirmDeleting('/api/users/${usr._id}/delete')`) Delete

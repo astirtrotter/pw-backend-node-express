@@ -28,7 +28,7 @@ exports.removeUser = (req, res, next) => {
     if (err) return next(err);
     if (user.meta.admin) {
       req.flash('error', 'Superuser cannot be removed');
-      return res.redirect('/users');
+      return res.redirect('back');
     }
     user.remove()
       .then(() => {

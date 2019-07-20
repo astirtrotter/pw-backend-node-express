@@ -1,4 +1,5 @@
 extends ../default
+include ../mixin/check
 
 block content
   h1 #{title}
@@ -9,7 +10,6 @@ block content
         th(scope='col') Image
         th(scope='col') Name
         th(scope='col') Email
-        th(scope='col') Location
         th(scope='col') Superuser
         th(scope='col') Allowed
         th(scope='col') Action
@@ -23,9 +23,10 @@ block content
             span #{usr.profile.name}
             span.text-info  #{(usr._id.equals(user._id) ? '(you)' : '')}
           td #{usr.email}
-          td #{usr.profile.location}
-          td #{usr.meta.admin}
-          td #{usr.meta.allowed}
+          td
+            +check(usr.meta.admin)
+          td
+            +check(usr.meta.allowed)
           td
             if user.meta.admin || user._id.equals(usr._id)
               .text-danger.mr-1.fas.fa-trash-alt(onclick=`confirmDeleting('/api/users/${usr._id}/delete')`)
