@@ -8,7 +8,7 @@ $(function () {
     }
   });
 
-  $('tr [data-href]').each(function (i, e) {
+  $('tbody [data-href]').each(function (i, e) {
     let href = $(this).data("href");
     $(e).children('td:not(:last)').click(function () {
       window.open(href, '_blank');

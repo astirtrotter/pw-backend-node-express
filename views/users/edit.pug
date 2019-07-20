@@ -1,4 +1,5 @@
 extends ../default
+include ../mixin/check
 
 block content
   h1 #{title}
@@ -31,7 +32,14 @@ block content
               .border.p-2(style='height:400px;', onclick='') #{usr.profile.overview || '__No Overview__'}
 
         .col-md-3.d-flex.flex-column
-          .card(style='background-color: blue;')
+          .card
+            .card-body.d-flex.flex-column
+              .custom-control.custom-checkbox
+                input#AdminCheckBox.custom-control-input(type='checkbox', checked=usr.meta.admin, disabled=true)
+                label.custom-control-label(for='AdminCheckBox') Super User
+              .custom-control.custom-checkbox.mt-2
+                input#AllowedCheckBox.custom-control-input(type='checkbox', checked=usr.meta.allowed, disabled=(usr.meta.admin || !user.meta.admin && !user._id.equals(usr._id)))
+                label.custom-control-label(for='AllowedCheckBox') Allowed
 
     #nav-security.tab-pane.fade Security
     #nav-details.tab-pane.fade Details
