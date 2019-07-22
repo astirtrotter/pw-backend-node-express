@@ -17,9 +17,27 @@ block content
               .d-flex.flex-row.flex-wrap.mb-4
                 // image
                 .col-sm-3
-                  figure.figure
-                    img.img-fluid.rounded-circle(src=`/assets/users/${usr._id}.png`, style='width:100px;', alt='No Image', onclick='alert()')
-                    figcaption.figure-caption.text-center Click to edit
+                  img.border.img-fluid.rounded-circle(src=`/assets/users/${usr._id}.png`, onclick='', style='width:100px;', alt='No Image', data-toggle='modal', data-target='#modalForImage', data-whatever=`/assets/users/${usr._id}.png`)
+                  #modalForImage.modal.fade(tabindex='-1', role='dialog', aria-labelledby='exampleModalLabel', aria-hidden='true')
+                    .modal-dialog
+                      .modal-content
+                        .modal-header
+                          h5.modal-title Edit Profile Image
+                          button.close(type='button', data-dismiss='modal', aria-label='Close')
+                            span(aria-hidden='true') ×
+                        .modal-body
+                          img#modalImage.border.img-fluid(alt='No Image')
+                          form
+                            .input-group
+                              .custom-file
+                                input#modalImageFile.custom-file-input(type='file', aria-describedby='modalImageFile')
+                                label.custom-file-label(for='modalImageFile') Choose file
+                              .input-group-append
+                                button.btn.btn-outline-secondary(type='button') Button
+                        .modal-footer
+                          button.btn.btn-secondary(type='button', data-dismiss='modal') Cancel
+                          button.btn.btn-primary(type='button') Upload
+
                 // name, location
                 .col.d-flex.flex-column
                   h2(onclick='') #{usr.profile.name}

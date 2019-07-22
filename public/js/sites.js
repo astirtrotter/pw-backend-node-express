@@ -14,6 +14,13 @@ $(function () {
       window.open(href, '_blank');
     });
   });
+
+  $('#modalForImage').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget);
+    var data = button.data('whatever');
+    var modal = $(this);
+    modal.find('#modalImage').attr('src', data);
+  })
 });
 
 function confirmDeleting(href) {
