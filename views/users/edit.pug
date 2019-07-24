@@ -17,7 +17,7 @@ block content
               .d-flex.flex-row.flex-wrap.mb-4
                 // image
                 .col-sm-3
-                  img.border.img-fluid.rounded-circle(src=`/assets/users/${usr._id}.png`, onclick='', style='width:100px;', alt='No Image', data-toggle='modal', data-target='#modalForImage', data-whatever=`/assets/users/${usr._id}.png`)
+                  img.border.img-fluid.rounded-circle(src=`/assets/users/${usr._id}.png`, onclick='', style='width:100px;', onerror=`this.src='/assets/users/default.png'`, data-toggle='modal', data-target='#modalForImage', data-whatever=`/assets/users/${usr._id}.png`)
                   #modalForImage.modal.fade(tabindex='-1', role='dialog', aria-labelledby='exampleModalLabel', aria-hidden='true')
                     .modal-dialog
                       .modal-content
