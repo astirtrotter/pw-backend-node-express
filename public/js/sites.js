@@ -1,4 +1,5 @@
 $(function () {
+  // main navigation item: active class
   let current = location.pathname;
   $('nav ul li a').each(function () {
     let $this = $(this);
@@ -8,6 +9,7 @@ $(function () {
     }
   });
 
+  // users/index.pug : entire row clickable (except action column)
   $('tbody [data-href]').each(function (i, e) {
     let href = $(this).data("href");
     $(e).children('td:not(:last)').click(function () {
@@ -15,14 +17,9 @@ $(function () {
     });
   });
 
-  $('#modalForImage').on('show.bs.modal', function (event) {
-    var button = $(event.relatedTarget);
-    var data = button.data('whatever');
-    var modal = $(this);
-    modal.find('#modalImage').attr('src', data);
-  })
 });
 
+// confirmation of delete action
 function confirmDeleting(href) {
   if (confirm('Are you sure')) {
     window.location = href;
