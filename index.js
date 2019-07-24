@@ -11,7 +11,6 @@ const flash = require('connect-flash');
 const methodOverride = require('method-override');
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
-const open = require('open');
 
 const passport = require('./middleware/passport');
 
@@ -77,5 +76,6 @@ const port = process.env.PORT;
 app.listen(port, (req, res) => {
   console.log(`App listening on port ${port}`);
 
+  // const open = require('open');
   // open(`http://localhost:${[port]}`);
 });

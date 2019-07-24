@@ -12,8 +12,16 @@ exports.getUsers = (req, res, next) => {
 
 exports.updateUser = (req, res, next) => {
   let data = {
-    title: req.body.title,
-    description: req.body.description
+    profile: {
+      name: req.body.name,
+      location: req.body.location,
+      title: req.body.title,
+      overview: req.body.overview
+    },
+    meta: {
+      admin: req.body.admin,
+      allowed: req.body.allowed
+    }
   };
 
   User.findOneAndUpdate({_id: req.params.id}, {$set: data}, {new: true}, (err, user) => {
