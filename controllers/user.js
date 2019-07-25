@@ -18,6 +18,7 @@ exports.updateUser = (req, res, next) => {
   if (req.body.allowed) req.usr.meta.allowed = Boolean(req.body.allowed);
 
   console.log('body: ', req.body);
+  console.log(req.files);
 
   req.usr.save()
     .then(() => {

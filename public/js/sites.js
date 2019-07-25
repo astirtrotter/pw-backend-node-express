@@ -29,6 +29,10 @@ $(function () {
       }
     })
   });
+
+  $('label.info').click(function () {
+    $('#image').click();
+  });
 });
 
 // confirmation of delete action
