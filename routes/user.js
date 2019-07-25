@@ -2,12 +2,21 @@ const UserController = require('../controllers/user');
 const AuthMiddleware = require('../middleware/auth');
 
 module.exports = router => {
+  router.param('userId', (req, res, next, userId) => {
+    const User = require('../models/user');
+    User.findById(userId, (err, user) => {
+      if (err) return next(err);
+      req.usr = user;
+      next();
+    });
+  });
+
   // views
   router.get('/users', AuthMiddleware.requireLogin, UserController.showUsers);
-  router.get('/users/:id', AuthMiddleware.requireLogin, UserController.showUser);
+  router.get('/users/:userId', AuthMiddleware.requireLogin, UserController.showUser);
 
   // apis
   router.get('/api/users', AuthMiddleware.requireLogin, UserController.getUsers);
-  router.put('/api/users/:id', AuthMiddleware.requireAuthorize, UserController.updateUser);
-  router.get('/api/users/:id/delete', AuthMiddleware.requireAuthorize, UserController.removeUser);
+  router.put('/api/users/:userId', AuthMiddleware.requireAuthorize, UserController.updateUser);
+  router.get('/api/users/:userId/delete', AuthMiddleware.requireAuthorize, UserController.removeUser);
 };

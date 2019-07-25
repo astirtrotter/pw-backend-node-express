@@ -11,34 +11,32 @@ exports.getUsers = (req, res, next) => {
 };
 
 exports.updateUser = (req, res, next) => {
-  let data = {profile: {}, meta: {}};
-  if (req.body.name) data.profile.name = req.body.name;
-  if (req.body.location) data.profile.location = req.body.location;
-  if (req.body.title) data.profile.title = req.body.title;
-  if (req.body.overview) data.profile.overview = req.body.overview;
-  if (req.body.allowed) data.meta.allowed = 'on' === req.body.allowed;
+  if (req.body.name) req.usr.profile.name = req.body.name;
+  if (req.body.location) req.usr.profile.location = req.body.location;
+  if (req.body.title) req.usr.profile.title = req.body.title;
+  if (req.body.overview) req.usr.profile.overview = req.body.overview;
+  if (req.body.admin) req.usr.meta.admin = 'on' === req.body.admin;
+  if (req.body.allowed) req.usr.meta.allowed = 'on' === req.body.allowed;
 
-  User.findOneAndUpdate({_id: req.params.id}, {$set: data}, {new: true}, (err, user) => {
-    if (err) return next(err);
-    req.flash('success', 'User updated successfully');
-    res.redirect('/users');
-  });
+  req.usr.save()
+    .then(() => {
+      req.flash('success', 'User updated successfully');
+      res.redirect('/users');
+    })
+    .catch(next);
 };
 
 exports.removeUser = (req, res, next) => {
-  User.findById(req.params.id, (err, user) => {
-    if (err) return next(err);
-    if (user.meta.admin) {
+    if (req.usr.meta.admin) {
       req.flash('error', 'Superuser cannot be removed');
       return res.redirect('back');
     }
-    user.remove()
+    req.usr.remove()
       .then(() => {
         req.flash('success', 'User removed successfully');
         res.redirect('/users');
       })
       .catch(next);
-  });
 };
 
 
@@ -56,11 +54,8 @@ exports.showUsers = (req, res, next) => {
 };
 
 exports.showUser = (req, res, next) => {
-  User.findById(req.params.id, (err, user) => {
-    if (err) return next(err);
-    res.render('users/edit', {
-      title: 'Edit User',
-      usr: user
-    });
+  res.render('users/edit', {
+    title: 'Edit User',
+    usr: req.usr
   });
 };

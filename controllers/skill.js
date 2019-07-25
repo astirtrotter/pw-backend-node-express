@@ -31,19 +31,19 @@ exports.updateSkill = (req, res, next) => {
     description: req.body.description
   };
 
-  Skill.findOneAndUpdate({_id: req.params.id}, {$set: data}, {new: true}, (err, skill) => {
-    if (err) return next(err);
-    req.flash('success', 'Skill updated successfully');
-    res.redirect('back');
-  });
+  // Skill.findOneAndUpdate({_id: req.params.id}, {$set: data}, {new: true}, (err, skill) => {
+  //   if (err) return next(err);
+  //   req.flash('success', 'Skill updated successfully');
+  //   res.redirect('back');
+  // });
 };
 
 exports.removeSkill = (req, res, next) => {
-  Skill.findOneAndDelete({_id: req.params.id}, (err, skill) => {
-    if (err) return next(err);
-    req.flash('success', 'Skill removed successfully');
-    res.redirect('/skills');
-  });
+  // Skill.findOneAndDelete({_id: req.params.id}, (err, skill) => {
+  //   if (err) return next(err);
+  //   req.flash('success', 'Skill removed successfully');
+  //   res.redirect('/skills');
+  // });
 };
 
 
@@ -61,12 +61,9 @@ exports.showSkills = (req, res, next) => {
 };
 
 exports.showSkill = (req, res, next) => {
-  Skill.findById(req.params.id, (err, skill) => {
-    if (err) return next(err);
-    res.render('skills/edit', {
-      title: 'Edit Skill',
-      skill
-    });
+  res.render('skills/edit', {
+    title: 'Edit Skill',
+    skill: req.skill
   });
 };
 
