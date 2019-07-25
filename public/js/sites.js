@@ -17,6 +17,18 @@ $(function () {
     });
   });
 
+  // add checkbox values on form submission
+  $('form').submit(function () {
+    $(this).find('input[type="checkbox"]').each(function () {
+      var checkbox = $(this);
+      if (checkbox.is(':checked')) {
+        checkbox.attr('value', 1);
+      } else {
+        checkbox.after().append(checkbox.clone().attr({type: 'hidden', value: 0}));
+        checkbox.prop('disabled', true);
+      }
+    })
+  });
 });
 
 // confirmation of delete action
