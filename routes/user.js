@@ -8,6 +8,6 @@ module.exports = router => {
 
   // apis
   router.get('/api/users', AuthMiddleware.requireLogin, UserController.getUsers);
-  router.put('/api/users/:id', AuthMiddleware.requireAdmin, UserController.updateUser);
-  router.get('/api/users/:id/delete', AuthMiddleware.requireAdmin, UserController.removeUser);
+  router.put('/api/users/:id', AuthMiddleware.requireAuthorize, UserController.updateUser);
+  router.get('/api/users/:id/delete', AuthMiddleware.requireAuthorize, UserController.removeUser);
 };
