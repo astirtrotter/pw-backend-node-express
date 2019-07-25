@@ -19,24 +19,24 @@
               // name, location
               .col-sm-4
                 label(for='name') Full Name
-                input#name.form-control(type='text', value=usr.profile.name, disabled=!isOwnerOrAdmin)
+                input#name.form-control(type='text', name='name', value=usr.profile.name, disabled=!isOwnerOrAdmin)
               .col-sm-4
                 label(for='location') Location
-                input#location.form-control(type='text', value=usr.profile.location, disabled=!isOwnerOrAdmin)
+                input#location.form-control(type='text', name='location', value=usr.profile.location, disabled=!isOwnerOrAdmin)
             // title
             label.mt-2(for='title') Title
-            input#title.form-control(type='text', value=usr.profile.title, disabled=!isOwnerOrAdmin)
+            input#title.form-control(type='text', name='title', value=usr.profile.title, disabled=!isOwnerOrAdmin)
             // overview
             label.mt-2(for='overview') Overview
-            textarea#overview.form-control(rows=10, disabled=!isOwnerOrAdmin) #{usr.profile.overview}
+            textarea#overview.form-control(rows=10, name='overview', disabled=!isOwnerOrAdmin) #{usr.profile.overview}
 
       .col-md-3.d-flex.flex-column
         .card
           .card-body.d-flex.flex-column
             .custom-control.custom-checkbox
-              input#admin.custom-control-input(type='checkbox', checked=usr.meta.admin, disabled=true)
+              input#admin.custom-control-input(type='checkbox', name='admin', checked=usr.meta.admin, disabled=true)
               label.custom-control-label(for='admin') Super User
             .custom-control.custom-checkbox.mt-2
-              input#allowed.custom-control-input(type='checkbox', checked=usr.meta.allowed, disabled=!isOwnerOrAdmin)
+              input#allowed.custom-control-input(type='checkbox', name='allowed', checked=usr.meta.allowed, disabled=!isOwnerOrAdmin)
               label.custom-control-label(for='allowed') Allowed
         button.btn.btn-success.mt-4(type='submit') Save Changes

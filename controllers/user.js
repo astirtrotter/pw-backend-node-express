@@ -11,18 +11,12 @@ exports.getUsers = (req, res, next) => {
 };
 
 exports.updateUser = (req, res, next) => {
-  let data = {
-    profile: {
-      name: req.body.name,
-      location: req.body.location,
-      title: req.body.title,
-      overview: req.body.overview
-    },
-    meta: {
-      admin: req.body.admin,
-      allowed: req.body.allowed
-    }
-  };
+  let data = {profile: {}, meta: {}};
+  if (req.body.name) data.profile.name = req.body.name;
+  if (req.body.location) data.profile.location = req.body.location;
+  if (req.body.title) data.profile.title = req.body.title;
+  if (req.body.overview) data.profile.overview = req.body.overview;
+  if (req.body.allowed) data.meta.allowed = 'on' === req.body.allowed;
 
   User.findOneAndUpdate({_id: req.params.id}, {$set: data}, {new: true}, (err, user) => {
     if (err) return next(err);
