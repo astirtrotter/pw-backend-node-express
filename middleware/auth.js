@@ -23,7 +23,7 @@ exports.requireAuthorize = (req, res, next) => {
     req.flash('info', 'You need to sign in first');
     return res.redirect('/login');
   }
-  if (!req.user._id.equals(req.params.id)) {
+  if (!req.user.meta.admin && !req.user._id.equals(req.params.id)) {
     req.flash('error', 'You are not authorized');
     return next(res.error(401, 'You are not authorized'));
   }
