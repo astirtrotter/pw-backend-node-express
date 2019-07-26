@@ -15,10 +15,7 @@ exports.updateUser = (req, res, next) => {
   if (req.body.location) req.usr.profile.location = req.body.location;
   if (req.body.title) req.usr.profile.title = req.body.title;
   if (req.body.overview) req.usr.profile.overview = req.body.overview;
-  if (req.body.allowed) req.usr.meta.allowed = Boolean(req.body.allowed);
-
-  console.log('body: ', req.body);
-  console.log(req.files);
+  if (req.body.allowed) req.usr.meta.allowed = 'true' === req.body.allowed;
 
   req.usr.save()
     .then(() => {

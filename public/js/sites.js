@@ -22,9 +22,9 @@ $(function () {
     $(this).find('input[type="checkbox"]').each(function () {
       var checkbox = $(this);
       if (checkbox.is(':checked')) {
-        checkbox.attr('value', 1);
+        checkbox.attr('value', true);
       } else {
-        checkbox.after().append(checkbox.clone().attr({type: 'hidden', value: 0}));
+        checkbox.after().append(checkbox.clone().attr({type: 'hidden', value: false}));
         checkbox.prop('disabled', true);
       }
     })
