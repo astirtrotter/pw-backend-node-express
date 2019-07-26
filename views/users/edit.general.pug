@@ -1,5 +1,5 @@
 #nav-general.tab-pane.fade.show.active
-  form(method='POST', action=`/api/users/${usr._id}?_method=PUT`, style='width:100%')
+  form(method='POST', action=`/api/users/${usr._id}?_method=PUT`, encType='multipart/form-data', style='width:100%')
     .d-flex.flex-row.flex-wrap-reverse
       .col-md-9.d-flex.flex-column
         .card
@@ -10,33 +10,33 @@
               .col-sm-4
                 if isOwnerOrAdmin
                   .hovereffect
-                    img.border.img-fluid.rounded-circle.portrait-1(src=`/assets/users/${usr._id}.png`, onerror=`this.src='/assets/users/default.png'`)
+                    img.border.img-fluid.rounded-circle.portrait-1(src=`/assets/users/${usr._id}`, onerror=`this.src='/assets/users/default.png'`)
                     .overlay.portrait-1.rounded-circle
-                      label.info Change
-                  input#image.d-none(type='file', name='image', accept='image/png, image/jpeg')
+                      label#profileImageView.info Change
+                  input#profileImageInput.d-none(type='file', name='image', accept='image/png, image/jpeg')
                 else
-                  img.border.img-fluid.rounded-circle.portrait-1(src=`/assets/users/${usr._id}.png`, onerror=`this.src='/assets/users/default.png'`)
+                  img.border.img-fluid.rounded-circle.portrait-1(src=`/assets/users/${usr._id}`, onerror=`this.src='/assets/users/default.png'`)
               // name, location
               .col-sm-4
-                label(for='name') Full Name
-                input#name.form-control(type='text', name='name', value=usr.profile.name, disabled=!isOwnerOrAdmin)
+                label(for='profileNameInput') Full Name
+                input#profileNameInput.form-control(type='text', name='name', value=usr.profile.name, disabled=!isOwnerOrAdmin)
               .col-sm-4
-                label(for='location') Location
-                input#location.form-control(type='text', name='location', value=usr.profile.location, disabled=!isOwnerOrAdmin)
+                label(for='profileLocationInput') Location
+                input#profileLocationInput.form-control(type='text', name='location', value=usr.profile.location, disabled=!isOwnerOrAdmin)
             // title
-            label.mt-2(for='title') Title
-            input#title.form-control(type='text', name='title', value=usr.profile.title, disabled=!isOwnerOrAdmin)
+            label.mt-2(for='profileTitleInput') Title
+            input#profileTitleInput.form-control(type='text', name='title', value=usr.profile.title, disabled=!isOwnerOrAdmin)
             // overview
-            label.mt-2(for='overview') Overview
-            textarea#overview.form-control(rows=10, name='overview', disabled=!isOwnerOrAdmin) #{usr.profile.overview}
+            label.mt-2(for='profileOverviewInput') Overview
+            textarea#profileOverviewInput.form-control(rows=10, name='overview', disabled=!isOwnerOrAdmin) #{usr.profile.overview}
 
       .col-md-3.d-flex.flex-column
         .card
           .card-body.d-flex.flex-column
             .custom-control.custom-checkbox
-              input#admin.custom-control-input(type='checkbox', name='admin', checked=usr.meta.admin, disabled=true)
-              label.custom-control-label(for='admin') Super User
+              input#profileAdminCheck.custom-control-input(type='checkbox', name='admin', checked=usr.meta.admin, disabled=true)
+              label.custom-control-label(for='profileAdminCheck') Super User
             .custom-control.custom-checkbox.mt-2
-              input#allowed.custom-control-input(type='checkbox', name='allowed', checked=usr.meta.allowed, disabled=(usr._id.equals(user._id) || !user.meta.admin))
-              label.custom-control-label(for='allowed') Allowed
+              input#profileAllowedCheck.custom-control-input(type='checkbox', name='allowed', checked=usr.meta.allowed, disabled=(usr._id.equals(user._id) || !user.meta.admin))
+              label.custom-control-label(for='profileAllowedCheck') Allowed
         button.btn.btn-success.mt-4(type='submit') Save Changes

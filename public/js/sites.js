@@ -30,8 +30,8 @@ $(function () {
     })
   });
 
-  $('label.info').click(function () {
-    $('#image').click();
+  $('#profileImageView').click(function () {
+    $('#profileImageInput').click();
   });
 });
 
