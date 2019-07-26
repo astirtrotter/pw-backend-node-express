@@ -30,8 +30,20 @@ $(function () {
     })
   });
 
-  $('#profileImageView').click(function () {
+  // profile image view 'Change' button click
+  $('#profileImageViewChange').click(function () {
     $('#profileImageInput').click();
+  });
+
+  // profile image view preview with file picker
+  $('#profileImageInput').change(function () {
+    if (this.files && this.files[0]) {
+      let reader = new FileReader();
+      reader.onload = function (ev) {
+        $('#profileImageView').attr('src', ev.target.result);
+      };
+      reader.readAsDataURL(this.files[0]);
+    }
   });
 });
 
