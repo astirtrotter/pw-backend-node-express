@@ -11,6 +11,7 @@ const flash = require('connect-flash');
 const methodOverride = require('method-override');
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
+const fileUpload = require('express-fileupload');
 
 const passport = require('./middleware/passport');
 
@@ -41,6 +42,9 @@ app.use(methodOverride('_method'));
 app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(fileUpload({
+  limits: {fileSize: 50 * 1024 * 1024} //50MB
+}));
 
 // initialize express router
 const router = require('./routes')(express.Router(), passport);
