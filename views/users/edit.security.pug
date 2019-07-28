@@ -1,5 +1,18 @@
 #nav-security.tab-pane.fade
-  form(method='POST', action=`/api/users/${usr._id}?_method=PUT`, style='width:100%')
-    .card.mx-4
-      .card-body.d-flex.flex-column
-        
+  .card.mx-4
+    .card-body
+      form(method='POST', action=`/api/users/${usr._id}?_method=PUT` oninput='confirm_password.setCustomValidity(confirm_password.value != password.value ? "Passwords do not match" : "")')
+        .row.h-100.align-items-center
+          .col-md-6.pr-5
+            label(for='profileOldPwd') Old Password
+            input#profileOldPwd.form-control.mb-2(type='password', name='old_password', disabled=!user._id.equals(usr._id), required)
+            label(for='profilePwd') New Password
+            input#profilePwd.form-control.mb-2(type='password', name='password', disabled=!user._id.equals(usr._id), required)
+            label(for='profileCfrmPwd') Confirm Password
+            input#profileCfrmPwd.form-control.mb-2(type='password', name='confirm_password', disabled=!user._id.equals(usr._id), required)
+          .col-md-6
+            button.btn.btn-success.mt-4.mb-4(type='submit') Change Password
+            br
+            span.text-muted
+              | Your password must be at least 8 characters long,
+              | and be a mixture of letters, digits (0-9), and punctuation (.-_@#$^*=~|+?
