@@ -15,18 +15,18 @@ exports.updateUser = (req, res, next) => {
   if (req.body.location) req.usr.profile.location = req.body.location;
   if (req.body.title) req.usr.profile.title = req.body.title;
   if (req.body.overview) req.usr.profile.overview = req.body.overview;
-  if (req.body.allowed) req.usr.meta.allowed = 'true' === req.body.allowed;
+  if (req.body.allowed) req.usr.meta.allowed = req.body.allowed;
 
   let save = () => {
     req.usr.save()
       .then(() => {
         req.flash('success', 'User updated successfully');
-        res.redirect('/users');
+        res.redirect('back');
       })
       .catch(next);
   };
 
-  if (req.files.image) {
+  if (req.files && req.files.image) {
     let image = req.files.image;
     image.mv(`./public/assets/users/${req.usr._id}`, err => {
       if (err) return next(err);
