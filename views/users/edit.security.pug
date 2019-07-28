@@ -1,7 +1,8 @@
-#nav-security.tab-pane.fade
+#nav-security.tab-pane.fade(class=(cur_tab === 'security' ? 'show active' : ''))
   .card.mx-4
     .card-body
       form(method='POST', action=`/api/users/${usr._id}?_method=PUT` oninput='confirm_password.setCustomValidity(confirm_password.value != password.value ? "Passwords do not match" : "")')
+        input.d-none(type='hidden', name='cur_tab', value='security')
         .row.h-100.align-items-center
           .col-md-6.pr-5
             label(for='profileOldPwd') Old Password

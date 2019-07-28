@@ -4,10 +4,10 @@ include ../mixin/check
 block content
   h1 #{title}
   .nav.nav-tabs.mt-4
-    a.nav-item.nav-link.active(data-toggle='tab', href='#nav-general') General
-    a.nav-item.nav-link(data-toggle='tab', href='#nav-competencies') Competencies
-    a.nav-item.nav-link(data-toggle='tab', href='#nav-histories') Histories
-    a.nav-item.nav-link(data-toggle='tab', href='#nav-security') Security
+    a.nav-item.nav-link(class=(cur_tab === 'general' ? 'active' : ''), data-toggle='tab', href='#nav-general') General
+    a.nav-item.nav-link(class=(cur_tab === 'competencies' ? 'active' : ''), data-toggle='tab', href='#nav-competencies') Competencies
+    a.nav-item.nav-link(class=(cur_tab === 'histories' ? 'active' : ''), data-toggle='tab', href='#nav-histories') Histories
+    a.nav-item.nav-link(class=(cur_tab === 'security' ? 'active' : ''), data-toggle='tab', href='#nav-security') Security
   .tab-content.py-4.border.bg-light
     include ./edit.general.pug
     #nav-competencies.tab-pane.fade Competencies

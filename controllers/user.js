@@ -10,30 +10,49 @@ exports.getUsers = (req, res, next) => {
   });
 };
 
+function redirectWithTab(req, res) {
+  let backUrl = `/users/${req.usr._id}?cur_tab=` + req.body.cur_tab;
+  res.redirect(backUrl);
+}
+
+function saveUserUpdates(req, res, next) {
+  req.usr.save()
+    .then(() => {
+      req.flash('success', 'User updated successfully');
+      redirectWithTab(req, res);
+    })
+    .catch(next);
+}
+
 exports.updateUser = (req, res, next) => {
-  if (req.body.name) req.usr.profile.name = req.body.name;
-  if (req.body.location) req.usr.profile.location = req.body.location;
-  if (req.body.title) req.usr.profile.title = req.body.title;
-  if (req.body.overview) req.usr.profile.overview = req.body.overview;
-  if (req.body.allowed) req.usr.meta.allowed = req.body.allowed;
+  if ('general' === req.body.cur_tab) {
+    if (req.body.name) req.usr.profile.name = req.body.name;
+    if (req.body.location) req.usr.profile.location = req.body.location;
+    if (req.body.title) req.usr.profile.title = req.body.title;
+    if (req.body.overview) req.usr.profile.overview = req.body.overview;
+    if (req.body.allowed) req.usr.meta.allowed = req.body.allowed;
 
-  let save = () => {
-    req.usr.save()
-      .then(() => {
-        req.flash('success', 'User updated successfully');
-        res.redirect('back');
-      })
-      .catch(next);
-  };
-
-  if (req.files && req.files.image) {
-    let image = req.files.image;
-    image.mv(`./public/assets/users/${req.usr._id}`, err => {
+    if (req.files && req.files.image) {
+      let image = req.files.image;
+      image.mv(`./public/assets/users/${req.usr._id}`, err => {
+        if (err) return next(err);
+        return saveUserUpdates(req, res, next);
+      });
+    } else {
+      return saveUserUpdates(req, res, next);
+    }
+  } else if ('security' === req.body.cur_tab) {
+    req.usr.comparePassword(req.body.old_password, (err, isMatch) => {
       if (err) return next(err);
-      save();
-    });
+      if (!isMatch) {
+        req.flash('error', 'Old password is incorrect');
+        return redirectWithTab(req, res);
+      }
+      req.usr.password = req.body.password;
+      return saveUserUpdates(req, res, next);
+    })
   } else {
-    save();
+    return next(res.error(400, 'Unknown update request'));
   }
 };
 
@@ -67,6 +86,7 @@ exports.showUsers = (req, res, next) => {
 exports.showUser = (req, res, next) => {
   res.render('users/edit', {
     title: 'Edit User',
-    usr: req.usr
+    usr: req.usr,
+    cur_tab: req.query.cur_tab || 'general'
   });
 };
