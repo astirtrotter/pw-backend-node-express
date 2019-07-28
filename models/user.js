@@ -1,64 +1,43 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const schema = new mongoose.Schema({
-  email: {
-    type: String,
-    unique: true,
-    trim: true,
-    required: true,
-    match: /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/
-  },
-  password: {
-    type: String,
-    required: true,
-  },
+  email: {type: String, unique: true, trim: true, required: true, match: /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/},
+  password: {type: String, required: true},
   profile: {
-    name: {
-      type: String,
-      trim: true,
-      required: true,
-      match: /^[\w\s]+$/
-    },
+    name: {type: String, trim: true, required: true, match: /^[\w\s]+$/},
     image: String,
-    title: {
-      type: String,
-      trim: true
-    },
-    overview: {
-      type: String,
-      trim: true
-    },
-    location: {
-      type: String,
-      trim: true,
-      match: /^\w+, \w+$/
-    },
+    title: {type: String, trim: true},
+    overview: {type: String, trim: true},
+    location: {type: String, trim: true, match: /^\w+, \w+$/}
+  },
+  competencies: {
     services: [{
-      service: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Services'
-      },
-      rate: {
-        type: Number,
-        min: 1,
-        max: 10
-      }
+      service: {type: mongoose.Schema.Types.ObjectId, ref: 'Services'},
+      rate: {type: Number, min: 1, max: 10}
     }],
     skills: [{
-      skill: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Skills'
-      },
-      rate: {
-        type: Number,
-        min: 1,
-        max: 10
-      }
+      skill: {type: mongoose.Schema.Types.ObjectId, ref: 'Skills'},
+      rate: {type: Number, min: 1, max: 10}
     }],
     portfolios: [{
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Portfolios'
+      portfolio: {type: mongoose.Schema.Types.ObjectId, ref: 'Portfolios'},
+      description: String
+    }]
+  },
+  histories: {
+    educations: [{
+      name: String,
+      since: Date,
+      until: Date,
+      degree: String
     }],
+    works: [{
+      name: String,
+      since: Date,
+      until: Date,
+      position: String,
+      description: String
+    }]
   },
   meta: {
     admin: {type: Boolean, default: false},
