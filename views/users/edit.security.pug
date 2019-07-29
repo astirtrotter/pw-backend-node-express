@@ -12,7 +12,7 @@
             label(for='profileCfrmPwd') Confirm Password
             input#profileCfrmPwd.form-control.mb-2(type='password', name='confirm_password', disabled=!user._id.equals(usr._id), required)
           .col-md-6
-            button.btn.btn-success.mt-4.mb-4(type='submit') Change Password
+            button.btn.btn-success.mt-4.mb-4(type='submit' disabled=!user._id.equals(usr._id)) Change Password
             br
             span.text-muted
               | Your password must be at least 8 characters long,
