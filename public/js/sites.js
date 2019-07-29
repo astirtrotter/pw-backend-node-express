@@ -30,17 +30,17 @@ $(function () {
     })
   });
 
-  // profile image view 'Change' button click
-  $('#profileImageViewChange').click(function () {
-    $('#profileImageInput').click();
+  // image view 'Change' button click
+  $('.hovereffect .overlay label').click(function () {
+    $(`[name='image']`).click();
   });
 
-  // profile image view preview with file picker
-  $('#profileImageInput').change(function () {
+  // image view preview with file picker
+  $(`[name='image']`).change(function () {
     if (this.files && this.files[0]) {
       let reader = new FileReader();
       reader.onload = function (ev) {
-        $('#profileImageView').attr('src', ev.target.result);
+        $('.hovereffect img').attr('src', ev.target.result);
       };
       reader.readAsDataURL(this.files[0]);
     }
