@@ -1,0 +1,6 @@
+#nav-histories.tab-pane.fade(class=(cur_tab === 'histories' ? 'show active' : ''))
+  form(method='POST', action=`/api/users/${usr._id}?_method=PUT`)
+    input.d-none(type='hidden', name='cur_tab', value='histories')
+    .card.mx-4
+      .card-body
+

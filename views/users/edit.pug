@@ -10,8 +10,8 @@ block content
     a.nav-item.nav-link(class=(cur_tab === 'security' ? 'active' : ''), data-toggle='tab', href='#nav-security') Security
   .tab-content.py-4.border.bg-light
     include ./edit.general.pug
-    #nav-competencies.tab-pane.fade Competencies
-    #nav-histories.tab-pane.fade Histories
+    include ./edit.competencies.pug
+    include ./edit.histories.pug
     include ./edit.security.pug
   .mt-5.d-flex.flex-row.justify-content-center
     .btn.btn-primary.px-4(onclick=`window.open('#', '_blank')`) FrontEnd

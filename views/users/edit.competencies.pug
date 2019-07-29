@@ -1,0 +1,6 @@
+#nav-competencies.tab-pane.fade(class=(cur_tab === 'competencies' ? 'show active' : ''))
+  form(method='POST', action=`/api/users/${usr._id}?_method=PUT`)
+    input.d-none(type='hidden', name='cur_tab', value='competencies')
+    .card.mx-4
+      .card-body
+
