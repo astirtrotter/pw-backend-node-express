@@ -16,11 +16,11 @@ module.exports = router => {
   // views
   router.get('/skills', AuthMiddleware.requireLogin, SkillController.showSkills);
   router.get('/skills/create', authMiddlewareAdmin, SkillController.showCreateSkill);
-  router.get('/skills/:skillId', AuthMiddleware.requireLogin, SkillController.showSkill);
+  router.get('/skills/:skillId', AuthMiddleware.requireLogin, SkillController.showEditSkill);
 
   // apis
   router.get('/api/skills', SkillController.getSkills);
-  router.post('/api/skills/create', authMiddlewareAdmin, SkillController.createSkill);
+  router.post('/api/skills', authMiddlewareAdmin, SkillController.createSkill);
   router.put('/api/skills/:skillId', authMiddlewareAdmin, SkillController.updateSkill);
   router.get('/api/skills/:skillId/delete', authMiddlewareAdmin, SkillController.removeSkill);
 };

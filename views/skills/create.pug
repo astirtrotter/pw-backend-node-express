@@ -2,3 +2,10 @@ extends ../default
 
 block content
   h1 #{title}
+  .d-flex.flex-column.mt-5
+    form(method='POST', action='/api/skills')
+      .hovereffect
+        img#skillImageView.border.img-fluid.rounded-circle.portrait-1(onerror=`this.src='/assets/skills/_default.png'`)
+        .overlay.portrait-1.rounded-circle
+          label#skillImageViewChange.info Change
+      input#profileImageInput.d-none(type='file', name='image', accept='image/png, image/jpeg')

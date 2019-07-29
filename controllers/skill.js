@@ -60,7 +60,7 @@ exports.showSkills = (req, res, next) => {
   });
 };
 
-exports.showSkill = (req, res, next) => {
+exports.showEditSkill = (req, res, next) => {
   res.render('skills/edit', {
     title: 'Edit Skill',
     skill: req.skill

@@ -10,18 +10,19 @@ block content
         th(scope='col') #
         th(scope='col') Name
         th(scope='col') Image
-        th(scope='col') Combined Skills
-        th(scope='col') Action
+        th(scope='col') Type
+        if user.meta.admin
+          th(scope='col') Action
     tbody
       each skill, index in skills
         tr
           th(scope='row') #{index + 1}
           td #{skill.name}
-          td #{skill.image}
-          td #{skill.combinedSkills}
           td
-            if user.meta.admin
-              a.text-danger.mr-1(href=`/api/skills/${skill._id}/delete`)
-                span.fas.fa-trash-alt
-              a.ml-1(href=`/skills/${skill._id}`) Edit
+            img.border.img-fluid.rounded-circle.portrait-2(src=`/assets/skills/${skill._id}`, onerror=`this.src='/assets/skills/_default'`)
+          td #{skill.type}
+          if user.meta.admin
+            td
+              .text-danger.mr-1.fas.fa-trash-alt(onclick=`confirmDeleting('/api/skills/${skill._id}/delete')`)
+              a.ml-1(href=`/skills/${skill._id}`)
                 span.fas.fa-edit

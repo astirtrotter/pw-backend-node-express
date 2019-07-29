@@ -18,7 +18,7 @@ block content
         tr(data-href='#')
           th(scope='row') #{index + 1}
           td(scope='row')
-            img.border.img-fluid.rounded-circle.portrait-2(src=`/assets/users/${usr._id}`, onerror=`this.src='/assets/users/default.png'`)
+            img.border.img-fluid.rounded-circle.portrait-2(src=`/assets/users/${usr._id}`, onerror=`this.src='/assets/users/_default'`)
           td
             span #{usr.profile.name}
             span.text-info #{(usr._id.equals(user._id) ? ' (you)' : '')}
