@@ -60,6 +60,8 @@ exports.updateSkill = (req, res, next) => {
     });
   } else if (hasChange) {
     saveSkillUpdates(req, res, next);
+  } else {
+    res.redirect('back');
   }
 };
 

@@ -60,7 +60,10 @@ app.use((err, req, res, next) => {
   //   return res.status(err.status).json({error: {message: err.message}});
   // }
 
-  if (err.status === 401) {
+  if (err.status === 400) {
+    req.flash('error', err.message);
+    res.redirect('back');
+  } else if (err.status === 401) {
     req.logout();
     res.redirect('/login');
   } else if (err.status === 404) {
