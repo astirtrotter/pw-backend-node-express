@@ -1,25 +1,24 @@
 extends ../default
 
 block content
-  .container.mt-5
-    .row.justify-content-center
-      .col.col-lg-6
-        .card
-          form(method='POST' action='/api/login')
-            .card-body
-              h2.card-title Log In
-              p.text-muted Sign in to your account
-                .input-group.mb-3
-                  .input-group-prepend
-                    .input-group-text
-                      span.fas.fa-envelope
-                  input.form-control(type='text' id='email' placeholder='Email' name='email')
-                .input-group.mb-3
-                  .input-group-prepend
-                    .input-group-text
-                      span.fas.fa-lock
-                  input.form-control(type='password' id='password' placeholder='Password' name='password')
-            .card-footer
-              .row.justify-content-end
-                button.btn.btn-primary.mr-3(type='submit') Log in
-                a.btn.btn-secondary.mr-3(href='/', role='button') Cancel
+  .row.justify-content-center
+    .col.col-lg-6
+      .card
+        form(method='POST' action='/api/login')
+          .card-body
+            h2.card-title Log In
+            p.text-muted Sign in to your account
+              .input-group.mb-3
+                .input-group-prepend
+                  .input-group-text
+                    span.fas.fa-envelope
+                input.form-control(type='text' id='email' placeholder='Email' name='email' autofocus)
+              .input-group.mb-3
+                .input-group-prepend
+                  .input-group-text
+                    span.fas.fa-lock
+                input.form-control(type='password' id='password' placeholder='Password' name='password')
+          .card-footer
+            .row.justify-content-end
+              button.btn.btn-primary.mr-3(type='submit') Log in
+              a.btn.btn-secondary.mr-3(href='/', role='button') Cancel

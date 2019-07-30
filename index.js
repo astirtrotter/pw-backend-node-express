@@ -11,6 +11,8 @@ const flash = require('connect-flash');
 const methodOverride = require('method-override');
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
+const fileUpload = require('express-fileupload');
+
 const passport = require('./middleware/passport');
 
 // call the database connectivity function
@@ -27,10 +29,11 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 app.use(session({
   secret: process.env.SESSION_SECRET,
+  resave: false,              // don't save session if unmodified
+  saveUninitialized: false,   //
   store: new MongoStore({
     url: process.env.DB,
     collection: 'sessions',     // default
-    resave: false,              // don't save session if unmodified
     autoRemove: 'native',       // default
     ttl: 14 * 24 * 60 * 60      // default: 14 days
   })
@@ -39,6 +42,9 @@ app.use(methodOverride('_method'));
 app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(fileUpload({
+  limits: {fileSize: 50 * 1024 * 1024} //50MB
+}));
 
 // initialize express router
 const router = require('./routes')(express.Router(), passport);
@@ -71,4 +77,9 @@ app.use((err, req, res, next) => {
 
 // initialize server
 const port = process.env.PORT;
-app.listen(port, (req, res) => console.log(`App listening on port ${port}`));
+app.listen(port, (req, res) => {
+  console.log(`App listening on port ${port}`);
+
+  // const open = require('open');
+  // open(`http://localhost:${[port]}`);
+});

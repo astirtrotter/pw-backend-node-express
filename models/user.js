@@ -1,53 +1,47 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
+const fs = require('fs');
 const schema = new mongoose.Schema({
-  email: {
-    type: String,
-    unique: true,
-    trim: true,
-    required: true,
-    match: /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/
-  },
-  password: {
-    type: String,
-    required: true,
-  },
+  email: {type: String, unique: true, trim: true, required: true, match: /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/},
+  password: {type: String, required: true},
   profile: {
-    name: {
-      type: String,
-      trim: true,
-      required: true,
-      match: /^[\w\s]+$/
-    },
-    overview: {
-      type: String,
-      trim: true
-    },
-    location: {
-      type: String,
-      trim: true,
-      match: /^\w+, \w+$/
-    },
+    name: {type: String, trim: true, required: true, match: /^[\w\s]+$/},
+    title: {type: String, trim: true},
+    overview: {type: String, trim: true},
+    location: {type: String, trim: true, match: /^\w+, \w+$/}
+  },
+  competencies: {
+    services: [{
+      service: {type: mongoose.Schema.Types.ObjectId, ref: 'Services'},
+      rate: {type: Number, min: 1, max: 10}
+    }],
     skills: [{
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Skills'
+      skill: {type: mongoose.Schema.Types.ObjectId, ref: 'Skills'},
+      rate: {type: Number, min: 1, max: 10}
     }],
     portfolios: [{
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Portfolios'
+      portfolio: {type: mongoose.Schema.Types.ObjectId, ref: 'Portfolios'},
+      description: String
+    }]
+  },
+  histories: {
+    educations: [{
+      name: String,
+      since: Date,
+      until: Date,
+      degree: String
     }],
-    clients: [{
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Clients'
-    }],
-    testimonials: [{
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Testimonials'
+    works: [{
+      name: String,
+      since: Date,
+      until: Date,
+      position: String,
+      description: String
     }]
   },
   meta: {
     admin: {type: Boolean, default: false},
-    lock: {type: Boolean, default: false}
+    allowed: {type: Boolean, default: false}
   }
 }, {
   timestamps: true
@@ -64,6 +58,10 @@ schema.pre('save', function(next) {
       })
       .catch(next);
   });
+});
+
+schema.post('remove', function () {
+  fs.unlink('./public/assets/users/' + this._id, (err) => {});
 });
 
 schema.methods.comparePassword = function (candidatePassword, cb) {

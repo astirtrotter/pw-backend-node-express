@@ -13,9 +13,10 @@ passport.use(new LocalStrategy({
       user.comparePassword(password, (err, isMatch) => {
         if (err) return done(err);
         if (!isMatch) return done(null, false, {message: 'Incorrect password'});
+        if (!user.meta.allowed) return done(null, false, {message: 'You are not allowed by superuser yet'});
         done(null, user);
-      })
-    })
+      });
+    });
   }
 ));
 
