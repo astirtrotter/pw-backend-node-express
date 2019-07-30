@@ -66,7 +66,7 @@ exports.removeUser = (req, res, next) => {
     req.usr.remove()
       .then(() => {
         req.flash('success', 'User removed successfully');
-        res.redirect('/users');
+        res.redirect('back');
       })
       .catch(next);
 };

@@ -15,8 +15,6 @@ module.exports = router => {
 
   // views
   router.get('/skills', AuthMiddleware.requireLogin, SkillController.showSkills);
-  router.get('/skills/create', authMiddlewareAdmin, SkillController.showCreateSkill);
-  router.get('/skills/:skillId', AuthMiddleware.requireLogin, SkillController.showEditSkill);
 
   // apis
   router.get('/api/skills', SkillController.getSkills);

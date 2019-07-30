@@ -45,6 +45,15 @@ $(function () {
       reader.readAsDataURL(this.files[0]);
     }
   });
+
+  // skill modal dialog
+  $('#skillModal').on('show.bs.modal', function (event) {
+    let button = $(event.relatedTarget);
+    let title = button.data('title');
+
+    let modal = $(this);
+    modal.find('#skillModalLabel').text(title);
+  });
 });
 
 // confirmation of delete action
