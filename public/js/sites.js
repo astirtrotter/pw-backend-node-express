@@ -52,15 +52,16 @@ $(function () {
     let skill = button.data('skill');
     let isNew = skill === undefined;
 
-    let formAction = isNew ? '/api/skills' : `/api/skills/${skill._id}?_method=PUT`
+    let formAction = isNew ? '/api/skills' : `/api/skills/${skill._id}?_method=PUT`;
     let formTitle = isNew ? 'New Skill' : 'Edit Skill';
 
     let modal = $(this);
     modal.find('#skillModalForm').attr('action', formAction);
     modal.find('#skillModalLabel').text(formTitle);
     if (skill) {
-      modal.find('skillNameInput').val(skill.name);
-      modal.find('skillTypeInput').val(skill.type);
+      modal.find('.hovereffect img').attr('src', '/assets/skills/' + skill._id);
+      modal.find('#skillNameInput').val(skill.name);
+      modal.find('#skillTypeInput').val(skill.type);
     }
   });
 });
