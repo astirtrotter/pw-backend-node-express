@@ -5,7 +5,6 @@ const schema = new mongoose.Schema({
   password: {type: String, required: true},
   profile: {
     name: {type: String, trim: true, required: true, match: /^[\w\s]+$/},
-    image: String,
     title: {type: String, trim: true},
     overview: {type: String, trim: true},
     location: {type: String, trim: true, match: /^\w+, \w+$/}
