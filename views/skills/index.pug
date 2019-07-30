@@ -1,4 +1,5 @@
 extends ../default
+include ../mixin/skill
 
 block content
   h1.mb-4 #{title}
@@ -18,10 +19,7 @@ block content
       each skill, index in skills
         tr
           th(scope='row') #{index + 1}
-          td #{skill.name}
-          td
-            img.img-fluid.portrait-2(src=`/assets/skills/${skill._id}`, onerror=`this.src='/assets/skills/_default'`)
-          td #{skill.type}
+          +skill(skill)
           if user.meta.admin
             td
               .btn.text-danger.mr-1(onclick=`confirmDeleting('/api/skills/${skill._id}/delete')`)
