@@ -20,7 +20,7 @@ block content
           th(scope='row') #{index + 1}
           td #{skill.name}
           td
-            img.border.img-fluid.rounded-circle.portrait-2(src=`/assets/skills/${skill._id}`, onerror=`this.src='/assets/skills/_default'`)
+            img.img-fluid.portrait-2(src=`/assets/skills/${skill._id}`, onerror=`this.src='/assets/skills/_default'`)
           td #{skill.type}
           if user.meta.admin
             td
@@ -38,8 +38,8 @@ block content
         .modal-body
           form#skillModalForm(method='POST', encType='multipart/form-data')
             .hovereffect
-              img.border.img-fluid.rounded-circle.portrait-1(src='#', onerror=`this.src='/assets/skills/_default'`)
-              .overlay.portrait-1.rounded-circle
+              img.img-fluid.portrait-1(src='#', onerror=`this.src='/assets/skills/_default'`)
+              .overlay.portrait-1
                 label.info Change
             input.d-none(type='file', name='image', accept='image/png, image/jpeg')
             label.mt-2(for='skillNameInput') Name
