@@ -1,4 +1,5 @@
 include mixin/flash-messages
+- var isOwnerOrAdmin = user && user.meta.admin || usr && usr._id.equals(user._id);
 
 doctype html
 html(lang='en')
@@ -19,7 +20,15 @@ html(lang='en')
             li.nav-item
               a.nav-link(href='/users') Users
             li.nav-item
-              a.nav-link(href='/tags') Tags
+              a.nav-link(href='/services') Services
+            li.nav-item
+              a.nav-link(href='/skills') Skills
+            li.nav-item
+              a.nav-link(href='/Portfolios') Portfolios
+            li.nav-item
+              a.nav-link(href='/clients') Clients
+            li.nav-item
+              a.nav-link(href='/testimontials') Testmontials
 
         ul.navbar-nav.ml-auto
           if !user
@@ -33,7 +42,8 @@ html(lang='en')
 
     +flash-messages(messages)
 
-    block content
+    .container.py-4
+      block content
 
     .py-5
 

@@ -1,0 +1,54 @@
+extends ../default
+include ../mixin/skill
+
+block content
+  h1.mb-4 #{title}
+  if user.meta.admin
+    .d-flex.flex-row.justify-content-end
+      button.btn.btn-primary(type='button', data-toggle='modal', data-target='#skillModal') New Skill
+  table.mt-4.table.table-striped.table-hover.table-responsive-md
+    thead
+      tr
+        th(scope='col') #
+        th(scope='col') Name
+        th(scope='col') Image
+        th(scope='col') Type
+        if user.meta.admin
+          th(scope='col') Action
+    tbody
+      each skill, index in skills
+        tr
+          th(scope='row') #{index + 1}
+          +skill(skill)
+          if user.meta.admin
+            td
+              .btn.text-danger.mr-1(onclick=`confirmDeleting('/api/skills/${skill._id}/delete')`)
+                span.fas.fa-trash-alt
+              .btn.ml-1.text-primary(data-toggle='modal', data-target='#skillModal', data-skill=skill)
+                span.fas.fa-edit
+  #skillModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='skillModalLabel', aria-hidden='true')
+    .modal-dialog.modal-dialog-centered(role='document')
+      .modal-content
+        .modal-header
+          h5#skillModalLabel.modal-title New/Edit Skill
+          button.close(type='button', data-dismiss='modal', aria-label='Close')
+            span(aria-hidden='true') ×
+        .modal-body
+          form#skillModalForm(method='POST', encType='multipart/form-data')
+            .hovereffect
+              img.img-fluid.portrait-1(src='#', onerror=`this.src='/assets/skills/_default'`)
+              .overlay.portrait-1
+                label.info Change
+            input.d-none(type='file', name='image', accept='image/png, image/jpeg')
+            label.mt-2(for='skillNameInput') Name
+            input#skillNameInput.form-control(type='text', name='name')
+            label.mt-2(for='skillTypeInput') Type
+            select#skillTypeInput.custom-select(name='type')
+              option(value='Language') Language
+              option(value='Library/Framework') Library/Framework
+              option(value='Platform') Platform
+              option(value='Tool') Tool
+              option(value='Database') Database
+        .modal-footer
+          button.btn.btn-secondary(data-dismiss='modal') Cancel
+          button.btn.btn-primary(onclick=`skillModalForm.submit()`) Submit

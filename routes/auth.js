@@ -1,11 +1,11 @@
-const UserController = require('../controllers/user');
+const AuthController = require('../controllers/auth');
 const AuthMiddleware = require('../middleware/auth');
 
 module.exports = (router, passport) => {
   // views
-  router.get('/login', AuthMiddleware.requireLogout, UserController.showLogin);
-  router.get('/signup', AuthMiddleware.requireLogout, UserController.showSignup);
-  router.get('/logout', AuthMiddleware.requireLogin, UserController.logout);
+  router.get('/login', AuthMiddleware.requireLogout, AuthController.showLogin);
+  router.get('/signup', AuthMiddleware.requireLogout, AuthController.showSignup);
+  router.get('/logout', AuthMiddleware.requireLogin, AuthController.logout);
 
   // apis
   router.post('/api/login', AuthMiddleware.requireLogout, passport.authenticate('local', {
@@ -13,5 +13,5 @@ module.exports = (router, passport) => {
     failureRedirect: '/login',
     failureFlash: true
   }));
-  router.post('/api/signup', AuthMiddleware.requireLogout, UserController.signup);
+  router.post('/api/signup', AuthMiddleware.requireLogout, AuthController.signup);
 };
