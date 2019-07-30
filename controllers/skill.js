@@ -12,10 +12,7 @@ exports.createSkill = (req, res, next) => {
     type: req.body.type
   };
   Skill.create(data, (err, skill) => {
-    if (err) {
-      req.flash('error', err.message);
-      return res.redirect('back');
-    }
+    if (err) return next(res.error(400, err.message));
 
     let image = req.files.image;
     mkdirp.sync('./public/assets/skills');

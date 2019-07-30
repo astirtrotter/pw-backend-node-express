@@ -7,6 +7,11 @@
   cursor: pointer;
 }
 
+.portrait-0 {
+  width: 300px !important;
+  height: 300px !important;
+}
+
 .portrait-1 {
   width: 100px !important;
   height: 100px !important;
