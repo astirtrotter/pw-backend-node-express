@@ -32,7 +32,7 @@ $(function () {
 
   // image view 'Change' button click
   $('.hovereffect .overlay label').click(function () {
-    $(`[name='image']`).click();
+    $('.hovereffect').siblings(`[name='image']`).click();
   });
 
   // image view preview with file picker
@@ -49,10 +49,19 @@ $(function () {
   // skill modal dialog
   $('#skillModal').on('show.bs.modal', function (event) {
     let button = $(event.relatedTarget);
-    let title = button.data('title');
+    let skill = button.data('skill');
+    let isNew = skill === undefined;
+
+    let formAction = isNew ? '/api/skills' : `/api/skills/${skill._id}?_method=PUT`
+    let formTitle = isNew ? 'New Skill' : 'Edit Skill';
 
     let modal = $(this);
-    modal.find('#skillModalLabel').text(title);
+    modal.find('#skillModalForm').attr('action', formAction);
+    modal.find('#skillModalLabel').text(formTitle);
+    if (skill) {
+      modal.find('skillNameInput').val(skill.name);
+      modal.find('skillTypeInput').val(skill.type);
+    }
   });
 });
 

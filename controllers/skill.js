@@ -1,20 +1,29 @@
 const Skill = require('../models/skill');
+const mkdirp = require('mkdirp');
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // api
 
 exports.createSkill = (req, res, next) => {
+  if (!req.files || !req.files.image) return next(res.error(400, 'Image is required'));
+
   let data = {
     name: req.body.name,
-
+    type: req.body.type
   };
   Skill.create(data, (err, skill) => {
     if (err) {
       req.flash('error', err.message);
       return res.redirect('back');
     }
-    req.flash('success', 'Skill created successfully');
-    res.redirect('/skills');
+
+    let image = req.files.image;
+    mkdirp.sync('./public/assets/skills');
+    image.mv(`./public/assets/skills/${skill._id}`, err => {
+      if (err) return next(err);
+      req.flash('success', 'Skill created successfully');
+      res.redirect('back');
+    });
   });
 };
 
