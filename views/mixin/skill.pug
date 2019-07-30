@@ -5,5 +5,5 @@ mixin skill(skill)
   +skillTd(skill.type, skill.type)
 
 mixin skillTd(type, text)
-  td(class='text-' + (type === 'Database' ? 'danger' : type === 'Language' ? 'primary' : type === 'Library/Framework' ? 'warning' : type === 'Platform' ? 'info' : type === 'Tool' ? 'success' : 'muted'))
+  td(class='text-' + (type === 'Database' ? 'danger' : type === 'Language' ? 'primary' : type === 'Library/Framework' ? 'info' : type === 'Platform' ? 'warning' : type === 'Tool' ? 'success' : 'muted'))
     = text
