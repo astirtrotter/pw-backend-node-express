@@ -77,7 +77,7 @@ exports.removeSkill = (req, res, next) => {
 // views
 
 exports.showSkills = (req, res, next) => {
-  Skill.find({}, {}, {sort:{type: 1}}, (err, skills) => {
+  Skill.find({}, {}, {sort:{type: 1, name: 1}}, (err, skills) => {
     if (err) return next(err);
     res.render('skills/index', {
       title: 'Skills',
