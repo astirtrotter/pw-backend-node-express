@@ -3187,7 +3187,7 @@
   }
 
   function toHtml(abstractNodes) {
-    var tag = abstractNodes.tag,
+    var tag = abstractNodes.skill,
         _abstractNodes$attrib = abstractNodes.attributes,
         attributes = _abstractNodes$attrib === void 0 ? {} : _abstractNodes$attrib,
         _abstractNodes$childr = abstractNodes.children,

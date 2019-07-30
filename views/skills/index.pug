@@ -1,0 +1,49 @@
+extends ../default
+
+block content
+  h1.mb-4 #{title}
+  if user.meta.admin
+    .d-flex.flex-row.justify-content-end
+      button.btn.btn-primary(type='button', data-toggle='modal', data-target='#skillModal', data-title='New Skill') Add Skill
+      //a.btn.btn-success(href='/skills/create', role='button') Add Skill
+  table.mt-4.table.table-striped.table-hover.table-responsive-md
+    thead
+      tr
+        th(scope='col') #
+        th(scope='col') Name
+        th(scope='col') Image
+        th(scope='col') Type
+        if user.meta.admin
+          th(scope='col') Action
+    tbody
+      each skill, index in skills
+        tr
+          th(scope='row') #{index + 1}
+          td #{skill.name}
+          td
+            img.border.img-fluid.rounded-circle.portrait-2(src=`/assets/skills/${skill._id}`, onerror=`this.src='/assets/skills/_default'`)
+          td #{skill.type}
+          if user.meta.admin
+            td
+              .text-danger.mr-1.fas.fa-trash-alt(onclick=`confirmDeleting('/api/skills/${skill._id}/delete')`)
+              a.ml-1(href=`/skills/${skill._id}`)
+                span.fas.fa-edit
+  #skillModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='skillModalLabel', aria-hidden='true')
+    .modal-dialog.modal-dialog-centered(role='document')
+      .modal-content
+        .modal-header
+          h5#skillModalLabel.modal-title New/Edit Skill
+          button.close(type='button', data-dismiss='modal', aria-label='Close')
+            span(aria-hidden='true') ×
+        .modal-body
+          form#skillModalForm(method='POST', action='/api/skills')
+            input.d-none(name='id', value='')
+            .hovereffect
+              img.border.img-fluid.rounded-circle.portrait-1(src='/assets/skills/_default', onerror=`this.src='/assets/skills/_default'`)
+              .overlay.portrait-1.rounded-circle
+                label.info Change
+            input.d-none(type='file', name='image', accept='image/png, image/jpeg')
+
+        .modal-footer
+          button.btn.btn-secondary(data-dismiss='modal') Close
+          #skillModalSubmit.btn.btn-primary Submit

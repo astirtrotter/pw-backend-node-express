@@ -10,7 +10,8 @@ const dbURL = process.env.DB;
 module.exports = () => {
   mongoose.connect(dbURL, {
     useCreateIndex: true,
-    useNewUrlParser: true
+    useNewUrlParser: true,
+    useFindAndModify: false
   });
 
   mongoose.connection.on('connected', () => {
