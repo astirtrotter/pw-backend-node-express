@@ -34,8 +34,33 @@ exports.getSkills = (req, res, next) => {
   });
 };
 
+function saveSkillUpdates(req, res, next) {
+  req.skill.save()
+    .then(() => {
+      req.flash('success', 'Skill updated successfully');
+      res.redirect('back');
+    })
+    .catch(next);
+}
+
 exports.updateSkill = (req, res, next) => {
-  // todo
+  let hasChange = false;
+  if (req.body.name !== req.skill.name ||
+    req.body.type !== req.skill.type) {
+    req.skill.name = req.body.name;
+    req.skill.type = req.body.type;
+    hasChange = true;
+  }
+  if (req.files && req.files.image) {
+    let image = req.files.image;
+    mkdirp.sync('./public/assets/skills');
+    image.mv(`./public/assets/skills/${req.skill._id}`, err => {
+      if (err) return next(err);
+      return saveSkillUpdates(req, res, next);
+    });
+  } else if (hasChange) {
+    saveSkillUpdates(req, res, next);
+  }
 };
 
 exports.removeSkill = (req, res, next) => {
