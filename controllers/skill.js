@@ -1,20 +1,29 @@
 const Skill = require('../models/skill');
+const mkdirp = require('mkdirp');
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // api
 
 exports.createSkill = (req, res, next) => {
+  if (!req.files || !req.files.image) return next(res.error(400, 'Image is required'));
+
   let data = {
     name: req.body.name,
-
+    type: req.body.type
   };
   Skill.create(data, (err, skill) => {
     if (err) {
       req.flash('error', err.message);
       return res.redirect('back');
     }
-    req.flash('success', 'Skill created successfully');
-    res.redirect('/skills');
+
+    let image = req.files.image;
+    mkdirp.sync('./public/assets/skills');
+    image.mv(`./public/assets/skills/${skill._id}`, err => {
+      if (err) return next(err);
+      req.flash('success', 'Skill created successfully');
+      res.redirect('back');
+    });
   });
 };
 
@@ -25,8 +34,33 @@ exports.getSkills = (req, res, next) => {
   });
 };
 
+function saveSkillUpdates(req, res, next) {
+  req.skill.save()
+    .then(() => {
+      req.flash('success', 'Skill updated successfully');
+      res.redirect('back');
+    })
+    .catch(next);
+}
+
 exports.updateSkill = (req, res, next) => {
-  // todo
+  let hasChange = false;
+  if (req.body.name !== req.skill.name ||
+    req.body.type !== req.skill.type) {
+    req.skill.name = req.body.name;
+    req.skill.type = req.body.type;
+    hasChange = true;
+  }
+  if (req.files && req.files.image) {
+    let image = req.files.image;
+    mkdirp.sync('./public/assets/skills');
+    image.mv(`./public/assets/skills/${req.skill._id}`, err => {
+      if (err) return next(err);
+      return saveSkillUpdates(req, res, next);
+    });
+  } else if (hasChange) {
+    saveSkillUpdates(req, res, next);
+  }
 };
 
 exports.removeSkill = (req, res, next) => {
@@ -43,7 +77,7 @@ exports.removeSkill = (req, res, next) => {
 // views
 
 exports.showSkills = (req, res, next) => {
-  Skill.find({}, (err, skills) => {
+  Skill.find({}, {}, {sort:{type: 1}}, (err, skills) => {
     if (err) return next(err);
     res.render('skills/index', {
       title: 'Skills',
