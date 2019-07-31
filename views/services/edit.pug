@@ -4,7 +4,7 @@ block content
   h1 #{title}
   form(method='POST', action=`/api/services/${service._id}?_method=PUT`, encType='multipart/form-data')
     .card.mt-4
-      h4.card-header.bg-primary.text-white Header
+      h4.card-header Header
       .card-body.d-flex.flex-column
         label(for='serviceHeaderTitleInput') Title
         input#serviceHeaderTitleInput(type='text', name='headerTitle', value=service.header.title)
@@ -72,3 +72,4 @@ block content
                   input(type='text', name='mentTitle', value=mentality.title, placeholder='Title')
                   textarea.form-control(rows=5, name='mentDescription', placeholder='Description') #{mentality.description}
                   .btn.btn-danger(onclick='$(this).parent().parent().remove()') Remove
+    button.btn.btn-primary.mt-5(type='submit') Save Changes
