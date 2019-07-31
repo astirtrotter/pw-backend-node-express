@@ -73,6 +73,24 @@ $(function () {
       modal.find('#skillTypeInput').val(skill.type);
     }
   });
+
+  // client modal dialog
+  $('#clientModal').on('show.bs.modal', function (event) {
+    let button = $(event.relatedTarget);
+    let client = button.data('client');
+    let isNew = client === undefined;
+
+    let formAction = isNew ? '/api/clients' : `/api/clients/${client._id}?_method=PUT`;
+    let formTitle = isNew ? 'New Client' : 'Edit Client';
+
+    let modal = $(this);
+    modal.find('#clientModalForm').attr('action', formAction);
+    modal.find('#clientModalLabel').text(formTitle);
+    if (client) {
+      modal.find('.hovereffect img').attr('src', '/assets/clients/' + client._id);
+      modal.find('#clientNameInput').val(client.name);
+    }
+  });
 });
 
 // confirmation of delete action
