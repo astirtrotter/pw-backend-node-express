@@ -1,5 +1,4 @@
 const Client = require('../models/client');
-//const mkdirp = require('mkdirp');
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // api
@@ -14,12 +13,9 @@ exports.createClient = (req, res, next) => {
     if (err) return next(res.error(400, err.message));
 
     let image = req.files.image;
-    //mkdirp.sync('./public/assets/clients');
-    image.mv(`./public/assets/clients/${client._id}`, err => {
-      if (err) return next(err);
-      req.flash('success', 'Client created successfully');
-      res.redirect('back');
-    });
+    image.mv(`./public/assets/clients/${client._id}`, err => {});
+    req.flash('success', 'Client created successfully');
+    res.redirect('back');
   });
 };
 
@@ -36,7 +32,7 @@ function saveClientUpdates(req, res, next) {
       req.flash('success', 'Client updated successfully');
       res.redirect('back');
     })
-    .catch(next);
+    .catch(err => next(res.error(400, err.message)));
 }
 
 exports.updateClient = (req, res, next) => {
@@ -47,11 +43,8 @@ exports.updateClient = (req, res, next) => {
   }
   if (req.files && req.files.image) {
     let image = req.files.image;
-    //mkdirp.sync('./public/assets/clients');
-    image.mv(`./public/assets/clients/${req.client._id}`, err => {
-      if (err) return next(err);
-      return saveClientUpdates(req, res, next);
-    });
+    image.mv(`./public/assets/clients/${req.client._id}`, err => {});
+    saveClientUpdates(req, res, next);
   } else if (hasChange) {
     saveClientUpdates(req, res, next);
   } else {

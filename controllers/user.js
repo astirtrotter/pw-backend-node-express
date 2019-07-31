@@ -1,5 +1,4 @@
 const User = require('../models/user');
-//const mkdirp = require('mkdirp');
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // api
@@ -22,7 +21,7 @@ function saveUserUpdates(req, res, next) {
       req.flash('success', 'User updated successfully');
       redirectWithTab(req, res);
     })
-    .catch(next);
+    .catch(err => next(res.error(400, err.message)));
 }
 
 exports.updateUser = (req, res, next) => {
@@ -36,11 +35,8 @@ exports.updateUser = (req, res, next) => {
     if (req.files && req.files.image) {
       let image = req.files.image;
       let path = `./public/assets/users/${req.usr._id}`;
-      //mkdirp.sync(path);
-      image.mv(`${path}/portrait`, err => {
-        if (err) return next(err);
-        return saveUserUpdates(req, res, next);
-      });
+      image.mv(`${path}/portrait`, err => {});
+      saveUserUpdates(req, res, next);
     } else {
       return saveUserUpdates(req, res, next);
     }

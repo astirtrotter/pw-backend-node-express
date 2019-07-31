@@ -91,6 +91,24 @@ $(function () {
       modal.find('#clientNameInput').val(client.name);
     }
   });
+
+  // testimontial modal dialog
+  $('#testimontialModal').on('show.bs.modal', function (event) {
+    let button = $(event.relatedTarget);
+    let testimontial = button.data('testimontial');
+    let isNew = testimontial === undefined;
+
+    let formAction = isNew ? '/api/testimontials' : `/api/testimontials/${testimontial._id}?_method=PUT`;
+    let formTitle = isNew ? 'New Testimontial' : 'Edit Testimontial';
+
+    let modal = $(this);
+    modal.find('#testimontialModalForm').attr('action', formAction);
+    modal.find('#testimontialModalLabel').text(formTitle);
+    if (testimontial) {
+      modal.find('#testimontialClientInput').val(testimontial.client._id);
+      modal.find('#testimontialTextArea').val(testimontial.feedback);
+    }
+  });
 });
 
 // confirmation of delete action
