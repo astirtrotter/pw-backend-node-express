@@ -109,6 +109,28 @@ $(function () {
       modal.find('#testimontialTextArea').val(testimontial.feedback);
     }
   });
+
+  // portfolio modal dialog
+  $('#portfolioModal').on('show.bs.modal', function (event) {
+    let button = $(event.relatedTarget);
+    let portfolio = button.data('portfolio');
+    let isNew = portfolio === undefined;
+
+    let formAction = isNew ? '/api/portfolios' : `/api/portfolios/${portfolio._id}?_method=PUT`;
+    let formTitle = isNew ? 'New Portfolio' : 'Edit Portfolio';
+
+    let modal = $(this);
+    modal.find('#portfolioModalForm').attr('action', formAction);
+    modal.find('#portfolioModalLabel').text(formTitle);
+    if (portfolio) {
+      modal.find('.hovereffect img').attr('src', '/assets/portfolios/' + portfolio._id);
+      modal.find('#portfolioNameInput').val(portfolio.name);
+      modal.find('#portfolioDescriptionInput').val(portfolio.description);
+      modal.find('#portfolioServicesInput').val(portfolio.services.map(it => it._id));
+      modal.find('#portfolioSkillsInput').val(portfolio.skills.map(it => it._id));
+      modal.find('#portfolioTestimontialInput').val(portfolio.testimontial._id);
+    }
+  });
 });
 
 // confirmation of delete action

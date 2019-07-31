@@ -80,10 +80,8 @@ exports.updateService = (req, res, next) => {
         mentImage[i].mv(`${path}/ment${i + 1}`);
       }
     }
-    saveServiceUpdates(req, res, next);
-  } else {
-    saveServiceUpdates(req, res, next);
   }
+  saveServiceUpdates(req, res, next);
 };
 
 exports.removeService = (req, res, next) => {

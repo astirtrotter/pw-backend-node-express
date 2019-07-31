@@ -38,6 +38,7 @@ module.exports = (router, passport) => {
   require('./service')(router);
   require('./client')(router);
   require('./testimontial')(router);
+  require('./portfolio')(router);
 
   // 404
   router.use((req, res, next) => {

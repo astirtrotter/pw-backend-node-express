@@ -9,7 +9,7 @@ block content
     thead
       tr
         th(scope='col') #
-        th(scope='col') Testimontial
+        th(scope='col') Client
         th(scope='col') Feedback
         if user.meta.admin
           th(scope='col') Action
@@ -39,7 +39,7 @@ block content
             label.mt-2(for='testimontialClientInput') Client
             select#testimontialClientInput.custom-select(name='client')
               each client in clients
-                option(value=client._id, data-thumbnail=`/assets/clients/${client._id}`) #{client.name}
+                option(value=client._id) #{client.name}
             label.mt-2(for='testimontialTextArea') Feedback
             textarea#testimontialTextArea.form-control(rows=5, name='feedback')
         .modal-footer
