@@ -1,5 +1,5 @@
 const Service = require('../models/service');
-const mkdirp = require('mkdirp');
+//const mkdirp = require('mkdirp');
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // api
@@ -66,12 +66,21 @@ exports.updateService = (req, res, next) => {
   }
 
   if (req.files) {
-    let image = req.files.image;
-    mkdirp.sync('./public/assets/services');
-    image.mv(`./public/assets/services/${req.service._id}`, err => {
-      if (err) return next(err);
-      return saveServiceUpdates(req, res, next);
-    });
+    let path = `./public/assets/services/${service._id}`;
+    // mkdirp.sync(path);
+
+    let descImage = req.files.descImage;
+    if (descImage) descImage.mv(`${path}/description`);
+    let wfImage = req.files.wfImage;
+    if (wfImage) wfImage.mv(`${path}/workflow`);
+    let mentImage = req.files.mentImage;
+    if (mentImage && !Array.isArray(mentImage)) mentImage = [mentImage];
+    if (mentImage) {
+      for (i = 0; i < mentImage.length; i++) {
+        mentImage[i].mv(`${path}/ment${i + 1}`);
+      }
+    }
+    saveServiceUpdates(req, res, next);
   } else {
     saveServiceUpdates(req, res, next);
   }

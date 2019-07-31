@@ -22,7 +22,7 @@ const schema = new mongoose.Schema({
     steps: [String]
   },
   mentalities: [{
-    // image: /assets/services/:id/mentality_title
+    // image: /assets/services/:id/ment1~3
     title: String,
     description: String
   }]

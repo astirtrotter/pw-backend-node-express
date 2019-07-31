@@ -43,6 +43,7 @@ app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(fileUpload({
+  createParentPath: true,
   limits: {fileSize: 50 * 1024 * 1024} //50MB
 }));
 

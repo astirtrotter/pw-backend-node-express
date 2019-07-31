@@ -1,5 +1,5 @@
 const Skill = require('../models/skill');
-const mkdirp = require('mkdirp');
+//const mkdirp = require('mkdirp');
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // api
@@ -15,7 +15,7 @@ exports.createSkill = (req, res, next) => {
     if (err) return next(res.error(400, err.message));
 
     let image = req.files.image;
-    mkdirp.sync('./public/assets/skills');
+    //mkdirp.sync('./public/assets/skills');
     image.mv(`./public/assets/skills/${skill._id}`, err => {
       if (err) return next(err);
       req.flash('success', 'Skill created successfully');
@@ -50,7 +50,7 @@ exports.updateSkill = (req, res, next) => {
   }
   if (req.files && req.files.image) {
     let image = req.files.image;
-    mkdirp.sync('./public/assets/skills');
+    //mkdirp.sync('./public/assets/skills');
     image.mv(`./public/assets/skills/${req.skill._id}`, err => {
       if (err) return next(err);
       return saveSkillUpdates(req, res, next);
