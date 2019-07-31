@@ -30,7 +30,7 @@ function saveServiceUpdates(req, res, next) {
       req.flash('success', 'Service updated successfully');
       res.redirect('back');
     })
-    .catch(next);
+    .catch(err => next(res.error(400, err.message)));
 }
 
 exports.updateService = (req, res, next) => {

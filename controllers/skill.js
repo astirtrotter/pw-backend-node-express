@@ -37,7 +37,7 @@ function saveSkillUpdates(req, res, next) {
       req.flash('success', 'Skill updated successfully');
       res.redirect('back');
     })
-    .catch(next);
+    .catch(err => next(res.error(400, err.message)));
 }
 
 exports.updateSkill = (req, res, next) => {

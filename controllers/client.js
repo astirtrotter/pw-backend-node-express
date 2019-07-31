@@ -36,7 +36,7 @@ function saveClientUpdates(req, res, next) {
       req.flash('success', 'Client updated successfully');
       res.redirect('back');
     })
-    .catch(next);
+    .catch(err => next(res.error(400, err.message)));
 }
 
 exports.updateClient = (req, res, next) => {

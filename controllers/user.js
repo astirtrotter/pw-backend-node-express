@@ -22,7 +22,7 @@ function saveUserUpdates(req, res, next) {
       req.flash('success', 'User updated successfully');
       redirectWithTab(req, res);
     })
-    .catch(next);
+    .catch(err => next(res.error(400, err.message)));
 }
 
 exports.updateUser = (req, res, next) => {
