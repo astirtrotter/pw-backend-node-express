@@ -3,16 +3,16 @@ extends ../default
 block content
   h1 #{title}
   form(method='POST', action=`/api/services/${service._id}?_method=PUT`, encType='multipart/form-data')
-    .card
-      .card-header Header
+    .card.mt-4
+      h4.card-header Header
       .card-body.d-flex.flex-column
         label(for='serviceHeaderTitleInput') Title
         input#serviceHeaderTitleInput(type='text', name='headerTitle', value=service.header.title)
         label.mt-2(for='serviceHeaderDescriptionInput') Description
         input#serviceHeaderDescriptionInput(type='text', name='headerDescription', value=service.header.description)
     .card.mt-4
-      .card-header Service Description
-      img#serviceDescImageView.card-img-top.portrait-0.border(onclick='', src=`/assets/services/${service._id}/description`, alt='Service Image')
+      h4.card-header Service Description
+      img#serviceDescImageView.card-img-top.portrait-1.border(onclick='', src=`/assets/services/${service._id}/description`, alt='Service Image')
       input#serviceDescImageInput.d-none(type='file', name='descImage', accept='image/png, image/jpeg')
       .card-body.d-flex.flex-column
         label(for='serviceDescTitleInput') Title
@@ -22,4 +22,31 @@ block content
         label.mt-2(for='serviceDescriptionOverviewInput') Overview
         textarea#serviceDescriptionOverviewInput.form-control(rows=10, name='descOverview') #{service.description.overview}
     .card.mt-4
-      .card-header Workflow
+      h4.card-header Workflow
+      img#serviceWfImageView.card-img-top.portrait-1.border(onclick='', src=`/assets/services/${service._id}/workflow`, alt='Workflow Image')
+      input#serviceWfImageInput.d-none(type='file', name='wfImage', accept='image/png, image/jpeg')
+      .card-body.d-flex.flex-column
+        .card
+          .card-body
+            h5.card-title Parts
+            .btn.btn-primary(onclick='addPartIntoService()') New Part
+            #serviceParts.card-deck
+              if service.workflow && service.workflow.parts
+                each part, index in service.workflow.parts
+                  .card
+                    .card-body.d-flex.flex-column
+                      input(type='text', name='partTitle', value=part.title, placeholder='Title')
+                      input(type='text', name='partSubtitle', value=part.subtitle, placeholder='Subtitle')
+                      textarea.form-control(rows=5, name='partDescription', placeholder='Description') #{part.description}
+                      .btn.btn-danger(onclick='$(this).parent().parent().remove()') Remove
+        .card.mt-2
+          .card-body
+            h5.card-title Steps
+            .btn.btn-primary(onclick='addStepIntoService()') New Step
+            #serviceSteps.card-deck
+              if service.workflow && service.workflow.steps
+                each step, index in service.workflow.steps
+                  .card
+                    .card-body.d-flow.flex-column
+                      input(type='text', name='step', value=step, placeholder='Step')
+                      .btn.btn-danger(onclick='$(this).parent().parent().remove()') Remove
