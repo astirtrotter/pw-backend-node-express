@@ -1,0 +1,47 @@
+extends ../default
+
+block content
+  h1.mb-4 #{title}
+  if user.meta.admin
+    .d-flex.flex-row.justify-content-end
+      button.btn.btn-primary(type='button', data-toggle='modal', data-target='#portfolioModal') New Portfolio
+  table.mt-4.table.table-striped.table-hover.table-responsive-md
+    thead
+      tr
+        th(scope='col') #
+        th(scope='col') Portfolio
+        th(scope='col') Feedback
+        if user.meta.admin
+          th(scope='col') Action
+    tbody
+      each portfolio, index in portfolios
+        tr
+          th(scope='row') #{index + 1}
+          td
+            img.img-fluid.border.rounded-circle.portrait-2(src=`/assets/clients/${portfolio.client._id}`, onerror=`this.src='/client_default.png'`)
+            span  #{portfolio.client.name}
+          td #{portfolio.feedback}
+          if user.meta.admin
+            td
+              .btn.text-danger.mr-1(onclick=`confirmDeleting('/api/portfolios/${portfolio._id}/delete')`)
+                span.fas.fa-trash-alt
+              .btn.ml-1.text-primary(data-toggle='modal', data-target='#portfolioModal', data-portfolio=portfolio)
+                span.fas.fa-edit
+  #portfolioModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='portfolioModalLabel', aria-hidden='true')
+    .modal-dialog.modal-dialog-centered(role='document')
+      .modal-content
+        .modal-header
+          h5#portfolioModalLabel.modal-title New/Edit Portfolio
+          button.close(type='button', data-dismiss='modal', aria-label='Close')
+            span(aria-hidden='true') ×
+        .modal-body
+          form#portfolioModalForm(method='POST')
+            label.mt-2(for='portfolioClientInput') Client
+            select#portfolioClientInput.custom-select(name='client')
+              each client in clients
+                option(value=client._id, data-thumbnail=`/assets/clients/${client._id}`) #{client.name}
+            label.mt-2(for='portfolioTextArea') Feedback
+            textarea#portfolioTextArea.form-control(rows=5, name='feedback')
+        .modal-footer
+          button.btn.btn-secondary(data-dismiss='modal') Cancel
+          button.btn.btn-primary(onclick=`portfolioModalForm.submit()`) Submit
