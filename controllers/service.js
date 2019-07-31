@@ -34,24 +34,46 @@ function saveServiceUpdates(req, res, next) {
 }
 
 exports.updateService = (req, res, next) => {
-  let hasChange = false;
-  if (req.body.name !== req.service.name ||
-    req.body.description !== req.service.description) {
-    req.service.name = req.body.name;
-    req.service.description = req.body.description;
-    hasChange = true;
+  let service = req.service;
+  service.header.title = req.body.headerTitle;
+  service.header.description = req.body.headerDescription;
+  service.description.title = req.body.descTitle;
+  service.description.subtitle = req.body.descSubtitle;
+  service.description.overview = req.body.descOverview;
+  service.workflow.parts = [];
+  let partCount = req.body.partTitle ? (Array.isArray(req.body.partTitle) ? req.body.partTitle.length : 1) : 0;
+  if (partCount === 1 && Array.isArray(req.body.partSubtitle)) partCount = req.body.partSubtitle.length;
+  if (partCount === 1 && Array.isArray(req.body.partDescription)) partCount = req.body.partDescription.length;
+  let i;
+  for (i = 0; i < partCount; i++) {
+    let part = {
+      title: Array.isArray(req.body.partTitle) ? req.body.partTitle[i] : req.body.partTitle,
+      subtitle: Array.isArray(req.body.partSubtitle) ? req.body.partSubtitle[i] : req.body.partSubtitle,
+      description: Array.isArray(req.body.partDescription) ? req.body.partDescription[i] : req.body.partDescription,
+    };
+    service.workflow.parts.push(part);
   }
-  if (req.files && req.files.image) {
+  service.workflow.steps = req.body.step;
+  service.mentalities = [];
+  let mentCount = req.body.mentTitle ? (Array.isArray(req.body.mentTitle) ? req.body.mentTitle.length : 1) : 0;
+  if (mentCount === 1 && Array.isArray(req.body.mentDescription)) mentCount = req.body.mentDescription.length;
+  for (i = 0; i < mentCount; i++) {
+    let mentality = {
+      title: Array.isArray(req.body.mentTitle) ? req.body.mentTitle[i] : req.body.mentTitle,
+      description: Array.isArray(req.body.mentDescription) ? req.body.mentDescription[i] : req.body.mentDescription,
+    };
+    service.mentalities.push(mentality);
+  }
+
+  if (req.files) {
     let image = req.files.image;
     mkdirp.sync('./public/assets/services');
     image.mv(`./public/assets/services/${req.service._id}`, err => {
       if (err) return next(err);
       return saveServiceUpdates(req, res, next);
     });
-  } else if (hasChange) {
-    saveServiceUpdates(req, res, next);
   } else {
-    res.redirect('back');
+    saveServiceUpdates(req, res, next);
   }
 };
 

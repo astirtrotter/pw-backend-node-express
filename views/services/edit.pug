@@ -17,8 +17,8 @@ block content
       .card-body.d-flex.flex-column
         label(for='serviceDescTitleInput') Title
         input#serviceDescTitleInput(type='text', name='descTitle', value=service.description.title)
-        label.mt-2(for='serviceDescDescriptionInput') Description
-        input#serviceDescDescriptionInput(type='text', name='descSubtitle', value=service.description.subtitle)
+        label.mt-2(for='serviceDescSubtitleInput') Subtitle
+        input#serviceDescSubtitleInput(type='text', name='descSubtitle', value=service.description.subtitle)
         label.mt-2(for='serviceDescriptionOverviewInput') Overview
         textarea#serviceDescriptionOverviewInput.form-control(rows=10, name='descOverview') #{service.description.overview}
     .card.mt-4
