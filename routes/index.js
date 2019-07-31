@@ -37,6 +37,7 @@ module.exports = (router, passport) => {
   require('./skill')(router);
   require('./service')(router);
   require('./client')(router);
+  require('./testimontial')(router);
 
   // 404
   router.use((req, res, next) => {
