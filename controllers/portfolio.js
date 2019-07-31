@@ -1,5 +1,7 @@
 const Portfolio = require('../models/portfolio');
-const Client = require('../models/client');
+const Service = require('../models/service');
+const Skill = require('../models/skill');
+const Testimontial = require('../models/testimontial');
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // api
@@ -64,12 +66,20 @@ exports.removePortfolio = (req, res, next) => {
 exports.showPortfolios = (req, res, next) => {
   Portfolio.find({}, (err, portfolios) => {
     if (err) return next(err);
-    Client.find({}, (err, clients) => {
+    Testimontial.find({}, (err, testimontials) => {
       if (err) return next(err);
-      res.render('portfolios/index', {
-        title: 'Portfolios',
-        portfolios,
-        clients
+      Service.find({}, (err, services) => {
+        if (err) return next(err);
+        Skill.find({}, {}, {sort: {type: 1, name: 1}}, (err, skills) => {
+          if (err) return next(err);
+          res.render('portfolios/index', {
+            title: 'Portfolios',
+            portfolios,
+            testimontials,
+            services,
+            skills
+          });
+        });
       });
     });
   });
