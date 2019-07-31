@@ -15,6 +15,7 @@ module.exports = router => {
 
   // views
   router.get('/services', AuthMiddleware.requireLogin, ServiceController.showServices);
+  router.get('/services/:serviceId', AuthMiddleware.requireLogin, ServiceController.showEditService);
 
   // apis
   router.get('/api/services', ServiceController.getServices);

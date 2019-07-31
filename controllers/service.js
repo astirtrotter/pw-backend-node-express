@@ -77,3 +77,10 @@ exports.showServices = (req, res, next) => {
     });
   });
 };
+
+exports.showEditService = (req, res, next) => {
+  res.render('services/edit', {
+    title: 'Edit Service',
+    service: req.service
+  })
+};
