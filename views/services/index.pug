@@ -10,41 +10,30 @@ block content
       tr
         th(scope='col') #
         th(scope='col') Name
-        th(scope='col') Image
-        th(scope='col') Description
         if user.meta.admin
           th(scope='col') Action
     tbody
       each service, index in services
         tr
           th(scope='row') #{index + 1}
-          td #{service.name}
-          td
-            img.img-fluid(src=`/assets/services/${service._id}`, onerror=`this.src='/service_default_image.png'`)
-          td #{service.description}
+          td #{service.header.title}
           if user.meta.admin
             td
               .btn.text-danger.mr-1(onclick=`confirmDeleting('/api/services/${service._id}/delete')`)
                 span.fas.fa-trash-alt
-              .btn.ml-1.text-primary(data-toggle='modal', data-target='#serviceModal', data-service=service)
+              a.btn.text-primary.ml-1(href=`/services/${service._id}`)
                 span.fas.fa-edit
   #serviceModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='serviceModalLabel', aria-hidden='true')
     .modal-dialog.modal-dialog-centered(role='document')
       .modal-content
         .modal-header
-          h5#serviceModalLabel.modal-title New/Edit Service
+          h5#serviceModalLabel.modal-title New Service
           button.close(type='button', data-dismiss='modal', aria-label='Close')
             span(aria-hidden='true') ×
         .modal-body
-          form#serviceModalForm(method='POST', encType='multipart/form-data')
-            img.img-fluid(src='#', onerror=`this.src='/service_default_image.png'`)
-            input(type='file', name='image', accept='image/png, image/jpeg')
-            br
-            br
-            label.mt-2(for='serviceNameInput') Name
-            input#serviceNameInput.form-control(type='text', name='name')
-            label.mt-2(for='serviceDescriptionInput') Description
-            input#serviceDescriptionInput.form-control(type='text', name='description')
+          form#serviceModalForm(method='POST', action='/api/services', encType='multipart/form-data')
+            label.mt-2(for='serviceNameInput') Title
+            input#serviceNameInput.form-control(type='text', name='title')
         .modal-footer
           button.btn.btn-secondary(data-dismiss='modal') Cancel
           button.btn.btn-primary(onclick=`serviceModalForm.submit()`) Submit

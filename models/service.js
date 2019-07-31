@@ -4,7 +4,7 @@ const fs = require('fs');
 const schema = new mongoose.Schema({
   header: {
     title: {type: String, unique: true, required: true, trim: true, match: /^[\w\s.-]+$/},
-    description: {type: String, required: true, trim: true}
+    description: String
   },
   description: {
     //image: /assets/services/:id/description

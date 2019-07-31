@@ -68,25 +68,6 @@ $(function () {
       modal.find('#skillTypeInput').val(skill.type);
     }
   });
-
-  // service modal dialog
-  $('#serviceModal').on('show.bs.modal', function (event) {
-    let button = $(event.relatedTarget);
-    let service = button.data('skill');
-    let isNew = service === undefined;
-
-    let formAction = isNew ? '/api/services' : `/api/services/${service._id}?_method=PUT`;
-    let formTitle = isNew ? 'New Service' : 'Edit Service';
-
-    let modal = $(this);
-    modal.find('#serviceModalForm').attr('action', formAction);
-    modal.find('#serviceModalLabel').text(formTitle);
-    if (service) {
-      modal.find('img').attr('src', '/assets/service/' + skill._id);
-      modal.find('#serviceNameInput').val(skill.name);
-      modal.find('#serviceTypeInput').val(skill.type);
-    }
-  });
 });
 
 // confirmation of delete action

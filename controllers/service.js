@@ -5,22 +5,15 @@ const mkdirp = require('mkdirp');
 // api
 
 exports.createService = (req, res, next) => {
-  if (!req.files || !req.files.image) return next(res.error(400, 'Image is required'));
-
   let data = {
-    name: req.body.name,
-    description: req.body.description
+    header: {
+      title: req.body.title
+    }
   };
   Service.create(data, (err, service) => {
     if (err) return next(res.error(400, err.message));
-
-    let image = req.files.image;
-    mkdirp.sync('./public/assets/services');
-    image.mv(`./public/assets/services/${service._id}`, err => {
-      if (err) return next(err);
-      req.flash('success', 'Service created successfully');
-      res.redirect('back');
-    });
+    req.flash('success', 'Service created successfully');
+    res.redirect('back');
   });
 };
 
