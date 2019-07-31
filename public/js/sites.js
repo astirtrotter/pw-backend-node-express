@@ -35,14 +35,14 @@ $(function () {
     $('.hovereffect').siblings(`[name='image']`).click();
   });
   // same above on service edit view
-  $('#serviceDescImageView, #serviceWfImageView').click(function () {
+  $('#serviceDescImageView, #serviceWfImageView, #serviceMent1ImageView, #serviceMent2ImageView, #serviceMent3ImageView').click(function () {
     let viewId = this.id;
     let inputId = viewId.replace('ImageView', 'ImageInput');
     $(`#${inputId}`).click();
   });
 
   // image view preview with file picker
-  $(`[name='image'], [name='descImage'], [name='wfImage']`).change(function () {
+  $(`[name='image'], [name='descImage'], [name='wfImage'], [name='mentImage']`).change(function () {
     if (this.files && this.files[0]) {
       let inputId = this.id;
       let viewId = inputId.replace('ImageInput', 'ImageView');
@@ -101,6 +101,18 @@ function addStepIntoService() {
     "<div class='card'>" +
       "<div class='card-body d-flex flex-column'>" +
         "<input type='text' name='step' placeholder='Step' />" +
+        "<div class='btn btn-danger' onclick='$(this).parent().parent().remove()'>Remove</div>" +
+      "</div>" +
+    "</div>");
+}
+
+// add mentality into service
+function addMentalityIntoService() {
+  $('#serviceMentalities').append(
+    "<div class='card'>" +
+      "<div class='card-body d-flex flex-column'>" +
+        "<input type='text' name='mentTitle' placeholder='Title' />" +
+        "<textarea class='form-control' rows=5 name='mentDescription' placeholder='Description' />" +
         "<div class='btn btn-danger' onclick='$(this).parent().parent().remove()'>Remove</div>" +
       "</div>" +
     "</div>");
