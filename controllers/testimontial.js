@@ -1,11 +1,10 @@
 const Testimontial = require('../models/testimontial');
+const Client = require('../models/client');
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // api
 
 exports.createTestimontial = (req, res, next) => {
-  if (!req.files || !req.files.image) return next(res.error(400, 'Image is required'));
-
   let data = {
     name: req.body.name,
   };
@@ -66,11 +65,15 @@ exports.removeTestimontial = (req, res, next) => {
 // views
 
 exports.showTestimontials = (req, res, next) => {
-  Testimontial.find({}, {}, {sort:{name: 1}}, (err, testimontials) => {
+  Testimontial.find({}, (err, testimontials) => {
     if (err) return next(err);
-    res.render('testimontials/index', {
-      title: 'Testimontials',
-      testimontials
+    Client.find({}, {}, {sort: {name: 1}}, (err, clients) => {
+      if (err) return next(err);
+      res.render('testimontials/index', {
+        title: 'Testimontials',
+        testimontials,
+        clients
+      });
     });
   });
 };

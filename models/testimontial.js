@@ -6,5 +6,9 @@ const schema = new mongoose.Schema({
   feedback: {type: String, required: true}
 });
 
+schema.pre('find', function() {
+  this.populate('client');
+});
+
 const model = mongoose.model('Testimontials', schema);
 module.exports = model;
