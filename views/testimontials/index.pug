@@ -9,7 +9,7 @@ block content
     thead
       tr
         th(scope='col') #
-        th(scope='col') Client
+        th(scope='col') Testimontial
         th(scope='col') Feedback
         if user.meta.admin
           th(scope='col') Action
@@ -19,7 +19,8 @@ block content
           th(scope='row') #{index + 1}
           td
             img.img-fluid.border.rounded-circle.portrait-2(src=`/assets/clients/${testimontial.client._id}`, onerror=`this.src='/client_default.png'`)
-            #{testimontial.client.name}
+            span  #{testimontial.client.name}
+          td #{testimontial.feedback}
           if user.meta.admin
             td
               .btn.text-danger.mr-1(onclick=`confirmDeleting('/api/testimontials/${testimontial._id}/delete')`)
@@ -35,9 +36,12 @@ block content
             span(aria-hidden='true') ×
         .modal-body
           form#testimontialModalForm(method='POST')
-
-            label.mt-2(for='testimontialTextArea') Name
-            textarea#testimontialTextArea.form-control(rows=5, name='name')
+            label.mt-2(for='testimontialClientInput') Client
+            select#testimontialClientInput.custom-select(name='client')
+              each client in clients
+                option(value=client._id, data-thumbnail=`/assets/clients/${client._id}`) #{client.name}
+            label.mt-2(for='testimontialTextArea') Feedback
+            textarea#testimontialTextArea.form-control(rows=5, name='feedback')
         .modal-footer
           button.btn.btn-secondary(data-dismiss='modal') Cancel
           button.btn.btn-primary(onclick=`testimontialModalForm.submit()`) Submit
