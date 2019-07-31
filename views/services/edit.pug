@@ -2,3 +2,22 @@ extends ../default
 
 block content
   h1 #{title}
+  form(method='POST', action=`/api/services/${service._id}?_method=PUT`, encType='multipart/form-data')
+    .card
+      .card-header Header
+      .card-body.d-flex.flex-column
+        label(for='serviceHeaderTitleInput') Title
+        input#serviceHeaderTitleInput(type='text', name='headerTitle', value=service.header.title)
+        label.mt-2(for='serviceHeaderDescriptionInput') Description
+        input#serviceHeaderDescriptionInput(type='text', name='headerDescription', value=service.header.description)
+    .card.mt-4
+      .card-header Service Description
+      img#serviceDescImageView.card-img-top.portrait-0(onclick='', src=`/assets/services/${service._id}/description`, alt='Service Image')
+      input#serviceDescImageInput.d-none(type='file', name='image', accept='image/png, image/jpeg')
+      .card-body.d-flex.flex-column
+        label(for='serviceDescTitleInput') Title
+        input#serviceDescTitleInput(type='text', name='headerTitle', value=service.description.title)
+        label.mt-2(for='serviceDescDescriptionInput') Description
+        input#serviceDescDescriptionInput(type='text', name='headerDescription', value=service.description.subtitle)
+        label.mt-2(for='serviceDescriptionOverviewInput') Overview
+        textarea#serviceDescriptionOverviewInput.form-control(rows=10, name='overview') #{service.description.overview}

@@ -34,16 +34,21 @@ $(function () {
   $('.hovereffect .overlay label').click(function () {
     $('.hovereffect').siblings(`[name='image']`).click();
   });
+  // same above on service edit view
+  $('#serviceDescImageView').click(function () {
+    $('#serviceDescImageInput').click();
+  });
 
   // image view preview with file picker
   $(`[name='image']`).change(function () {
     if (this.files && this.files[0]) {
       let reader = new FileReader();
       reader.onload = function (ev) {
-        var imageView = $('.hovereffect img');
+        let imageView = $('.hovereffect img'); // user profile image
         if (imageView.length === 0)
-          imageView = $('img.img-fluid');
-        console.log(imageView);
+          imageView = $('img.img-fluid');     // skill modal dialog
+        if (imageView.length === 0)
+          imageView = $('#serviceDescImageView');   // service description image
         imageView.attr('src', ev.target.result);
       };
       reader.readAsDataURL(this.files[0]);

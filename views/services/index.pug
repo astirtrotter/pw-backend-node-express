@@ -31,7 +31,7 @@ block content
           button.close(type='button', data-dismiss='modal', aria-label='Close')
             span(aria-hidden='true') ×
         .modal-body
-          form#serviceModalForm(method='POST', action='/api/services', encType='multipart/form-data')
+          form#serviceModalForm(method='POST', action='/api/services')
             label.mt-2(for='serviceNameInput') Title
             input#serviceNameInput.form-control(type='text', name='title')
         .modal-footer
