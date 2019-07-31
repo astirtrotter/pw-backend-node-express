@@ -11,10 +11,10 @@
               .col-sm-4
                 if isOwnerOrAdmin
                   .hovereffect
-                    img.border.img-fluid.rounded-circle.portrait-1(src=`/assets/users/${usr._id}/portrait`, onerror=`this.src='/user_default_portrait.png'`)
+                    img#profileImageView.border.img-fluid.rounded-circle.portrait-1(src=`/assets/users/${usr._id}/portrait`, onerror=`this.src='/user_default_portrait.png'`)
                     .overlay.portrait-1.rounded-circle
                       label.info Change
-                  input.d-none(type='file', name='image', accept='image/png, image/jpeg')
+                  input#profileImageInput.d-none(type='file', name='image', accept='image/png, image/jpeg')
                 else
                   img.border.img-fluid.rounded-circle.portrait-1(src=`/assets/users/${usr._id}`, onerror=`this.src='/user_default_portrait.png'`)
               // name, location

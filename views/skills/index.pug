@@ -36,10 +36,10 @@ block content
         .modal-body
           form#skillModalForm(method='POST', encType='multipart/form-data')
             .hovereffect
-              img.img-fluid.portrait-1(src='#', onerror=`this.src='/skill_default_avatar.png'`)
+              img#skillImageView.img-fluid.portrait-1(src='#', onerror=`this.src='/skill_default_avatar.png'`)
               .overlay.portrait-1
                 label.info Change
-            input.d-none(type='file', name='image', accept='image/png, image/jpeg')
+            input#skillImageInput.d-none(type='file', name='image', accept='image/png, image/jpeg')
             label.mt-2(for='skillNameInput') Name
             input#skillNameInput.form-control(type='text', name='name')
             label.mt-2(for='skillTypeInput') Type

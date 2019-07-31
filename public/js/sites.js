@@ -40,15 +40,13 @@ $(function () {
   });
 
   // image view preview with file picker
-  $(`[name='image']`).change(function () {
+  $(`[name='image'], [name='descImage']`).change(function () {
     if (this.files && this.files[0]) {
+      let inputId = this.id;
+      let viewId = inputId.replace('ImageInput', 'ImageView');
       let reader = new FileReader();
       reader.onload = function (ev) {
-        let imageView = $('.hovereffect img'); // user profile image
-        if (imageView.length === 0)
-          imageView = $('img.img-fluid');     // skill modal dialog
-        if (imageView.length === 0)
-          imageView = $('#serviceDescImageView');   // service description image
+        let imageView = $(`#${viewId}`);
         imageView.attr('src', ev.target.result);
       };
       reader.readAsDataURL(this.files[0]);
