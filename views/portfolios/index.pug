@@ -12,6 +12,7 @@ block content
         th(scope='col') Image
         th(scope='col') Name
         th(scope='col') Services
+        th(scope='col') Skills
         th(scope='col') Client
         if user.meta.admin
           th(scope='col') Action
@@ -20,12 +21,13 @@ block content
         tr
           th(scope='row') #{index + 1}
           td
-            img.img-fluid.border.rounded-circle.portrait-2(src=`/assets/portfolios/${portfolio._id}`, onerror=`this.src='/portfolio_default.png'`)
+            img.img-fluid.portrait-2(src=`/assets/portfolios/${portfolio._id}`, onerror=`this.src='/portfolio_default.png'`)
           td #{portfolio.name}
-          td #{portfolio.services.join()}
+          td #{portfolio.services.map(it => it.header.title).join(', ')}
+          td #{portfolio.skills.map(it => it.name).join(', ')}
           td
             img.img-fluid.border.rounded-circle.portrait-2(src=`/assets/clients/${portfolio.testimontial.client._id}`, onerror=`this.src='/client_default.png'`)
-            span  #{portfolio.client.name}
+            span  #{portfolio.testimontial.client.name}
           if user.meta.admin
             td
               .btn.text-danger.mr-1(onclick=`confirmDeleting('/api/portfolios/${portfolio._id}/delete')`)
@@ -40,7 +42,12 @@ block content
           button.close(type='button', data-dismiss='modal', aria-label='Close')
             span(aria-hidden='true') ×
         .modal-body
-          form#portfolioModalForm(method='POST')
+          form#portfolioModalForm(method='POST', encType='multipart/form-data')
+            .hovereffect
+              img#portfolioImageView.img-fluid.portrait-1(src='#', onerror=`this.src='/portfolio_default.png'`)
+              .overlay.portrait-1
+                label.info Change
+            input#portfolioImageInput.d-none(type='file', name='image', accept='image/png, image/jpeg')
             label.mt-2(for='portfolioNameInput') Name
             input#portfolioNameInput.form-control(type='text', name='name')
             label.mt-2(for='portfolioNameInput') Description

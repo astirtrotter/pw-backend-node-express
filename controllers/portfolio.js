@@ -7,6 +7,8 @@ const Testimontial = require('../models/testimontial');
 // api
 
 exports.createPortfolio = (req, res, next) => {
+  if (!req.files || !req.files.image) return next(res.error(400, 'Image is required'));
+
   let data = {
     name: req.body.name,
     description: req.body.description,
@@ -16,6 +18,7 @@ exports.createPortfolio = (req, res, next) => {
   };
   Portfolio.create(data, (err, portfolio) => {
     if (err) return next(res.error(400, err.message));
+    req.files.image.mv('./public/assets/portfolios/' + portfolio._id);
     req.flash('success', 'Portfolio created successfully');
     res.redirect('back');
   });
