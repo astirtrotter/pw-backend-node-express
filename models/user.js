@@ -1,7 +1,9 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
-const fs = require('fs');
+const rimraf = require('rimraf');
+
 const schema = new mongoose.Schema({
+  // image: /assets/users/:id/portrait
   email: {type: String, unique: true, trim: true, required: true, match: /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/},
   password: {type: String, required: true},
   profile: {
@@ -61,7 +63,7 @@ schema.pre('save', function(next) {
 });
 
 schema.post('remove', function () {
-  fs.unlink('./public/assets/users/' + this._id, (err) => {});
+  rimraf('./public/assets/users/' + this._id, () => {});
 });
 
 schema.methods.comparePassword = function (candidatePassword, cb) {

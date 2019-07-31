@@ -1,7 +1,7 @@
 mixin skill(skill)
   +skillTd('', skill.name)
   td
-    img.img-fluid.portrait-2(src=`/assets/skills/${skill._id}`, onerror=`this.src='/assets/skills/_default'`)
+    img.img-fluid.portrait-2(src=`/assets/skills/${skill._id}`, onerror=`this.src='/skill_default_avatar.png'`)
   +skillTd(skill.type, skill.type)
 
 mixin skillTd(type, text)

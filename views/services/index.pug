@@ -20,7 +20,7 @@ block content
           th(scope='row') #{index + 1}
           td #{service.name}
           td
-            img.img-fluid(src=`/assets/services/${service._id}`, onerror=`this.src='/assets/services/_default'`)
+            img.img-fluid(src=`/assets/services/${service._id}`, onerror=`this.src='/service_default_image.png'`)
           td #{service.description}
           if user.meta.admin
             td
@@ -37,7 +37,7 @@ block content
             span(aria-hidden='true') ×
         .modal-body
           form#serviceModalForm(method='POST', encType='multipart/form-data')
-            img.img-fluid(src='#', onerror=`this.src='/assets/services/_default'`)
+            img.img-fluid(src='#', onerror=`this.src='/service_default_image.png'`)
             input(type='file', name='image', accept='image/png, image/jpeg')
             br
             br
