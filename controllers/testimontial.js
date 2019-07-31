@@ -1,5 +1,4 @@
 const Testimontial = require('../models/testimontial');
-//const mkdirp = require('mkdirp');
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // api
@@ -14,12 +13,9 @@ exports.createTestimontial = (req, res, next) => {
     if (err) return next(res.error(400, err.message));
 
     let image = req.files.image;
-    //mkdirp.sync('./public/assets/testimontials');
-    image.mv(`./public/assets/testimontials/${testimontial._id}`, err => {
-      if (err) return next(err);
-      req.flash('success', 'Testimontial created successfully');
-      res.redirect('back');
-    });
+    image.mv(`./public/assets/testimontials/${testimontial._id}`, err => {});
+    req.flash('success', 'Testimontial created successfully');
+    res.redirect('back');
   });
 };
 
@@ -47,11 +43,8 @@ exports.updateTestimontial = (req, res, next) => {
   }
   if (req.files && req.files.image) {
     let image = req.files.image;
-    //mkdirp.sync('./public/assets/testimontials');
-    image.mv(`./public/assets/testimontials/${req.testimontial._id}`, err => {
-      if (err) return next(err);
-      return saveTestimontialUpdates(req, res, next);
-    });
+    image.mv(`./public/assets/testimontials/${req.testimontial._id}`, err => {});
+    saveTestimontialUpdates(req, res, next);
   } else if (hasChange) {
     saveTestimontialUpdates(req, res, next);
   } else {
