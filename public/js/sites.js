@@ -133,6 +133,25 @@ $(function () {
   });
 });
 
+
+// users/edit.competencies.pug
+$('#profileSkillsInput').ready(function (event) {
+  revertProfileCompetencies();
+});
+function revertProfileCompetencies() {
+  let target = $('#profileSkillsInput');
+  let skills = target.data('skills');
+  target.val(skills);
+
+  target = $('#profileServicesInput');
+  let services = target.data('services');
+  target.val(services);
+
+  target = $('#profilePortfoliosInput');
+  let portfolios = target.data('portfolios');
+  target.val(portfolios);
+}
+
 // confirmation of delete action
 function confirmDeleting(href) {
   if (confirm('Are you sure')) {

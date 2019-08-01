@@ -52,10 +52,15 @@ exports.updateUser = (req, res, next) => {
         return redirectWithTab(req, res);
       }
       req.usr.password = req.body.password;
-      return saveUserUpdates(req, res, next);
+      saveUserUpdates(req, res, next);
     })
   } else if ('competencies' === req.body.cur_tab) {
-
+    req.usr.competencies = {
+      skills: req.body.skills,
+      services: req.body.services,
+      portfolios: req.body.portfolios
+    };
+    saveUserUpdates(req, res, next);
   } else if ('histories' === req.body.cur_tab) {
 
   } else {
