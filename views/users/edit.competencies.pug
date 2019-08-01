@@ -3,7 +3,21 @@
     input.d-none(type='hidden', name='cur_tab', value='competencies')
     .card.mx-4
       .card-body
-        label.mt-2(for='profileServicesInput') Services
-        select#profileServicesInput.custom-select(name='services', multiple)
-          each service in services
-            option(value=service._id) #{service.header.title}
+        .row
+          .col-md-6
+            label.mt-2(for='profileSkillsInput') Skills
+            select#profileSkillsInput.custom-select(name='skills', multiple, style='height:750px')
+              each skill in skills
+                option(value=skill._id) #{skill.type} - #{skill.name}
+          .col-md-6
+            label.mt-2(for='profileServicesInput') Services
+            select#profileServicesInput.custom-select(name='services', multiple, style='height:200px')
+              each service in services
+                option(value=service._id) #{service.header.title}
+            label.mt-2(for='profilePortfoliosInput') Portfolios
+            select#profilePortfoliosInput.custom-select(name='portfolios', multiple, style='height:500px')
+              each portfolio in portfolios
+                option(value=portfolio._id) #{portfolio.name}
+        .row.mt-5.justify-content-center
+          button.btn.btn-secondary(onclick='window.location.reload()') Revert
+          button.btn.btn-primary.ml-5(type='submit') Save Changes

@@ -81,23 +81,31 @@ exports.removeUser = (req, res, next) => {
 // views
 
 exports.showUsers = (req, res, next) => {
+  User.find({}, (err, users) => {
+    if (err) return next(err);
+    res.render('users/index', {
+      title: 'Users',
+      users
+    });
+  });
+};
+
+exports.showUser = (req, res, next) => {
   waterfall([
     function (callback) {
-      User.find().then(users => callback(null, users));
+      Service.find().then(services => callback(null, services));
     },
-    function (users, callback) {
-      Service.find().then(services => callback(null, users, services));
+    function (services, callback) {
+      Skill.find({}, {}, {sort: {type: 1, name: 1}}).then(skills => callback(null, services, skills));
     },
-    function (users, services, callback) {
-      Skill.find().then(skills => callback(null, users, services, skills));
+    function (services, skills, callback) {
+      Portfolio.find({}, {}, {sort: {name: 1}}).then(portfolios => callback(null, services, skills, portfolios));
     },
-    function (users, services, skills, callback) {
-      Portfolio.find().then(portfolios => callback(null, users, services, skills, portfolios));
-    },
-    function (users, services, skills, portfolios, callback) {
+    function (services, skills, portfolios, callback) {
       let data = {
-        title: 'Users',
-        users,
+        title: 'Edit User',
+        usr: req.usr,
+        cur_tab: req.query.cur_tab || 'general',
         services,
         skills,
         portfolios
@@ -106,14 +114,6 @@ exports.showUsers = (req, res, next) => {
     }
   ], (err, data) => {
     if (err) return next(err);
-    res.render('users/index', data);
-  });
-};
-
-exports.showUser = (req, res, next) => {
-  res.render('users/edit', {
-    title: 'Edit User',
-    usr: req.usr,
-    cur_tab: req.query.cur_tab || 'general'
+    res.render('users/edit', data);
   });
 };
