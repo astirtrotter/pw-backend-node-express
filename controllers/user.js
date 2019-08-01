@@ -62,23 +62,75 @@ exports.updateUser = (req, res, next) => {
     };
     saveUserUpdates(req, res, next);
   } else if ('histories' === req.body.cur_tab) {
+    req.usr.histories = req.usr.histories || {};
+    req.usr.histories.works = req.usr.histories.works || [];
+    req.usr.histories.educations = req.usr.histories.educations || [];
 
+    if (req.body.historyType === 'work') {
+      let works = req.usr.histories.works;
+      let work = {
+        name: req.body.workName,
+        position: req.body.workPosition,
+        since: new Date(req.body.workSince),
+        description: req.body.workDescription,
+      };
+      if (req.body.workUntil && req.body.workUntil.length > 0) work.until = new Date(req.body.workUntil);
+
+      let index = parseInt(req.body.workIndex);
+      if (index === -1) {
+        works.push(work);
+      } else {
+        works[index] = work;
+      }
+    } else {
+      let educations = req.usr.histories.educations;
+      let education = {
+        name: req.body.eduName,
+        degree: req.body.eduDegree,
+        since: new Date(req.body.eduSince),
+        description: req.body.eduDescription,
+      };
+      if (req.body.eduUntil && req.body.eduUntil.length > 0) education.until = new Date(req.body.eduUntil);
+
+      let index = parseInt(req.body.eduIndex);
+      if (index === -1) {
+        educations.push(education);
+      } else {
+        educations[index] = education;
+      }
+    }
+    console.log(req.usr.histories);
+    saveUserUpdates(req, res, next);
   } else {
     return next(res.error(400, 'Unknown update request'));
   }
 };
 
 exports.removeUser = (req, res, next) => {
-    if (req.usr.meta.admin) {
-      req.flash('error', 'Superuser cannot be removed');
-      return res.redirect('back');
-    }
-    req.usr.remove()
-      .then(() => {
-        req.flash('success', 'User removed successfully');
-        res.redirect('back');
-      })
-      .catch(next);
+  if (req.usr.meta.admin) {
+    req.flash('error', 'Superuser cannot be removed');
+    return res.redirect('back');
+  }
+  req.usr.remove()
+    .then(() => {
+      req.flash('success', 'User removed successfully');
+      res.redirect('back');
+    })
+    .catch(next);
+};
+
+exports.removeUserWork = (req, res, next) => {
+  let index = parseInt(req.query.workIndex);
+  req.usr.histories.works.splice(index, 1);
+  req.body.cur_tab = 'histories';
+  saveUserUpdates(req, res, next);
+};
+
+exports.removeUserEducation = (req, res, next) => {
+  let index = parseInt(req.query.eduIndex);
+  req.usr.histories.educations.splice(index, 1);
+  req.body.cur_tab = 'histories';
+  saveUserUpdates(req, res, next);
 };
 
 

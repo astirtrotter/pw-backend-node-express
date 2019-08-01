@@ -20,15 +20,16 @@ const schema = new mongoose.Schema({
   histories: {
     educations: [{
       name: String,
+      degree: String,
       since: Date,
       until: Date,
-      degree: String
+      description: String
     }],
     works: [{
       name: String,
+      position: String,
       since: Date,
       until: Date,
-      position: String,
       description: String
     }]
   },

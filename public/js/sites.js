@@ -131,13 +131,55 @@ $(function () {
       modal.find('#portfolioTestimontialInput').val(portfolio.testimontial._id);
     }
   });
+
+  // users/edit.competencies.pug
+  $('#profileSkillsInput').ready(function (event) {
+    revertProfileCompetencies();
+  });
+
+  // work modal dialog
+  $('#profileWorkModal').on('show.bs.modal', function (event) {
+    let button = $(event.relatedTarget);
+    let work = button.data('work');
+    let index = button.data('index');
+    let isNew = work === undefined;
+
+    let formTitle = isNew ? 'New Work' : 'Edit Work';
+
+    let modal = $(this);
+    modal.find('#profileWorkModalLabel').text(formTitle);
+    modal.find('[name="workIndex"]').val(index);
+    if (work) {
+      modal.find('#profileWorkNameInput').val(work.name);
+      modal.find('#profileWorkPositionInput').val(work.position);
+      modal.find('#profileWorkSinceInput').val(work.since.toString().substring(0, 10));
+      work.until && modal.find('#profileWorkUntilInput').val(work.until.toString().substring(0, 10));
+      modal.find('#profileWorkDescriptionInput').val(work.description);
+    }
+  });
+
+  // education modal dialog
+  $('#profileEduModal').on('show.bs.modal', function (event) {
+    let button = $(event.relatedTarget);
+    let education = button.data('education');
+    let index = button.data('index');
+    let isNew = education === undefined;
+
+    let formTitle = isNew ? 'New Education' : 'Edit Education';
+
+    let modal = $(this);
+    modal.find('#profileEduModalLabel').text(formTitle);
+    modal.find('[name="eduIndex"]').val(index);
+    if (education) {
+      modal.find('#profileEduNameInput').val(education.name);
+      modal.find('#profileEduDegreeInput').val(education.degree);
+      modal.find('#profileEduSinceInput').val(education.since.toString().substring(0, 10));
+      education.until && modal.find('#profileEduUntilInput').val(education.until.toString().substring(0, 10));
+      modal.find('#profileEduDescriptionInput').val(education.description);
+    }
+  });
 });
 
-
-// users/edit.competencies.pug
-$('#profileSkillsInput').ready(function (event) {
-  revertProfileCompetencies();
-});
 function revertProfileCompetencies() {
   let target = $('#profileSkillsInput');
   let skills = target.data('skills');
