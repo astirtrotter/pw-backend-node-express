@@ -2,6 +2,7 @@ const Portfolio = require('../models/portfolio');
 const Service = require('../models/service');
 const Skill = require('../models/skill');
 const Testimontial = require('../models/testimontial');
+const waterfall = require('async-waterfall');
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // api
@@ -67,23 +68,31 @@ exports.removePortfolio = (req, res, next) => {
 // views
 
 exports.showPortfolios = (req, res, next) => {
-  Portfolio.find({}, (err, portfolios) => {
+  waterfall([
+    function (callback) {
+      Portfolio.find().then(users => callback(null, users));
+    },
+    function (portfolios, callback) {
+      Testimontial.find().then(testimontials => callback(null, portfolios, testimontials));
+    },
+    function (portfolios, testimontials, callback) {
+      Service.find().then(services => callback(null, portfolios, testimontials, services));
+    },
+    function (portfolios, testimontials, services, callback) {
+      Skill.find({}, {}, {sort: {type: 1, name: 1}}).then(skills => callback(null, portfolios, testimontials, services, skills));
+    },
+    function (portfolios, testimontials, services, skills, callback) {
+      let data = {
+        title: 'Portfolios',
+        portfolios,
+        testimontials,
+        services,
+        skills
+      };
+      callback(null, data);
+    }
+  ], (err, data) => {
     if (err) return next(err);
-    Testimontial.find({}, (err, testimontials) => {
-      if (err) return next(err);
-      Service.find({}, (err, services) => {
-        if (err) return next(err);
-        Skill.find({}, {}, {sort: {type: 1, name: 1}}, (err, skills) => {
-          if (err) return next(err);
-          res.render('portfolios/index', {
-            title: 'Portfolios',
-            portfolios,
-            testimontials,
-            services,
-            skills
-          });
-        });
-      });
-    });
+    res.render('portfolios/index', data);
   });
 };

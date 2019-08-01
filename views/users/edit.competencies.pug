@@ -3,4 +3,7 @@
     input.d-none(type='hidden', name='cur_tab', value='competencies')
     .card.mx-4
       .card-body
-
+        label.mt-2(for='profileServicesInput') Services
+        select#profileServicesInput.custom-select(name='services', multiple)
+          each service in services
+            option(value=service._id) #{service.header.title}

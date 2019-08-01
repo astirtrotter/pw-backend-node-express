@@ -1,6 +1,6 @@
 const Testimontial = require('../models/testimontial');
 const Client = require('../models/client');
-
+const waterfall = require('async-waterfall');
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // api
 
@@ -61,15 +61,23 @@ exports.removeTestimontial = (req, res, next) => {
 // views
 
 exports.showTestimontials = (req, res, next) => {
-  Testimontial.find({}, (err, testimontials) => {
-    if (err) return next(err);
-    Client.find({}, (err, clients) => {
-      if (err) return next(err);
-      res.render('testimontials/index', {
+  waterfall([
+    function (callback) {
+      Testimontial.find().then(testimontials => callback(null, testimontials));
+    },
+    function (testimontials, callback) {
+      Client.find().then(clients => callback(null, testimontials, clients));
+    },
+    function (testimontials, clients, callback) {
+      let data = {
         title: 'Testimontials',
         testimontials,
         clients
-      });
-    });
+      };
+      callback(null, data);
+    }
+  ], (err, data) => {
+    if (err) return next(err);
+    res.render('testimontials/index', data);
   });
 };

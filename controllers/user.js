@@ -1,4 +1,8 @@
 const User = require('../models/user');
+const Service = require('../models/service');
+const Skill = require('../models/skill');
+const Portfolio = require('../models/portfolio');
+const waterfall = require('async-waterfall');
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // api
@@ -50,6 +54,10 @@ exports.updateUser = (req, res, next) => {
       req.usr.password = req.body.password;
       return saveUserUpdates(req, res, next);
     })
+  } else if ('competencies' === req.body.cur_tab) {
+
+  } else if ('histories' === req.body.cur_tab) {
+
   } else {
     return next(res.error(400, 'Unknown update request'));
   }
@@ -73,12 +81,32 @@ exports.removeUser = (req, res, next) => {
 // views
 
 exports.showUsers = (req, res, next) => {
-  User.find({}, (err, users) => {
+  waterfall([
+    function (callback) {
+      User.find().then(users => callback(null, users));
+    },
+    function (users, callback) {
+      Service.find().then(services => callback(null, users, services));
+    },
+    function (users, services, callback) {
+      Skill.find().then(skills => callback(null, users, services, skills));
+    },
+    function (users, services, skills, callback) {
+      Portfolio.find().then(portfolios => callback(null, users, services, skills, portfolios));
+    },
+    function (users, services, skills, portfolios, callback) {
+      let data = {
+        title: 'Users',
+        users,
+        services,
+        skills,
+        portfolios
+      };
+      callback(null, data);
+    }
+  ], (err, data) => {
     if (err) return next(err);
-    res.render('users/index', {
-      title: 'Users',
-      users
-    });
+    res.render('users/index', data);
   });
 };
 
