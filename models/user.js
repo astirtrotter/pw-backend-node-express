@@ -13,18 +13,9 @@ const schema = new mongoose.Schema({
     location: {type: String, trim: true, match: /^\w+, \w+$/}
   },
   competencies: {
-    services: [{
-      service: {type: mongoose.Schema.Types.ObjectId, ref: 'Services'},
-      rate: {type: Number, min: 1, max: 10}
-    }],
-    skills: [{
-      skill: {type: mongoose.Schema.Types.ObjectId, ref: 'Skills'},
-      rate: {type: Number, min: 1, max: 10}
-    }],
-    portfolios: [{
-      portfolio: {type: mongoose.Schema.Types.ObjectId, ref: 'Portfolios'},
-      description: String
-    }]
+    services: [{type: mongoose.Schema.Types.ObjectId, ref: 'Services'}],
+    skills: [{type: mongoose.Schema.Types.ObjectId, ref: 'Skills'}],
+    portfolios: [{type: mongoose.Schema.Types.ObjectId, ref: 'Portfolios'}]
   },
   histories: {
     educations: [{
@@ -47,6 +38,12 @@ const schema = new mongoose.Schema({
   }
 }, {
   timestamps: true
+});
+
+schema.pre('find', function () {
+  this.populate('competencies.services');
+  this.populate('competencies.skills');
+  this.populate('competencies.portfolios');
 });
 
 schema.pre('save', function(next) {
