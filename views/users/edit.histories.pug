@@ -1,6 +1,42 @@
 #nav-histories.tab-pane.fade(class=(cur_tab === 'histories' ? 'show active' : ''))
-  form(method='POST', action=`/api/users/${usr._id}?_method=PUT`)
-    input.d-none(type='hidden', name='cur_tab', value='histories')
-    .card.mx-4
-      .card-body
+  .card-deck.px-4
+    .card
+      .card-header
+        .row.px-2
+          h5.mt-2 Works
+          .btn.btn-primary.ml-auto(data-toggle='modal', data-target='#profileWorkModal') Add
+      #profileWorks.card-body
+        if usr.histories && usr.histories.works && usr.histories.works.length > 0
+          each work in usr.histories.works
+            span #{JSON.stringify(work)}
+        else
+          #profileWorksEmpty.text-muted No Work History
 
+        #profileWorkModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='workModalLabel', aria-hidden='true')
+          .modal-dialog.modal-dialog-centered(role='document')
+            .modal-content
+              form(method='POST', action=`/api/users/${usr._id}?_method=PUT`)
+                .modal-header
+                  h5#profileWorkModalLabel.modal-title New/Edit Work
+                  button.close(type='button', data-dismiss='modal', aria-label='Close')
+                    span(aria-hidden='true') ×
+                .modal-body
+                  input.d-none(type='hidden', name='cur_tab', value='histories')
+                  input#profileWorkUpdateTypeInput.d-none(type='text', name='workIsNew')
+                  label.mt-2(for='profileWorkNameInput') Name
+                  input#profileWorkNameInput.form-control(type='text', name='workName' required)
+                  label.mt-2(for='profileWorkPositionInput') Position
+                  input#profileWorkPositionInput.form-control(type='text', name='workPosition' required)
+                  label.mt-2(for='profileWorkSinceInput') Since
+                  input#profileWorkSinceInput.form-control(type='date', name='workSince' required)
+                  label.mt-2(for='profileWorkUntilInput') Until
+                  input#profileWorkUntilInput.form-control(type='date', name='workUntil')
+                  label.mt-2(for='profileWorkDescriptionInput') Description
+                  textarea#profileWorkDescriptionInput.form-control(rows=5, name='workDescription')
+                .modal-footer
+                  button.btn.btn-secondary(data-dismiss='modal') Cancel
+                  button.btn.btn-primary(type='submit') Submit
+
+    .card
+      h5.card-header Educations
+      .card-body

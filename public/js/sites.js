@@ -131,13 +131,33 @@ $(function () {
       modal.find('#portfolioTestimontialInput').val(portfolio.testimontial._id);
     }
   });
+
+  // users/edit.competencies.pug
+  $('#profileSkillsInput').ready(function (event) {
+    revertProfileCompetencies();
+  });
+
+  // work modal dialog
+  $('#profileWorkModal').on('show.bs.modal', function (event) {
+    let button = $(event.relatedTarget);
+    let work = button.data('work');
+    let isNew = work === undefined;
+
+    let formTitle = isNew ? 'New Work' : 'Edit Work';
+
+    let modal = $(this);
+    modal.find('#profileWorkModalLabel').text(formTitle);
+    modal.find('#profileWorkUpdateTypeInput').val(isNew);
+    if (work) {
+      modal.find('#profileWorkNameInput').val(work.name);
+      modal.find('#profileWorkPositionInput').val(work.position);
+      modal.find('#profileWorkSinceInput').val(work.since);
+      modal.find('#profileWorkUntilInput').val(work.until);
+      modal.find('#profileWorkDescriptionInput').val(work.description);
+    }
+  });
 });
 
-
-// users/edit.competencies.pug
-$('#profileSkillsInput').ready(function (event) {
-  revertProfileCompetencies();
-});
 function revertProfileCompetencies() {
   let target = $('#profileSkillsInput');
   let skills = target.data('skills');

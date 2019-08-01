@@ -62,7 +62,13 @@ exports.updateUser = (req, res, next) => {
     };
     saveUserUpdates(req, res, next);
   } else if ('histories' === req.body.cur_tab) {
-
+    console.log(req.body);
+    res.send();
+    // req.usr.histories = {
+    //   educations: [],
+    //   works: []
+    // };
+    //saveUserUpdates(req, res, next);
   } else {
     return next(res.error(400, 'Unknown update request'));
   }
