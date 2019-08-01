@@ -14,6 +14,6 @@ block content
     include ./edit.histories.pug
     include ./edit.security.pug
   .mt-5.d-flex.flex-row.justify-content-center
-    .btn.btn-primary.px-4(onclick=`window.open('#', '_blank')`) FrontEnd
+    .btn.btn-success.px-4(onclick=`window.open('#', '_blank')`) FrontEnd
     if user.meta.admin || usr._id.equals(user._id)
       .btn.btn-danger.px-4.ml-5(onclick=`confirmDeleting('/api/users/${usr._id}/delete')`) Delete

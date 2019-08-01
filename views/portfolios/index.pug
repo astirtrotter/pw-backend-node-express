@@ -1,0 +1,69 @@
+extends ../default
+
+block content
+  h1.mb-4 #{title}
+  if user.meta.admin
+    .d-flex.flex-row.justify-content-end
+      button.btn.btn-primary(type='button', data-toggle='modal', data-target='#portfolioModal') New Portfolio
+  table.mt-4.table.table-striped.table-hover.table-responsive-md
+    thead
+      tr
+        th(scope='col') #
+        th(scope='col') Image
+        th(scope='col') Name
+        th(scope='col') Services
+        th(scope='col') Skills
+        th(scope='col') Client
+        if user.meta.admin
+          th(scope='col') Action
+    tbody
+      each portfolio, index in portfolios
+        tr
+          th(scope='row') #{index + 1}
+          td
+            img.img-fluid.portrait-2(src=`/assets/portfolios/${portfolio._id}`, onerror=`this.src='/portfolio_default.png'`)
+          td #{portfolio.name}
+          td #{portfolio.services.map(it => it.header.title).join(', ')}
+          td #{portfolio.skills.map(it => it.name).join(', ')}
+          td
+            img.img-fluid.border.rounded-circle.portrait-2(src=`/assets/clients/${portfolio.testimontial.client._id}`, onerror=`this.src='/client_default.png'`)
+            span  #{portfolio.testimontial.client.name}
+          if user.meta.admin
+            td
+              .btn.text-danger.mr-1(onclick=`confirmDeleting('/api/portfolios/${portfolio._id}/delete')`)
+                span.fas.fa-trash-alt
+              .btn.ml-1.text-primary(data-toggle='modal', data-target='#portfolioModal', data-portfolio=portfolio)
+                span.fas.fa-edit
+  #portfolioModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='portfolioModalLabel', aria-hidden='true')
+    .modal-dialog.modal-dialog-centered(role='document')
+      .modal-content
+        .modal-header
+          h5#portfolioModalLabel.modal-title New/Edit Portfolio
+          button.close(type='button', data-dismiss='modal', aria-label='Close')
+            span(aria-hidden='true') ×
+        .modal-body
+          form#portfolioModalForm(method='POST', encType='multipart/form-data')
+            .hovereffect
+              img#portfolioImageView.img-fluid.portrait-1(src='#', onerror=`this.src='/portfolio_default.png'`)
+              .overlay.portrait-1
+                label.info Change
+            input#portfolioImageInput.d-none(type='file', name='image', accept='image/png, image/jpeg')
+            label.mt-2(for='portfolioNameInput') Name
+            input#portfolioNameInput.form-control(type='text', name='name')
+            label.mt-2(for='portfolioNameInput') Description
+            textarea#portfolioDescriptionInput.form-control(rows=5, name='description')
+            label.mt-2(for='portfolioServicesInput') Services
+            select#portfolioServicesInput.custom-select(name='services', multiple)
+              each service in services
+                option(value=service._id) #{service.header.title}
+            label.mt-2(for='portfolioSkillsInput') Skills
+            select#portfolioSkillsInput.custom-select(name='skills', multiple)
+              each skill in skills
+                option(value=skill._id) #{skill.type} - #{skill.name}
+            label.mt-2(for='portfolioTestimontialInput') Testimontial
+            select#portfolioTestimontialInput.custom-select(name='testimontial')
+              each testimontial in testimontials
+                option(value=testimontial._id) #{testimontial.client.name} - #{testimontial.feedback}
+        .modal-footer
+          button.btn.btn-secondary(data-dismiss='modal') Cancel
+          button.btn.btn-primary(onclick=`portfolioModalForm.submit()`) Submit

@@ -1,7 +1,9 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
-const fs = require('fs');
+const rimraf = require('rimraf');
+
 const schema = new mongoose.Schema({
+  // image: /assets/users/:id/portrait
   email: {type: String, unique: true, trim: true, required: true, match: /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/},
   password: {type: String, required: true},
   profile: {
@@ -11,31 +13,23 @@ const schema = new mongoose.Schema({
     location: {type: String, trim: true, match: /^\w+, \w+$/}
   },
   competencies: {
-    services: [{
-      service: {type: mongoose.Schema.Types.ObjectId, ref: 'Services'},
-      rate: {type: Number, min: 1, max: 10}
-    }],
-    skills: [{
-      skill: {type: mongoose.Schema.Types.ObjectId, ref: 'Skills'},
-      rate: {type: Number, min: 1, max: 10}
-    }],
-    portfolios: [{
-      portfolio: {type: mongoose.Schema.Types.ObjectId, ref: 'Portfolios'},
-      description: String
-    }]
+    services: [{type: mongoose.Schema.Types.ObjectId, ref: 'Services'}],
+    skills: [{type: mongoose.Schema.Types.ObjectId, ref: 'Skills'}],
+    portfolios: [{type: mongoose.Schema.Types.ObjectId, ref: 'Portfolios'}]
   },
   histories: {
     educations: [{
       name: String,
+      degree: String,
       since: Date,
       until: Date,
-      degree: String
+      description: String
     }],
     works: [{
       name: String,
+      position: String,
       since: Date,
       until: Date,
-      position: String,
       description: String
     }]
   },
@@ -45,6 +39,12 @@ const schema = new mongoose.Schema({
   }
 }, {
   timestamps: true
+});
+
+schema.pre('find', function () {
+  this.populate('competencies.services');
+  this.populate('competencies.skills');
+  this.populate('competencies.portfolios');
 });
 
 schema.pre('save', function(next) {
@@ -61,7 +61,7 @@ schema.pre('save', function(next) {
 });
 
 schema.post('remove', function () {
-  fs.unlink('./public/assets/users/' + this._id, (err) => {});
+  rimraf('./public/assets/users/' + this._id, () => {});
 });
 
 schema.methods.comparePassword = function (candidatePassword, cb) {
