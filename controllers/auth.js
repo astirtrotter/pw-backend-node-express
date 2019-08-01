@@ -11,13 +11,19 @@ exports.signup = (req, res, next) => {
       name: req.body.name
     }
   };
-  User.create(data, (err, user) => {
-    if (err) {
-      req.flash('error', err.message);
-      return res.redirect('back');
-    }
-    req.flash('success', 'Please contact superuser to get your account allowed');
-    return res.redirect('/login');
+  User.count({}, (err, count) => {
+    if (err) return next(err);
+    if (count === 0) data.meta = {admin: true, allowed: true};
+
+    User.create(data, (err, user) => {
+      if (err) return next(res.error(400, err.message));
+      if (count === 0) {
+        req.flash('success', 'You became a superuser as being a first registeror');
+      } else {
+        req.flash('success', 'Please contact superuser to get your account allowed');
+      }
+      return res.redirect('/login');
+    });
   });
 };
 
