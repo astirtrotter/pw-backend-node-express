@@ -49,6 +49,12 @@ const schema = new mongoose.Schema({
   timestamps: true
 });
 
+schema.pre('find', function () {
+  this.populate('competencies.services');
+  this.populate('competencies.skills');
+  this.populate('competencies.portfolios');
+});
+
 schema.pre('save', function(next) {
   let user = this;
   if (!user.isModified('password')) return next();
