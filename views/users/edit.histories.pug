@@ -4,11 +4,19 @@
       .card-header
         .row.px-2
           h5.mt-2 Works
-          .btn.btn-primary.ml-auto(data-toggle='modal', data-target='#profileWorkModal') Add
+          .btn.btn-primary.ml-auto(data-toggle='modal', data-target='#profileWorkModal', data-index=-1) Add
       #profileWorks.card-body
         if usr.histories && usr.histories.works && usr.histories.works.length > 0
-          each work in usr.histories.works
-            span #{JSON.stringify(work)}
+          each work, index in usr.histories.works
+            .card.mt-2
+              .card-body
+                h5.card-title #{work.name}
+                .text-muted.mb-2 #{work.since.toLocaleDateString()} ~ #{work.until && work.until.toLocaleDateString() || 'Present'}
+                .card-subtitle #{work.position}
+                .card-text #{work.description}
+              .card-footer
+                .btn.btn-danger(onclick=`confirmDeleting('/api/users/${usr._id}/deleteWork?workIndex=${index}')`) Delete
+                .btn.btn-info.ml-4(data-toggle='modal', data-target='#profileWorkModal', data-work=work, data-index=index) Edit
         else
           #profileWorksEmpty.text-muted No Work History
 
@@ -16,13 +24,14 @@
           .modal-dialog.modal-dialog-centered(role='document')
             .modal-content
               form(method='POST', action=`/api/users/${usr._id}?_method=PUT`)
+                input.d-none(type='hidden', name='cur_tab', value='histories')
+                input.d-none(type='text', name='historyType', value='work')
+                input.d-none(type='text', name='workIndex')
                 .modal-header
                   h5#profileWorkModalLabel.modal-title New/Edit Work
                   button.close(type='button', data-dismiss='modal', aria-label='Close')
                     span(aria-hidden='true') ×
                 .modal-body
-                  input.d-none(type='hidden', name='cur_tab', value='histories')
-                  input#profileWorkUpdateTypeInput.d-none(type='text', name='workIsNew')
                   label.mt-2(for='profileWorkNameInput') Name
                   input#profileWorkNameInput.form-control(type='text', name='workName' required)
                   label.mt-2(for='profileWorkPositionInput') Position
