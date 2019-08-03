@@ -3,7 +3,7 @@ const fs = require('fs');
 
 const schema = new mongoose.Schema({
   // image: /assets/clients/:id
-  name: {type: String, unique: true, required: true, trim: true, match: /^[\w\s]+$/}
+  name: {type: String, unique: true, required: true, trim: true}
 });
 
 schema.post('remove', function () {

@@ -3,7 +3,7 @@ const fs = require('fs');
 
 const schema = new mongoose.Schema({
   // image: /assets/portfolios/:id
-  name: {type: String, unique: true, required: true, trim: true, match: /^[\w\s]+$/},
+  name: {type: String, unique: true, required: true, trim: true},
   description: String,
   services: [{type: mongoose.Schema.Types.ObjectId, ref: 'Services'}],
   skills: [{type: mongoose.Schema.Types.ObjectId, ref: 'Skills'}],

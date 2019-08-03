@@ -7,10 +7,10 @@ const schema = new mongoose.Schema({
   email: {type: String, unique: true, trim: true, required: true, match: /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/},
   password: {type: String, required: true},
   profile: {
-    name: {type: String, trim: true, required: true, match: /^[\w\s]+$/},
+    name: {type: String, trim: true, required: true},
     title: {type: String, trim: true},
     overview: {type: String, trim: true},
-    location: {type: String, trim: true, match: /^\w+, \w+$/}
+    location: {type: String, trim: true}
   },
   competencies: {
     services: [{type: mongoose.Schema.Types.ObjectId, ref: 'Services'}],

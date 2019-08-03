@@ -3,7 +3,7 @@ const fs = require('fs');
 
 const schema = new mongoose.Schema({
   // image: /assets/skills/:id
-  name: {type: String, unique: true, required: true, trim: true, match: /^[\w\s.-]+$/},
+  name: {type: String, unique: true, required: true, trim: true},
   type: {type: String, enum: ['Language', 'Library/Framework', 'Platform', 'Tool', 'Database'], required: true}
 });
 
