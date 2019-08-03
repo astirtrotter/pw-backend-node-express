@@ -9,17 +9,17 @@ block content
     thead
       tr
         th(scope='col') #
-        th(scope='col') Name
         th(scope='col') Image
+        th(scope='col') Name
         if user.meta.admin
           th(scope='col') Action
     tbody
       each client, index in clients
         tr
           th(scope='row') #{index + 1}
-          td #{client.name}
           td
             img.img-fluid.border.rounded-circle.portrait-2(src=`/assets/clients/${client._id}`, onerror=`this.src='/client_default.png'`)
+          td #{client.name}
           if user.meta.admin
             td
               .btn.text-danger.mr-1(onclick=`confirmDeleting('/api/clients/${client._id}/delete')`)

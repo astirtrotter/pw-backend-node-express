@@ -18,8 +18,9 @@ block content
         tr
           th(scope='row') #{index + 1}
           td
-            img.img-fluid.border.rounded-circle.portrait-2(src=`/assets/clients/${testimontial.client._id}`, onerror=`this.src='/client_default.png'`)
-            span  #{testimontial.client.name}
+            .d-flex.flex-column.align-items-center
+              img.img-fluid.border.rounded-circle.portrait-2(src=`/assets/clients/${testimontial.client._id}`, onerror=`this.src='/client_default.png'`)
+              span  #{testimontial.client.name}
           td #{testimontial.feedback}
           if user.meta.admin
             td
