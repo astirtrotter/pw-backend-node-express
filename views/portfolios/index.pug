@@ -9,7 +9,6 @@ block content
     thead
       tr
         th(scope='col') #
-        th(scope='col') Image
         th(scope='col') Name
         th(scope='col') Services
         th(scope='col') Skills
@@ -21,8 +20,9 @@ block content
         tr
           th(scope='row') #{index + 1}
           td
-            img.img-fluid.portrait-2(src=`/assets/portfolios/${portfolio._id}`, onerror=`this.src='/portfolio_default.png'`)
-          td #{portfolio.name}
+            .d-flex.flex-column.align-items-center
+              img.img-fluid.portrait-2(src=`/assets/portfolios/${portfolio._id}`, onerror=`this.src='/portfolio_default.png'`)
+              span #{portfolio.name}
           td #{portfolio.services.map(it => it.header.title).join(', ')}
           td #{portfolio.skills.map(it => it.name).join(', ')}
           td
