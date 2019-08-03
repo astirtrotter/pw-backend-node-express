@@ -9,9 +9,5 @@ schema.pre('find', function() {
   this.populate('client');
 });
 
-schema.post('init', function(doc) {
-  doc.feedback = doc.feedback.replace('{{name}}', doc.client.name);
-});
-
 const model = mongoose.model('Testimontials', schema);
 module.exports = model;

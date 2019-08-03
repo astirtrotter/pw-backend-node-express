@@ -21,7 +21,7 @@ block content
             .d-flex.flex-column.align-items-center
               img.img-fluid.border.rounded-circle.portrait-2(src=`/assets/clients/${testimontial.client._id}`, onerror=`this.src='/client_default.png'`)
               span  #{testimontial.client.name}
-          td #{testimontial.feedback}
+          td #{testimontial.feedback.replace('{{name}}', user.profile.name)}
           if user.meta.admin
             td
               .btn.text-danger.mr-1(onclick=`confirmDeleting('/api/testimontials/${testimontial._id}/delete')`)
