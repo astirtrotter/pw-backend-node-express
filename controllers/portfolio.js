@@ -70,7 +70,7 @@ exports.removePortfolio = (req, res, next) => {
 exports.showPortfolios = (req, res, next) => {
   waterfall([
     function (callback) {
-      Portfolio.find().then(users => callback(null, users));
+      Portfolio.find().then(portfolios => callback(null, portfolios));
     },
     function (portfolios, callback) {
       Testimontial.find().then(testimontials => callback(null, portfolios, testimontials));
