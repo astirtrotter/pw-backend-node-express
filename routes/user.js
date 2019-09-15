@@ -17,6 +17,7 @@ module.exports = router => {
 
   // apis
   router.get('/api/users', AuthMiddleware.requireLogin, UserController.getUsers);
+  router.get('/api/users/:userId', UserController.getUser);
   router.put('/api/users/:userId', AuthMiddleware.requireAuthorize, UserController.updateUser);
   router.get('/api/users/:userId/delete', AuthMiddleware.requireAuthorize, UserController.removeUser);
   router.get('/api/users/:userId/deleteWork', AuthMiddleware.requireAuthorize, UserController.removeUserWork);

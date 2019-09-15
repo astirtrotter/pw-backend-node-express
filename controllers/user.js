@@ -174,3 +174,9 @@ exports.showUser = (req, res, next) => {
     res.render('users/edit', data);
   });
 };
+
+exports.getUser = function (req, res, next) {
+  res.json({
+    user: req.usr
+  });
+};
