@@ -12,6 +12,7 @@ const methodOverride = require('method-override');
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
 const fileUpload = require('express-fileupload');
+const cors = require('cors');
 
 const passport = require('./middleware/passport');
 
@@ -46,6 +47,7 @@ app.use(fileUpload({
   createParentPath: true,
   limits: {fileSize: 50 * 1024 * 1024} //50MB
 }));
+app.use(cors());
 
 // initialize express router
 const router = require('./routes')(express.Router(), passport);
