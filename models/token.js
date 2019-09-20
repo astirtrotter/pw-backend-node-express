@@ -5,7 +5,7 @@ const schema = new mongoose.Schema({
   user: {type: mongoose.Schema.Types.ObjectId, ref: 'Users'},
 });
 
-schema.pre('find', function () {
+schema.pre('findOne', function () {
   this.populate('user');
 });
 

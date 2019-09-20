@@ -35,8 +35,12 @@ exports.removeToken = (req, res, next) => {
 };
 
 exports.getTokenUser = (req, res, next) => {
-  res.json({
-    user: req.token.user
+  Token.findOne({code: req.params.code}, (err, token) => {
+    if (err) return next(err);
+    if (!token) return next(res.error(400, 'Invalid code'));
+    res.json({
+      user: token.user
+    });
   });
 };
 

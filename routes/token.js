@@ -15,8 +15,8 @@ module.exports = router => {
   router.get('/tokens', AuthMiddleware.requireLogin, TokenController.showTokens);
 
   // apis
-  router.get('/api/tokens', TokenController.getTokens);
+  // router.get('/api/tokens', TokenController.getTokens);
   router.post('/api/tokens', AuthMiddleware.requireAdmin, TokenController.createToken);
-  router.get('/api/tokens/:tokenId', TokenController.getTokenUser);
+  router.get('/api/tokens/:code', TokenController.getTokenUser);
   router.get('/api/tokens/:tokenId/delete', AuthMiddleware.requireAdmin, TokenController.removeToken);
 };
