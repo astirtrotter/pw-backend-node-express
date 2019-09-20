@@ -1,4 +1,8 @@
+
 module.exports = (router, passport) => {
+  // setup swagger ui
+  require('../config/swagger')(router);
+
   // init error handler
   router.use((req, res, next) => {
     res.error = (statusCode, error) => {
