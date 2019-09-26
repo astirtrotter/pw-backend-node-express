@@ -4,8 +4,7 @@
   "description": "BackEnd of my personal website using Node/Express",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "start-hot-reload": "nodemon index.js",
+    "start": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
