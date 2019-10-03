@@ -7,19 +7,16 @@ This is a basic Node/Express/MongoDB personal-website skeleton written on JavaSc
 ## Features
 
 -   Node/Express
--   Multiple environment ready (development, production).
+-   Multiple environment ready (development, production)
 -   Pug
 -   Passport
--   Login.
--   Signup.
--   Account verification.
--   User profile.
--   Users admin area with CRUD operations.
+-   Login
+-   Signup
+-   Account verification
+-   User profile
+-   Users admin area with CRUD operations
 -   Passport sessions
-
-## Demo
-
-A demo of this CMS is located at: <http://185.86.150.187:4000>
+-   RESTful APIs
 
 ### Login credentials
 
