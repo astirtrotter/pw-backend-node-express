@@ -18,11 +18,6 @@ This is a basic Node/Express/MongoDB personal-website skeleton written on JavaSc
 -   Passport sessions
 -   RESTful APIs
 
-### Login credentials
-
-email: `prodev9999@gmail.com`
-password: `12345`
-
 ## How to install
 
 ### Using Git (recommended)
