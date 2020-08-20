@@ -25,7 +25,7 @@
   "homepage": "https://github.com/prodev9999/pw-backend-node-express#readme",
   "dependencies": {
     "async-waterfall": "^0.1.5",
-    "bcrypt": "^3.0.6",
+    "bcrypt": "^5.0.0",
     "body-parser": "^1.19.0",
     "chalk": "^2.4.2",
     "connect-flash": "^0.1.1",
